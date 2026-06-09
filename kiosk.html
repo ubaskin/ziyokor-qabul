@@ -156,6 +156,53 @@ body{
 
 </div>
 
+<!-- ===== KIOSK CHIQISH DARCHASI (maxfiy) ===== -->
+<div id="kiosk-tap" style="position:fixed;top:0;left:0;width:58px;height:58px;z-index:99998;"></div>
+<div id="kiosk-exit" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(8,10,24,.92);
+     align-items:center;justify-content:center;flex-direction:column;padding:24px;">
+  <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px;">Chiqish uchun parol</div>
+  <div style="font-size:13px;color:#9aa3c7;margin-bottom:18px;">Faqat o'qituvchi uchun</div>
+  <input id="kiosk-pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off"
+     style="width:200px;text-align:center;letter-spacing:8px;font-size:24px;padding:14px;border-radius:14px;
+     border:2px solid #232a4d;background:#1a1f3a;color:#fff;outline:none;">
+  <div id="kiosk-err" style="color:#ef4444;font-size:13px;height:18px;margin-top:8px;"></div>
+  <div style="display:flex;gap:12px;margin-top:14px;">
+    <button id="kiosk-cancel" style="padding:12px 22px;border:none;border-radius:12px;font-size:16px;font-weight:700;
+       background:#232a4d;color:#fff;">Bekor</button>
+    <button id="kiosk-ok" style="padding:12px 22px;border:none;border-radius:12px;font-size:16px;font-weight:700;
+       background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;">Chiqish</button>
+  </div>
+</div>
+<script>
+/* Kiosk chiqish: top-left burchakka 5 marta ketma-ket teging → PIN → chiqish.
+   PIN'ni o'zgartirish uchun shu raqamni tahrirlang. */
+(function(){
+  const KIOSK_EXIT_PIN = "2024";
+  let taps=0, t0=0;
+  const zone=document.getElementById('kiosk-tap');
+  const modal=document.getElementById('kiosk-exit');
+  const pin=document.getElementById('kiosk-pin');
+  const err=document.getElementById('kiosk-err');
+  zone.addEventListener('click',()=>{
+    const now=Date.now();
+    if(now-t0>3000) taps=0;
+    t0=now; taps++;
+    if(taps>=5){ taps=0; openModal(); }
+  });
+  function openModal(){ modal.style.display='flex'; err.textContent=''; pin.value=''; setTimeout(()=>pin.focus(),50); }
+  function closeModal(){ modal.style.display='none'; }
+  document.getElementById('kiosk-cancel').addEventListener('click',closeModal);
+  document.getElementById('kiosk-ok').addEventListener('click',tryExit);
+  pin.addEventListener('keydown',e=>{ if(e.key==='Enter') tryExit(); });
+  function tryExit(){
+    if(pin.value===KIOSK_EXIT_PIN){
+      if(window.AndroidKiosk && window.AndroidKiosk.exitApp){ window.AndroidKiosk.exitApp(); }
+      else { closeModal(); }   // web rejimida haqiqiy chiqish yo'q
+    } else { err.textContent="Parol noto'g'ri"; pin.value=''; pin.focus(); }
+  }
+})();
+</script>
+
 <script>
 /* ============================================================
    ZIYOKOR qabul testi — kiosk webapp
