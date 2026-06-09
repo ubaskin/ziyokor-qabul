@@ -456,15 +456,24 @@ function selectAnswer(letter){
 
 function resumeTest(){ showScreen('test-screen'); nextQuestion(); }
 
+// Promise'ni vaqt bilan cheklaydi — Firebase javob bermay osilib qolsa, oqim qotmaydi
+function withTimeout(promise, ms){
+  return Promise.race([
+    promise,
+    new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))
+  ]);
+}
+
 async function finishTest(){
   clearInterval(timerInterval);
+  clearResumeState();   // darrov tozala — bu yerdan keyin qayta yuklansa phantom savol chiqmasin
   const sum = engine.summary();
 
   // tavsiya guruh — Firebase groups dan (sinf + daraja + bo'sh joy)
   let tavsiyaGuruh = "";
   try{
     if(fbGroups){
-      const snap = await fbGroups.once('value');
+      const snap = await withTimeout(fbGroups.once('value'), 4000);
       const groups = snap.val()||{};
       const matches = Object.values(groups).filter(g=>
         Number(g.sinf)===student.sinf && Number(g.daraja)===sum.level &&
@@ -497,7 +506,6 @@ async function finishTest(){
     javoblar: sum.responses,
     createdAt: firebaseNow()
   };
-  clearResumeState();
   await saveAndSyncLead(lead);
   console.log("QABUL LEAD:", lead);
 
@@ -513,7 +521,7 @@ function firebaseNow(){
 // ============================================================
 async function saveAndSyncLead(lead){
   if(navigator.onLine && fbLeads){
-    try{ await fbLeads.push(lead); return; }
+    try{ await withTimeout(fbLeads.push(lead), 5000); return; }
     catch(e){ console.warn("to'g'ridan yozilmadi, navbatga:",e); }
   }
   queueLead(lead);
@@ -561,9 +569,11 @@ async function tryResume(){
   engine = new QabulEngine(pool);
   engine.responses=st.responses; engine.used=new Set(st.used); engine.usedGroups=st.usedGroups;
   engine.theta=st.theta; engine.se=st.se; engine.askedCount=st.askedCount; engine.consecFastWrong=st.consecFastWrong;
-  currentQuestion = st.currentQuestion;
+  // saqlangan currentQuestion — ALLAQACHON javob berilgan savol (saveResumeState answer'dan keyin chaqiriladi).
+  // Shuning uchun uni qaytadan ko'rsatmaymiz — keyingi savolga o'tamiz (yoki >=TARGET bo'lsa yakunlaymiz).
+  currentQuestion = null;
   showScreen('test-screen');
-  renderQuestion(currentQuestion);
+  nextQuestion();
   return true;
 }
 
