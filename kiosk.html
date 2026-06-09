@@ -129,7 +129,18 @@ body{
     </div>
     <div class="field">
       <label>Nechinchi sinf?</label>
-      <div class="sinf-grid" id="sinf-grid"></div>
+      <div class="sinf-grid" id="sinf-grid">
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,2)">2</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,3)">3</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,4)">4</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,5)">5</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,6)">6</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,7)">7</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,8)">8</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,9)">9</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,10)">10</button>
+        <button type="button" class="sinf-btn" onclick="pickSinf(this,11)">11</button>
+      </div>
     </div>
     <div class="field">
       <label>Ota-ona telefon raqami</label>
@@ -261,18 +272,15 @@ async function loadQuestions(){
 loadQuestions();
 
 // ---- Intake forma ----
-function buildSinfGrid(){
-  const g = document.getElementById('sinf-grid');
-  for(let s=2;s<=11;s++){
-    const b=document.createElement('button');
-    b.className='sinf-btn'; b.textContent=s;
-    b.onclick=()=>{ student.sinf=s;
-      document.querySelectorAll('.sinf-btn').forEach(x=>x.classList.remove('sel'));
-      b.classList.add('sel'); validateIntake(); };
-    g.appendChild(b);
-  }
+// Sinf tugmalari statik HTML — JS ishlamasa ham ko'rinadi. Bu funksiya tanlovni boshqaradi.
+function pickSinf(btn, s){
+  student.sinf = s;
+  var all = document.querySelectorAll('.sinf-btn');
+  for (var i=0;i<all.length;i++){ all[i].classList.remove('sel'); }
+  btn.classList.add('sel');
+  validateIntake();
 }
-buildSinfGrid();
+window.pickSinf = pickSinf;
 
 function validateIntake(){
   student.name = document.getElementById('in-name').value.trim();
