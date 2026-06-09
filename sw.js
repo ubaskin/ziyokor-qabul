@@ -1,40 +1,37 @@
-/* ZIYOKOR qabul testi — service worker (offline-first kesh) */
-const CACHE = 'ziyokor-qabul-v1';
-const ASSETS = [
-  './kiosk.html',
-  './questions.json',
-  './manifest.json',
+/* ZIYOKOR qabul testi — service worker (ES5, eski WebView mos). Network-first. */
+var CACHE = 'ziyokor-qabul-v2';
+var ASSETS = [
+  './', './index.html', './kiosk.html', './app.bundle.js',
+  './questions.json', './manifest.json',
   'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
-  'https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js'
 ];
 
-self.addEventListener('install', e => {
+self.addEventListener('install', function (e) {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(()=>{})));
+  e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ASSETS).catch(function () {}); }));
 });
 
-self.addEventListener('activate', e => {
+self.addEventListener('activate', function (e) {
   e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    }).then(function () { return self.clients.claim(); })
   );
 });
 
-self.addEventListener('fetch', e => {
-  const req = e.request;
+self.addEventListener('fetch', function (e) {
+  var req = e.request;
   if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  // Firebase RTDB so'rovlari (real-time) — keshlanmaydi, to'g'ridan tarmoqqa
-  if (url.hostname.endsWith('firebaseio.com')) return;
-
-  // questions.json — avval tarmoq (yangilik), bo'lmasa kesh
-  if (url.pathname.endsWith('questions.json')) {
-    e.respondWith(
-      fetch(req).then(r => { const c = r.clone(); caches.open(CACHE).then(ca => ca.put(req, c)); return r; })
-        .catch(() => caches.match(req))
-    );
-    return;
-  }
-  // Qolgani — avval kesh (tez, offline), bo'lmasa tarmoq
-  e.respondWith(caches.match(req).then(r => r || fetch(req)));
+  var url = new URL(req.url);
+  // Firebase real-time — keshlamaymiz, to'g'ridan tarmoqqa
+  if (url.hostname.indexOf('firebaseio.com') > -1) return;
+  // Network-first: online bo'lsa eng yangi, tarmoq yo'q bo'lsa keshdan
+  e.respondWith(
+    fetch(req).then(function (r) {
+      var c = r.clone();
+      caches.open(CACHE).then(function (ca) { ca.put(req, c); });
+      return r;
+    }).catch(function () { return caches.match(req); })
+  );
 });
