@@ -11,7 +11,8 @@ html,body{margin:0;height:100%;background:#fff;color:var(--ink)}
 .bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:2px solid #eee;position:sticky;top:0;background:#fff;z-index:5}
 .logo{font-weight:800;color:var(--g);font-size:20px;letter-spacing:.5px}
 .flt{margin-left:auto;background:#eef7e6;color:#3a7d00;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
-.gear{width:30px;height:30px;opacity:.0}
+.gear{width:34px;height:34px;opacity:.55;cursor:pointer;color:#888;display:flex;align-items:center;justify-content:center;border:1px solid #eee;border-radius:9px}
+.gear:active{opacity:1}
 .wrap{max-width:780px;margin:0 auto;padding:18px}
 h1{font-size:22px;font-weight:800;margin:6px 0 2px}.sub{color:var(--mut);font-size:14px;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -46,7 +47,7 @@ h1{font-size:22px;font-weight:800;margin:6px 0 2px}.sub{color:var(--mut);font-si
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
  <span class="flt" id="fbadge">Filial: …</span>
- <div class="gear" id="gear" title="menejer"></div>
+ <div class="gear" id="gear" title="Menejer (filial almashtirish)">⚙️</div>
 </div>
 <div class="wrap" id="app"></div>
 
@@ -58,12 +59,8 @@ var app=document.getElementById('app');
 var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};
 document.getElementById('fbadge').textContent='Filial: '+(BRANCHES[state.branch]||'—')+' 🔒';
 
-// hidden manager: 5 taps on gear within 3s
-var taps=[];
-document.getElementById('gear').addEventListener('click',function(){
- var now=Date.now();taps.push(now);taps=taps.filter(function(t){return now-t<3000});
- if(taps.length>=5){taps=[];managerMenu();}
-});
+// visible manager button — PIN himoyalangan
+document.getElementById('gear').addEventListener('click',managerMenu);
 function managerMenu(){
  var pin=prompt('Menejer PIN:');if(pin!==EXIT_PIN)return;
  var b=prompt('Filialni o\'zgartirish:\n1 - Abituriyent\n2 - Prezident maktabi\n(bekor: yopish)');
