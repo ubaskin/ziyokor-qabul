@@ -1,38 +1,51 @@
 <!DOCTYPE html><html lang="uz"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZIYOKOR — Qabul menejer</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#070d1c">
 <script>window.MathJax={tex:{inlineMath:[['$','$']]},svg:{fontCache:'global'}};</script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-*{box-sizing:border-box;font-family:'Nunito',system-ui,Arial,sans-serif}
-body{margin:0;background:#f6f7f9;color:#33323a}
-.bar{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#2b2440;color:#fff}
-.logo{font-weight:800;color:#9be15d}
+:root{--bg:#070d1c;--card:#0f1c38;--surf2:#0e1a34;--emer:#27c285;--emerd:#149a64;--gold:#e0bb63;--ink:#eef3fc;--mut:#92a3c4;--line:rgba(255,255,255,.10)}
+*{box-sizing:border-box;font-family:'Manrope',system-ui,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:url('./qabul-assets/hero.jpg') center top/cover no-repeat;opacity:.28}
+body::after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(7,13,28,.55) 0%,rgba(7,13,28,.92) 38%,#070d1c 70%)}
+.bar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(7,13,28,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-family:'Sora','Manrope',sans-serif;font-weight:800;letter-spacing:.5px;background:linear-gradient(90deg,var(--emer),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.bar b{color:var(--ink)}
+.bar select{color:var(--ink)!important;width:auto;background:var(--surf2);border:1px solid var(--line);border-radius:9px;padding:8px 12px}
 select,input,textarea,button{font-family:inherit}
-.tabs{display:flex;gap:6px;padding:10px 18px;background:#fff;border-bottom:2px solid #eee;flex-wrap:wrap}
-.tab{padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;color:#666;border:2px solid transparent}
-.tab.on{background:#eef7e6;color:#3a7d00}
+.tabs{display:flex;gap:6px;padding:11px 18px;background:rgba(14,26,52,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{padding:9px 16px;border-radius:10px;font-weight:700;cursor:pointer;color:var(--mut);border:1px solid transparent}
+.tab.on{background:rgba(39,194,133,.13);color:#7fe3b6;border-color:rgba(39,194,133,.3)}
 .wrap{max-width:980px;margin:0 auto;padding:18px}
-.card{background:#fff;border:1px solid #eee;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 1px 0 #eee}
+h2,h3{font-family:'Sora','Manrope',sans-serif;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 12px 32px rgba(0,0,0,.34)}
 table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:9px 8px;border-bottom:1px solid #eee;text-align:left}
-th{color:#888;font-size:12px;text-transform:uppercase}
-.btn{background:#58cc02;color:#fff;border:none;border-bottom:3px solid #46a302;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer}
-.btn.sec{background:#fff;color:#333;border:2px solid #ddd;border-bottom:3px solid #ddd}
-.btn.sm{padding:6px 12px;font-size:13px}
-label{font-weight:800;font-size:13px;display:block;margin:10px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:2px solid #e3e3e3;border-radius:10px;font-size:15px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.btn{background:linear-gradient(180deg,var(--emer),var(--emerd));color:#04130c;border:none;border-radius:10px;padding:11px 17px;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(39,194,133,.25)}
+.btn:active{transform:translateY(1px)}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn.sm{padding:7px 13px;font-size:13px}
+label{font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);display:block;margin:12px 0 5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--surf2);color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--emer);box-shadow:0 0 0 3px rgba(39,194,133,.16)}
+input::placeholder,textarea::placeholder{color:#5d6e8c}
 textarea{min-height:120px}
 .row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}
-.pill{font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;background:#e7f0ff;color:#1366d6}
-.rev{background:#ffe9b3;color:#8a5b00}
-.mut{color:#999;font-size:13px}
-.qrow{padding:10px;border:1px solid #eee;border-radius:10px;margin:8px 0;cursor:pointer;display:flex;gap:8px;align-items:center}
-.qrow:hover{background:#fafafa}
-#login{max-width:340px;margin:80px auto;text-align:center}
+.pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;background:rgba(63,164,240,.14);color:#8fcaf6;border:1px solid rgba(63,164,240,.24)}
+.rev{background:rgba(224,187,99,.14);color:#e7c878;border-color:rgba(224,187,99,.32)}
+.mut{color:var(--mut);font-size:13px}
+.qrow{padding:11px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer;display:flex;gap:8px;align-items:center;background:var(--surf2)}
+.qrow:hover{border-color:rgba(255,255,255,.22);background:#13213e}
+#login{max-width:360px;margin:90px auto;text-align:center}
 .hidden{display:none}
-.ok{color:#3a7d00;font-weight:800}
+.ok{color:#7fe3b6;font-weight:700}
+[style*="c0392b"]{color:#ff7a7a!important}
+mjx-container{color:var(--ink)}
 </style></head><body>
 <div id="login" class="card">
  <div style="font-size:34px">🔐</div><h2>Qabul menejer</h2>
