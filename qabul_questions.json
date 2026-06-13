@@ -6,202 +6,222 @@
  "yonalishlar": [
   {
    "id": "aniq_fanlar__m_f_",
-   "name": "Aniq fanlar M F",
-   "count": 29,
+   "name": "Aniq fanlar (Matematika + Fizika)",
+   "count": 17,
    "questions": [
     {
-     "id": "Aniq_fanlar__M_F_-1",
+     "id": "mf-mat-1",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "\"Besh million olti yuz ming yetti\" sonida nechta 0 raqami bor?",
+     "text": "«Besh million olti yuz ming yetti» sonida nechta 0 raqami bor?",
      "options": {
       "A": "3",
       "B": "1",
       "C": "4",
       "D": "2"
      },
-     "correct": null,
+     "correct": "C",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-2",
+     "id": "mf-mat-2",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "O'quvchi kitobning 80 betini 5 kunda, qolganini 15 kunda o'qib tugatdi. Kitob necha betlik?",
+     "text": "O'quvchi kitobning 80 betini 5 kunda, qolganini 15 kunda (xuddi shu sur'atda) o'qib tugatdi. Kitob necha betlik?",
      "options": {
       "A": "400",
       "B": "320",
       "C": "360",
       "D": "300"
      },
-     "correct": null,
+     "correct": "B",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-3",
+     "id": "mf-mat-3",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Hisoblang: -- 27:3 + (--10)·(--2)",
+     "text": "Hisoblang: $-27:3 + (-10)\\cdot(-2)$",
      "options": {
       "A": "16",
       "B": "10",
       "C": "11",
       "D": "48"
      },
-     "correct": null,
+     "correct": "C",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-4",
+     "id": "mf-mat-4",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Hisoblang: [RASM]",
+     "text": "Hisoblang: $\\left(4-\\dfrac{2}{3}\\right):6\\dfrac{2}{3}\\cdot 2$",
      "options": {
       "A": "2,5",
       "B": "1,5",
       "C": "2",
       "D": "3"
      },
-     "correct": null,
-     "has_image": true,
+     "correct": "C",
+     "has_image": false,
      "needs_review": true
     },
     {
-     "id": "Aniq_fanlar__M_F_-5",
+     "id": "mf-mat-5",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Tenglamani yeching: 4 + *x* = 14 -- *x*",
+     "text": "Tenglamani yeching: $4 + x = 14 - x$",
      "options": {
       "A": "5",
       "B": "7",
       "C": "3",
       "D": "4"
      },
-     "correct": null,
+     "correct": "A",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-6",
+     "id": "mf-mat-6",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Soddalashtiring: 6a + 4 -- 10a -- 2",
+     "text": "Soddalashtiring: $6a + 4 - 10a - 2$",
      "options": {
-      "A": "-- 2",
-      "B": "16a + 2",
-      "C": "-- 4a + 2",
-      "D": "-- 4a"
+      "A": "-2",
+      "B": "16a+2",
+      "C": "-4a+2",
+      "D": "-4a"
      },
-     "correct": null,
+     "correct": "C",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-7",
+     "id": "mf-mat-7",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Hisoblang: 3^2^ + (-1)^3^ -- 7^0^",
+     "text": "Hisoblang: $3^2 + (-1)^3 - 7^0$",
      "options": {
       "A": "8",
       "B": "7",
       "C": "9",
       "D": "6"
      },
-     "correct": null,
+     "correct": "B",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-8",
+     "id": "mf-mat-8",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Ko'paytirishni bajaring: (2x -- 1)⋅(x + 1)",
+     "text": "Ko'paytirishni bajaring: $(2x-1)\\cdot(x+1)$",
      "options": {
-      "A": "2x^2^ + x -- 1",
-      "B": "2x^2^ -- x -- 1",
+      "A": "2x^2+x-1",
+      "B": "2x^2-x-1",
       "C": "3x",
-      "D": "3x -- 1"
+      "D": "3x-1"
      },
-     "correct": null,
+     "correct": "A",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-9",
+     "id": "mf-mat-9",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Hisoblang: 3⋅1,5 -- 1,6:4",
+     "text": "Hisoblang: $3\\cdot 1{,}5 - 1{,}6:4$",
      "options": {
       "A": "3,9",
       "B": "4,1",
       "C": "2,7",
       "D": "1,5"
      },
-     "correct": null,
+     "correct": "B",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-10",
+     "id": "mf-mat-10",
      "fan": "Matematika",
      "type": "mcq",
-     "text": "Soddalashtiring: $frac{x}{x^{2} - y^{2}} - frac{y}{x^{2} - y^{2}}$",
+     "text": "Soddalashtiring: $\\dfrac{x}{x^2-y^2}-\\dfrac{y}{x^2-y^2}$",
      "options": {
-      "A": "$x - y$",
-      "B": "$x + y$",
-      "C": "$frac{1}{x - y}$",
-      "D": "$frac{1}{x + y}$  `"
+      "A": "x-y",
+      "B": "x+y",
+      "C": "\\dfrac{1}{x-y}",
+      "D": "\\dfrac{1}{x+y}"
      },
-     "correct": null,
+     "correct": "D",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-11",
+     "id": "mf-mat-11",
      "fan": "Matematika",
-     "type": "open",
-     "text": "$|x + 2| = 3$ tenglamaning ildizlari ko'paytmasini toping.   **JAVOB:** **    ______________________________________**",
-     "options": {},
-     "correct": null,
+     "type": "mcq",
+     "text": "$|x+2|=3$ tenglamaning ildizlari ko'paytmasini toping.",
+     "options": {
+      "A": "-5",
+      "B": "5",
+      "C": "-1",
+      "D": "6"
+     },
+     "correct": "A",
      "has_image": false,
-     "needs_review": true
+     "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-12",
+     "id": "mf-mat-12",
      "fan": "Matematika",
-     "type": "open",
-     "text": "2x -- 5 < 4 tengsizlikning natural yechimi nechta?   **JAVOB:**  **__________________________________________**",
-     "options": {},
-     "correct": null,
+     "type": "mcq",
+     "text": "$2x-5<4$ tengsizlikning natural yechimlari nechta?",
+     "options": {
+      "A": "3",
+      "B": "4",
+      "C": "5",
+      "D": "2"
+     },
+     "correct": "B",
      "has_image": false,
-     "needs_review": true
+     "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-13",
+     "id": "mf-mat-14",
      "fan": "Matematika",
-     "type": "open",
-     "text": "[RASM], x = ?   **JAVOB:**  **______________________________________**",
-     "options": {},
-     "correct": null,
-     "has_image": true,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-14",
-     "fan": "Matematika",
-     "type": "open",
-     "text": "Tenglamani yeching: $sqrt{2x - 1} = 3$   **JAVOB:**  **__________________________________________**  **15.** Hisoblang: $left( 2sqrt{5} + sqrt{45} right):sqrt{5}$   **JAVOB:**   **__________________________________________**",
-     "options": {},
-     "correct": null,
+     "type": "mcq",
+     "text": "Tenglamani yeching: $\\sqrt{2x-1}=3$",
+     "options": {
+      "A": "5",
+      "B": "4",
+      "C": "3",
+      "D": "6"
+     },
+     "correct": "A",
      "has_image": false,
-     "needs_review": true
+     "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-15",
-     "fan": "Fiziка",
+     "id": "mf-mat-15",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Hisoblang: $\\dfrac{2\\sqrt5+\\sqrt{45}}{\\sqrt5}$",
+     "options": {
+      "A": "5",
+      "B": "7",
+      "C": "3",
+      "D": "2\\sqrt5"
+     },
+     "correct": "A",
+     "has_image": false,
+     "needs_review": false
+    },
+    {
+     "id": "mf-fiz-1",
+     "fan": "Fizika",
      "type": "mcq",
      "text": "Suv necha gradusda qaynaydi?",
      "options": {
@@ -210,192 +230,37 @@
       "C": "-100",
       "D": "0"
      },
-     "correct": null,
+     "correct": "A",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-16",
-     "fan": "Fiziка",
+     "id": "mf-fiz-3",
+     "fan": "Fizika",
      "type": "mcq",
-     "text": "Rasmdagi har bir o'quvchi 10 N kuchga ega. Qaysi jamoa qancha umumiy kuchga ega ekanligini va qaysi jamoa g'alaba qozonishini toping.  [RASM]{width=\"3.4944444444444445in\" height=\"1.369790026246719in\"}",
-     "options": {
-      "A": "A jamoa (10 N)",
-      "B": "B jamoa (30 N)",
-      "C": "B jamoa (10 N)",
-      "D": "A jamoa (30 N)"
-     },
-     "correct": null,
-     "has_image": true,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-17",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "O'quvchi stulda o'tirib stulga 350 N gravitatsiya kuchi bilan bosmoqda. Stulda hosil bo'ladigan tayanchning reaksiya kuchini (N) toping?",
+     "text": "O'quvchi stulga 350 N gravitatsiya kuchi bilan bosmoqda. Stulda hosil bo'ladigan tayanch reaksiya kuchini (N) toping.",
      "options": {
       "A": "350",
       "B": "0",
       "C": "35",
       "D": "700"
      },
-     "correct": null,
+     "correct": "A",
      "has_image": false,
      "needs_review": false
     },
     {
-     "id": "Aniq_fanlar__M_F_-18",
-     "fan": "Fiziка",
+     "id": "mf-fiz-8",
+     "fan": "Fizika",
      "type": "mcq",
-     "text": "Rasmda moddani qaysi agregat holati tasvirlangan?  [RASM]{width=\"1.4472222222222222in\" height=\"1.2277777777777779in\"}",
-     "options": {
-      "A": "gaz",
-      "B": "suyuqlik",
-      "C": "amorf",
-      "D": "qattiq jism"
-     },
-     "correct": null,
-     "has_image": true,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-19",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "Bug'lanishga teskari jarayonga qanday jarayon deyiladi?",
-     "options": {
-      "A": "qotish",
-      "B": "sublimatsiya",
-      "C": "kondensatsiya",
-      "D": "erish"
-     },
-     "correct": null,
-     "has_image": false,
-     "needs_review": false
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-20",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "Haroratni qaysi asbobda o'lchanadi?",
-     "options": {
-      "A": "dinamometr",
-      "B": "termometr",
-      "C": "tarozi",
-      "D": "taxomtr"
-     },
-     "correct": null,
-     "has_image": false,
-     "needs_review": false
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-21",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "Poyabzal tagcharmi dizayni (rasmga qarang) bunday bo'lishining sababi nimada?  [RASM]{width=\"1.8020833333333333in\" height=\"2.543316929133858in\"}",
-     "options": {
-      "A": "poyabzal og'irroq bo'lishi uchun",
-      "B": "odam yurganda sirpanmasligi uchun",
-      "C": "poyabzalga ta'sir qiluvchi gravitatsiya kuchini oshirish uchun",
-      "D": "chiroyli ko'rinishi uchun"
-     },
-     "correct": null,
-     "has_image": true,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-22",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "0,5 kg necha gramm?",
-     "options": {
-      "A": "0,5",
-      "B": "50",
-      "C": "500",
-      "D": "5000"
-     },
-     "correct": null,
-     "has_image": false,
-     "needs_review": false
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-23",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "Toshkentdan soat 7^30^ da yo'lga chiqqan \"Neksiya\" 270 km yo'l bosib, soat 10^30^ da Farg'onaga yetib keldi. Uning o'rtacha tezligini km/soat da hisoblang.",
+     "text": "Toshkentdan soat 7°0 da yo'lga chiqqan «Nexia» 270 km yo'l bosib, soat 10°0 da Farg'onaga yetib keldi. Uning o'rtacha tezligini km/soat da hisoblang.",
      "options": {
       "A": "90",
       "B": "25",
       "C": "27",
       "D": "270"
      },
-     "correct": null,
-     "has_image": false,
-     "needs_review": false
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-24",
-     "fan": "Fiziка",
-     "type": "mcq",
-     "text": "90 km/soat necha m/s ga teng?",
-     "options": {
-      "A": "15",
-      "B": "20",
-      "C": "25",
-      "D": "10"
-     },
-     "correct": null,
-     "has_image": false,
-     "needs_review": false
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-25",
-     "fan": "Fiziка",
-     "type": "open",
-     "text": "100 K necha gradus Selsiy bo'ladi?   **Javob:**­­­­­_________________________________",
-     "options": {},
-     "correct": null,
-     "has_image": false,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-26",
-     "fan": "Fiziка",
-     "type": "open",
-     "text": "$S = frac{v^{2} - v_{0}^{2}}{2a}$ ifodadan $v_{0}$ ni toping?   **Javob:**­­­­­_________________________________",
-     "options": {},
-     "correct": null,
-     "has_image": false,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-27",
-     "fan": "Fiziка",
-     "type": "open",
-     "text": "Nur yassi ko'zguga 35^0^ burchak ostida tushmoqda. Tushayotgan va qaytayotgan nurlar orasidagi burchakni toping.   **Javob:**­­­­­_________________________________",
-     "options": {},
-     "correct": null,
-     "has_image": false,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-28",
-     "fan": "Fiziка",
-     "type": "open",
-     "text": "Qarshiliklari 3 Ω va 6 Ω bo'lgan ikkita iste'molchi parallel ulangan. Iste'molchilar ulangan zanjir qismining to'liq qarshiligini (Ω) toping.   **Javob:**­­­­­_________________________________",
-     "options": {},
-     "correct": null,
-     "has_image": false,
-     "needs_review": true
-    },
-    {
-     "id": "Aniq_fanlar__M_F_-29",
-     "fan": "Fiziка",
-     "type": "open",
-     "text": "Elektroneytral neon $(_{10}^{21}{Ne})$ izotopida nechta elektron borligini toping.   **Javob:**­­­­­_________________________________",
-     "options": {},
-     "correct": null,
+     "correct": "A",
      "has_image": false,
      "needs_review": true
     }
