@@ -1,0 +1,428 @@
+{
+ "version": 1,
+ "branch": "prezident",
+ "test": "matematika_oson_30",
+ "count": 30,
+ "questions": [
+  {
+   "id": "pm-q00045",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00045.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00046",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00046.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00048",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00048.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00049",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00049.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00050",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00050.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00051",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00051.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00052",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00052.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00053",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00053.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00055",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00055.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00056",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00056.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00057",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00057.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00058",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00058.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00059",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00059.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00061",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00061.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00062",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00062.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00072",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00072.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00074",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00074.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00075",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00075.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00076",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00076.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00077",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00077.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00078",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00078.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00082",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00082.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00084",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00084.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00088",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00088.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00092",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00092.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00093",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00093.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00095",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00095.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00097",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00097.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00103",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00103.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  },
+  {
+   "id": "pm-q00105",
+   "fan": "Matematika",
+   "type": "mcq_img",
+   "img": "./prezident-imgs/q00105.png",
+   "options": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+   },
+   "correct": null,
+   "needs_review": true
+  }
+ ]
+}

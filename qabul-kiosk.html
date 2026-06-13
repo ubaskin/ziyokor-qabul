@@ -83,11 +83,42 @@ Promise.all([
 }).catch(function(){app.innerHTML='<div class="center">Maʼlumot yuklanmadi. Internetni tekshiring.</div>'});
 
 function route(){
- if(state.branch==='prezident'){
-   app.innerHTML='<div class="center"><div class="big">🏫</div><h1>Prezident maktabi filiali</h1><p class="sub">Bu filial uchun mavjud sinf-asosidagi test ishlatiladi.</p><a class="btn" style="display:inline-block;text-decoration:none;max-width:320px" href="./kiosk.html">Testni ochish →</a><div class="note">(menejer filialni o\'zgartirishi mumkin — yuqori o\'ng burchak)</div></div>';return;
- }
+ if(state.branch==='prezident'){return screenPrezInfo();}
  screenYon();
 }
+function screenPrezInfo(){
+ app.innerHTML='<div class="big" style="text-align:center">🏫</div><h1 style="text-align:center">Prezident maktabi</h1>'
+ +'<div class="field"><label>Ism familiya</label><input id="i_name" autocomplete="off"></div>'
+ +'<div class="field"><label>Nechinchi sinf?</label><div id="sinfgrid" class="grid" style="grid-template-columns:repeat(5,1fr)">'
+ +[2,3,4,5,6].map(function(s){return '<div class="yo" style="text-align:center;padding:14px" onclick="pickSinf('+s+')">'+s+'</div>'}).join('')+'</div></div>'
+ +'<div id="schoolwrap"></div>'
+ +'<div class="field"><label>Ota-ona telefon</label><input id="i_tel" inputmode="tel" placeholder="+998"></div>'
+ +'<button class="btn" id="prezstart" onclick="startPrez()" disabled>Testni boshlash →</button>';
+}
+var prezSel={sinf:null,school:null};
+window.pickSinf=function(s){prezSel.sinf=s;prezSel.school=null;
+ document.querySelectorAll('#sinfgrid .yo').forEach(function(e){e.classList.toggle('sel',e.textContent==String(s));});
+ var sw=document.getElementById('schoolwrap');
+ if(s===5||s===6){sw.innerHTML='<div class="field"><label>Maktab yo‘nalishi</label>'
+   +'<div class="grid"><div class="yo" onclick="pickSchool(\'ibn_sino\')">Ibn Sino<small>Biologiya + Ingliz</small></div>'
+   +'<div class="yo" onclick="pickSchool(\'mirzo_ulugbek\')">Mirzo Ulug‘bek<small>Matematika + Ingliz</small></div></div></div>';}
+ else{sw.innerHTML='<div class="note">Prezident maktabi — Matematika + Ingliz tili</div>';prezSel.school='prezident';}
+ checkPrez();
+};
+window.pickSchool=function(sc){prezSel.school=sc;
+ document.querySelectorAll('#schoolwrap .yo').forEach(function(e){e.classList.remove('sel');});
+ event.currentTarget.classList.add('sel');checkPrez();};
+function checkPrez(){document.getElementById('prezstart').disabled=!(prezSel.sinf&&prezSel.school);}
+window.startPrez=function(){
+ var nm=document.getElementById('i_name').value.trim();if(!nm){alert('Ism familiyani kiriting');return;}
+ state.info={name:nm,sinf:prezSel.sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
+   branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
+ // hozircha barcha matematika yo'li 30 oson testni oladi (Bio/Ingliz banki keyin)
+ fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
+   state.qs=d.questions.slice();state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};
+   renderQ();
+ });
+};
 function screenYon(){
  var h='<h1>Yo‘nalishni tanlang</h1><div class="sub">Abituriyent qabul testi</div><div class="grid">';
  DATA.yonalishlar.forEach(function(y){
@@ -120,7 +151,9 @@ function renderQ(){
  var q=state.qs[state.idx];var n=state.qs.length;
  var h='<div class="prog"><i style="width:'+Math.round(state.idx/n*100)+'%"></i></div>';
  h+='<div style="display:flex;justify-content:space-between;color:var(--mut);font-weight:800;font-size:13px;margin-bottom:8px"><span>Savol '+(state.idx+1)+' / '+n+'</span><span>'+(q.fan||'')+'</span></div>';
- h+='<div class="qcard"><div class="qh"><span class="pill">'+(q.fan||'')+'</span></div><div class="qtext">'+(q.text||'')+'</div>';
+ h+='<div class="qcard"><div class="qh"><span class="pill">'+(q.fan||'')+'</span></div>';
+ if(q.img){h+='<img src="'+q.img+'" style="max-width:100%;border-radius:10px;margin:6px 0">';}
+ else{h+='<div class="qtext">'+(q.text||'')+'</div>';}
  var hasOpts=q.options&&Object.keys(q.options).length>=2;
  if(hasOpts){
    ['A','B','C','D'].forEach(function(L){ if(q.options[L]===undefined)return;
