@@ -73,8 +73,17 @@ function managerMenu(){
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 
 var DATA=null;
-fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){DATA=d;route();})
- .catch(function(){app.innerHTML='<div class="center">Maʼlumot yuklanmadi. Internetni tekshiring.</div>'});
+Promise.all([
+  fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
+  fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null})
+]).then(function(a){
+  DATA=a[0];var ov=a[1]||{};
+  // apply menejer overrides (tahrirlangan savol/javob jonli)
+  DATA.yonalishlar.forEach(function(y){y.questions.forEach(function(q){
+    var o=ov[q.id];if(o){for(var k in o)q[k]=o[k];}
+  });});
+  route();
+}).catch(function(){app.innerHTML='<div class="center">Maʼlumot yuklanmadi. Internetni tekshiring.</div>'});
 
 function route(){
  if(state.branch==='prezident'){
