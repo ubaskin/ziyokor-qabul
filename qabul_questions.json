@@ -120,8 +120,8 @@
      "type": "mcq",
      "text": "Ko'paytirishni bajaring: $(2x-1)\\cdot(x+1)$",
      "options": {
-      "A": "2x^2+x-1",
-      "B": "2x^2-x-1",
+      "A": "$2x^2+x-1$",
+      "B": "$2x^2-x-1$",
       "C": "3x",
       "D": "3x-1"
      },
@@ -152,8 +152,8 @@
      "options": {
       "A": "x-y",
       "B": "x+y",
-      "C": "\\dfrac{1}{x-y}",
-      "D": "\\dfrac{1}{x+y}"
+      "C": "$\\dfrac{1}{x-y}$",
+      "D": "$\\dfrac{1}{x+y}$"
      },
      "correct": "D",
      "has_image": false,
@@ -213,7 +213,7 @@
       "A": "5",
       "B": "7",
       "C": "3",
-      "D": "2\\sqrt5"
+      "D": "$2\\sqrt5$"
      },
      "correct": "A",
      "has_image": false,
