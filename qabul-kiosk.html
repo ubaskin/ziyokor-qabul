@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="uz"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ZIYOKOR Qabul</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<script>window.MathJax={tex:{inlineMath:[['$','$']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--g:#58cc02;--gd:#46a302;--b:#1cb0f6;--ink:#3c3c3c;--mut:#777;--line:#e5e5e5}
+*{box-sizing:border-box;font-family:'Nunito',system-ui,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#fff;color:var(--ink)}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:2px solid #eee;position:sticky;top:0;background:#fff;z-index:5}
+.logo{font-weight:800;color:var(--g);font-size:20px;letter-spacing:.5px}
+.flt{margin-left:auto;background:#eef7e6;color:#3a7d00;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
+.gear{width:30px;height:30px;opacity:.0}
+.wrap{max-width:780px;margin:0 auto;padding:18px}
+h1{font-size:22px;font-weight:800;margin:6px 0 2px}.sub{color:var(--mut);font-size:14px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.yo{background:#fff;border:2px solid var(--line);border-bottom:4px solid var(--line);border-radius:16px;padding:16px;font-weight:800;cursor:pointer;transition:.05s}
+.yo:active{transform:translateY(2px);border-bottom-width:2px}
+.yo small{display:block;color:var(--mut);font-weight:700;font-size:12px;margin-top:4px}
+.field{margin:12px 0}.field label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}
+.field input,.field select{width:100%;padding:13px 14px;border:2px solid var(--line);border-radius:12px;font-size:16px}
+.btn{background:var(--g);color:#fff;border:none;border-bottom:4px solid var(--gd);border-radius:14px;padding:15px 22px;font-weight:800;font-size:16px;cursor:pointer;width:100%}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn[disabled]{background:#d6d6d6;border-bottom-color:#bcbcbc;cursor:default}
+.btn.sec{background:#fff;color:var(--ink);border:2px solid var(--line);border-bottom:4px solid var(--line)}
+.prog{height:14px;background:#eee;border-radius:10px;overflow:hidden;margin:6px 0 14px}
+.prog>i{display:block;height:100%;background:var(--g);width:0;transition:.3s}
+.qcard{background:#fff;border:2px solid #eee;border-radius:18px;padding:20px;box-shadow:0 2px 0 #eee}
+.qh{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.pill{font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;background:#e7f0ff;color:#1366d6}
+.qtext{font-size:19px;margin:6px 0 16px;line-height:1.5}
+.opt{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-bottom:3px solid var(--line);border-radius:14px;padding:13px 15px;margin:9px 0;cursor:pointer;font-size:17px}
+.opt:active{transform:translateY(1px)}
+.opt.sel{border-color:var(--b);background:#f0faff}
+.lett{display:inline-flex;width:30px;height:30px;border-radius:8px;background:#f0f0f0;align-items:center;justify-content:center;font-weight:800;color:#666}
+.opt.sel .lett{background:var(--b);color:#fff}
+.txtin{width:100%;padding:13px;border:2px solid var(--line);border-radius:12px;font-size:17px}
+.center{text-align:center;padding:40px 18px}
+.big{font-size:60px}
+.hidden{display:none}
+.note{font-size:12px;color:#a9a9a9;margin-top:8px}
+</style></head>
+<body>
+<div class="bar">
+ <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
+ <span class="flt" id="fbadge">Filial: …</span>
+ <div class="gear" id="gear" title="menejer"></div>
+</div>
+<div class="wrap" id="app"></div>
+
+<script>
+var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";
+var EXIT_PIN="2024";
+var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
+var app=document.getElementById('app');
+var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};
+document.getElementById('fbadge').textContent='Filial: '+(BRANCHES[state.branch]||'—')+' 🔒';
+
+// hidden manager: 5 taps on gear within 3s
+var taps=[];
+document.getElementById('gear').addEventListener('click',function(){
+ var now=Date.now();taps.push(now);taps=taps.filter(function(t){return now-t<3000});
+ if(taps.length>=5){taps=[];managerMenu();}
+});
+function managerMenu(){
+ var pin=prompt('Menejer PIN:');if(pin!==EXIT_PIN)return;
+ var b=prompt('Filialni o\'zgartirish:\n1 - Abituriyent\n2 - Prezident maktabi\n(bekor: yopish)');
+ if(b==='1'){localStorage.setItem('zq_branch','abituriyent');location.reload();}
+ if(b==='2'){localStorage.setItem('zq_branch','prezident');location.reload();}
+}
+function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
+
+var DATA=null;
+fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){DATA=d;route();})
+ .catch(function(){app.innerHTML='<div class="center">Maʼlumot yuklanmadi. Internetni tekshiring.</div>'});
+
+function route(){
+ if(state.branch==='prezident'){
+   app.innerHTML='<div class="center"><div class="big">🏫</div><h1>Prezident maktabi filiali</h1><p class="sub">Bu filial uchun mavjud sinf-asosidagi test ishlatiladi.</p><a class="btn" style="display:inline-block;text-decoration:none;max-width:320px" href="./kiosk.html">Testni ochish →</a><div class="note">(menejer filialni o\'zgartirishi mumkin — yuqori o\'ng burchak)</div></div>';return;
+ }
+ screenYon();
+}
+function screenYon(){
+ var h='<h1>Yo‘nalishni tanlang</h1><div class="sub">Abituriyent qabul testi</div><div class="grid">';
+ DATA.yonalishlar.forEach(function(y){
+   h+='<div class="yo" onclick="pickYon(\''+y.id+'\')">'+y.name+'<small>'+y.count+' savol</small></div>';
+ });
+ h+='</div>';app.innerHTML=h;
+}
+window.pickYon=function(id){
+ state.yon=DATA.yonalishlar.find(function(y){return y.id===id});
+ state.qs=state.yon.questions.slice();state.idx=0;state.ans={};
+ screenInfo();
+};
+function screenInfo(){
+ app.innerHTML='<h1>'+state.yon.name+'</h1><div class="sub">Maʼlumotlaringizni kiriting</div>'
+ +'<div class="field"><label>Ism familiya</label><input id="i_name" autocomplete="off"></div>'
+ +'<div class="field"><label>Sinf</label><select id="i_sinf"><option value="">Tanlang</option>'
+ +[9,10,11].map(function(s){return '<option>'+s+'</option>'}).join('')+'<option>Bitiruvchi</option></select></div>'
+ +'<div class="field"><label>Telefon</label><input id="i_tel" inputmode="tel" autocomplete="off" placeholder="+998"></div>'
+ +'<button class="btn" onclick="startTest()">Boshlash →</button>';
+}
+window.startTest=function(){
+ var nm=document.getElementById('i_name').value.trim();
+ if(!nm){alert('Ism familiyani kiriting');return;}
+ state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:document.getElementById('i_tel').value.trim(),
+   yon:state.yon.id,yon_name:state.yon.name,branch:state.branch,started:new Date().toISOString()};
+ state.idx=0;renderQ();
+};
+function renderQ(){
+ if(state.idx>=state.qs.length){return finish();}
+ var q=state.qs[state.idx];var n=state.qs.length;
+ var h='<div class="prog"><i style="width:'+Math.round(state.idx/n*100)+'%"></i></div>';
+ h+='<div style="display:flex;justify-content:space-between;color:var(--mut);font-weight:800;font-size:13px;margin-bottom:8px"><span>Savol '+(state.idx+1)+' / '+n+'</span><span>'+(q.fan||'')+'</span></div>';
+ h+='<div class="qcard"><div class="qh"><span class="pill">'+(q.fan||'')+'</span></div><div class="qtext">'+(q.text||'')+'</div>';
+ var hasOpts=q.options&&Object.keys(q.options).length>=2;
+ if(hasOpts){
+   ['A','B','C','D'].forEach(function(L){ if(q.options[L]===undefined)return;
+     var sel=state.ans[q.id]===L?' sel':'';
+     h+='<div class="opt'+sel+'" onclick="pick(\''+L+'\')"><span class="lett">'+L+'</span><span>'+q.options[L]+'</span></div>';
+   });
+ } else {
+   h+='<input class="txtin" id="txtans" placeholder="Javobingiz..." value="'+(state.ans[q.id]||'')+'">';
+ }
+ h+='</div>';
+ h+='<div style="display:flex;gap:10px;margin-top:16px">'
+  +(state.idx>0?'<button class="btn sec" style="flex:.5" onclick="prevQ()">← Orqaga</button>':'')
+  +'<button class="btn" style="flex:1" onclick="nextQ()">'+(state.idx===n-1?'Yakunlash ✓':'Keyingi →')+'</button></div>';
+ app.innerHTML=h;typeset();
+}
+window.pick=function(L){state.ans[state.qs[state.idx].id]=L;renderQ();};
+window.prevQ=function(){saveTxt();if(state.idx>0){state.idx--;renderQ();}};
+window.nextQ=function(){saveTxt();state.idx++;renderQ();};
+function saveTxt(){var t=document.getElementById('txtans');if(t)state.ans[state.qs[state.idx].id]=t.value.trim();}
+function finish(){
+ var correct=0,graded=0;
+ state.qs.forEach(function(q){ if(q.correct){graded++; if(state.ans[q.id]===q.correct)correct++;} });
+ var ansd=Object.keys(state.ans).length;
+ var rec={info:state.info,answers:state.ans,answered:ansd,total:state.qs.length,
+   graded:graded,correct:correct,finished:new Date().toISOString()};
+ // save to Firebase (REST)
+ fetch(DB+'/sessions.json',{method:'POST',body:JSON.stringify(rec)}).catch(function(){});
+ app.innerHTML='<div class="center"><div class="big">🎉</div><h1>Rahmat!</h1>'
+  +'<p class="sub">'+state.info.name+', testni yakunladingiz.</p>'
+  +'<div style="font-size:18px;font-weight:800;margin:10px 0">Javob berilgan: '+ansd+' / '+state.qs.length+'</div>'
+  +(graded?'<div style="color:var(--g);font-weight:800">Avtomat baholangan: '+correct+' / '+graded+' to‘g‘ri</div>':'')
+  +'<div class="note">Natija qabul menejeriga yuborildi.</div>'
+  +'<button class="btn" style="max-width:320px;margin:20px auto 0" onclick="location.reload()">Yangi test</button></div>';
+}
+</script></body></html>
