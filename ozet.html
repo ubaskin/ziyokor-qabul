@@ -46,31 +46,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 </div>
 
 <script>
-firebase.initializeApp({ databaseURL:"https://ziyokor-qabul-default-rtdb.firebaseio.com" });
-const db=firebase.database();
-const LEVEL_LABEL={1:"Asos qo'yilmoqda",2:"Rivojlanish bosqichida",3:"Mustahkam",4:"Sinfdan oldinda",5:"Yuqori / olimpiada saviyasi"};
-const LEVEL_COLOR={1:"#ef4444",2:"#f59e0b",3:"#3b82f6",4:"#10b981",5:"#a855f7"};
+var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";
+const LEVEL_LABEL={0:"Baholanmagan",1:"Asos qo'yilmoqda",2:"Rivojlanish bosqichida",3:"Mustahkam",4:"Sinfdan oldinda",5:"Yuqori / olimpiada saviyasi"};
+const LEVEL_COLOR={0:"#64748b",1:"#ef4444",2:"#f59e0b",3:"#3b82f6",4:"#10b981",5:"#a855f7"};
 function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function levelOf(pct,graded){ if(!graded)return 0; if(pct>=85)return 5; if(pct>=70)return 4; if(pct>=50)return 3; if(pct>=30)return 2; return 1; }
 
 const id=new URLSearchParams(location.search).get('id');
 if(!id){ document.getElementById('wrap').innerHTML='<div class="err">Xulosa havolasi noto\'g\'ri.</div>'; }
-else db.ref('qabul_test/leads/'+id).once('value').then(snap=>{
-  const l=snap.val();
-  if(!l){ document.getElementById('wrap').innerHTML='<div class="err">Natija topilmadi.</div>'; return; }
-  const L=l.daraja||0;
-  const planHtml = l.reja ? `<div class="section"><h3>🗓️ Shaxsiy 30 kunlik reja</h3><div class="plan">${esc(l.reja)}</div></div>` : '';
-  const grpHtml = l.tavsiyaGuruh ? `<div class="grp"><div class="gn">${esc(l.tavsiyaGuruh)}</div><div class="gm">Menejer siz bilan jadval va bo'sh joyni hal qiladi</div></div>` : '';
+else Promise.all([
+  fetch(DB+'/sessions/'+id+'.json').then(r=>r.json()),
+  fetch('./qabul_questions.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
+  fetch('./prezident_math30.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
+  fetch(DB+'/overrides.json').then(r=>r.json()).catch(()=>({}))
+]).then(([s,DATA,PREZ,OVER])=>{
+  OVER=OVER||{};
+  if(!s){ document.getElementById('wrap').innerHTML='<div class="err">Natija topilmadi.</div>'; return; }
+  // savol kartasi (id -> {fan,correct}), override qo'llab
+  const qmap={};
+  function add(q){const o=OVER[q.id]||{};qmap[q.id]={fan:o.fan||q.fan,correct:('correct'in o)?o.correct:q.correct};}
+  if(DATA&&DATA.yonalishlar)DATA.yonalishlar.forEach(y=>(y.questions||[]).forEach(add));
+  if(PREZ&&PREZ.questions)PREZ.questions.forEach(add);
+  // fan bo'yicha tahlil
+  const byFan={};Object.keys(s.answers||{}).forEach(qid=>{const q=qmap[qid];if(!q||!q.correct)return;const f=q.fan||'?';byFan[f]=byFan[f]||{c:0,t:0};byFan[f].t++;if(s.answers[qid]===q.correct)byFan[f].c++;});
+  const fans=Object.keys(byFan);
+  const graded=fans.reduce((a,f)=>a+byFan[f].t,0), correct=fans.reduce((a,f)=>a+byFan[f].c,0);
+  const pct=graded?Math.round(correct/graded*100):0; const L=levelOf(pct,graded);
+  const strong=fans.filter(f=>byFan[f].c/byFan[f].t>=0.7), weak=fans.filter(f=>byFan[f].c/byFan[f].t<0.5);
+  const inf=s.info||{};
   document.getElementById('wrap').innerHTML=`
-    <div class="hero"><div class="logo">📐</div><h1>ZIYOKOR</h1><p>Matematika qabul testi — natija xulosasi</p></div>
+    <div class="hero"><div class="logo">🎓</div><h1>ZIYOKOR</h1><p>Qabul testi — natija xulosasi</p></div>
     <div class="body">
-      <div style="text-align:center;font-size:18px;font-weight:700;margin-bottom:14px">${esc(l.ism)} · ${esc(l.sinf)}-sinf</div>
-      <div class="ring" style="border-color:${LEVEL_COLOR[L]}"><div class="lvl" style="color:${LEVEL_COLOR[L]}">${L}</div><div class="of">5 dan</div></div>
+      <div style="text-align:center;font-size:18px;font-weight:700;margin-bottom:4px">${esc(inf.name||'')}</div>
+      <div style="text-align:center;color:var(--hint);font-size:14px;margin-bottom:14px">${esc(inf.yon_name||'')} · ${esc(inf.sinf||'')}-sinf</div>
+      <div class="ring" style="border-color:${LEVEL_COLOR[L]}"><div class="lvl" style="color:${LEVEL_COLOR[L]}">${graded?L:'—'}</div><div class="of">5 dan</div></div>
       <div class="lvl-label">${esc(LEVEL_LABEL[L]||'')}</div>
-      <div class="pct">${l.persentil?`Sinfdoshlarining <b>${l.persentil}%</b>idan oldinda`:''}</div>
-      ${(l.kuchli&&l.kuchli.length)?`<div class="section"><h3>💪 Kuchli tomonlar</h3>${l.kuchli.map(s=>`<span class="tag strong">${esc(s)}</span>`).join('')}</div>`:''}
-      ${(l.zaif&&l.zaif.length)?`<div class="section"><h3>📈 O'sish nuqtalari</h3><div style="color:var(--hint);font-size:13px;margin-bottom:8px">Shu mavzularga e'tibor bersak, natija tez ko'tariladi:</div>${l.zaif.map(s=>`<span class="tag weak">${esc(s)}</span>`).join('')}</div>`:''}
-      ${grpHtml}
-      ${planHtml}
+      <div class="pct">${graded?`To'g'ri javoblar: <b>${correct}/${graded}</b> (${pct}%)`:`Javob berildi: ${s.answered||0}/${s.total||0}`}</div>
+      ${strong.length?`<div class="section"><h3>💪 Kuchli tomonlar</h3>${strong.map(f=>`<span class="tag strong">${esc(f)} — ${Math.round(byFan[f].c/byFan[f].t*100)}%</span>`).join('')}</div>`:''}
+      ${weak.length?`<div class="section"><h3>📈 O'sish nuqtalari</h3><div style="color:var(--hint);font-size:13px;margin-bottom:8px">Shu fanlarga e'tibor bersak, natija tez ko'tariladi:</div>${weak.map(f=>`<span class="tag weak">${esc(f)} — ${Math.round(byFan[f].c/byFan[f].t*100)}%</span>`).join('')}</div>`:''}
+      <div class="grp"><div class="gn">ZIYOKOR o'quv markazi</div><div class="gm">Menejer siz bilan jadval va mos guruhni hal qiladi</div></div>
       <div class="note">Bu xulosa ZIYOKOR menejeri bilan suhbat uchun.<br>Savollaringiz bo'lsa — menejerga murojaat qiling.</div>
     </div>`;
 }).catch(e=>{ document.getElementById('wrap').innerHTML='<div class="err">Xato: '+esc(e.message)+'</div>'; });

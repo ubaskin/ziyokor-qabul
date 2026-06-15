@@ -76,7 +76,8 @@ mjx-container{color:var(--ink)}
 <div class="wrap" id="app"></div>
 
 <script>
-var DB="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";
+var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
+var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write — ma'lumot yo'qolmasin)
 var EXIT_PIN="2024";
 var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
 var app=document.getElementById('app');
@@ -206,8 +207,10 @@ function finish(){
  var ansd=Object.keys(state.ans).length;
  var rec={info:state.info,answers:state.ans,answered:ansd,total:state.qs.length,
    graded:graded,correct:correct,finished:new Date().toISOString()};
- // save to Firebase (REST)
- fetch(DB+'/sessions.json',{method:'POST',body:JSON.stringify(rec)}).catch(function(){});
+ // save to Firebase (REST) — ikkala bazaga ham (dual-write)
+ var body=JSON.stringify(rec);
+ fetch(DB+'/sessions.json',{method:'POST',body:body}).catch(function(){});
+ fetch(DB2+'/sessions.json',{method:'POST',body:body}).catch(function(){});
  app.innerHTML='<div class="center"><div class="big">🎉</div><h1>Rahmat!</h1>'
   +'<p class="sub">'+state.info.name+', testni yakunladingiz.</p>'
   +'<div style="font-size:18px;font-weight:800;margin:10px 0">Javob berilgan: '+ansd+' / '+state.qs.length+'</div>'
