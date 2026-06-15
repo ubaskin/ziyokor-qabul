@@ -1523,7 +1523,7 @@ var fbLeads = null,
   fbGroups = null;
 try {
   firebase.initializeApp({
-    databaseURL: "https://ziyokor2024-default-rtdb.firebaseio.com"
+    databaseURL: "https://ziyokor-qabul-default-rtdb.firebaseio.com"
   });
   var db = firebase.database();
   fbLeads = db.ref("qabul_test/leads");
