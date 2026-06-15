@@ -93,16 +93,15 @@ function managerMenu(){
 }
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 
-var DATA=null;
+var DATA=null,OV={};
+function applyOver(q){var o=OV[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 Promise.all([
   fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
   fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null})
 ]).then(function(a){
-  DATA=a[0];var ov=a[1]||{};
+  DATA=a[0];OV=a[1]||{};
   // apply menejer overrides (tahrirlangan savol/javob jonli)
-  DATA.yonalishlar.forEach(function(y){y.questions.forEach(function(q){
-    var o=ov[q.id];if(o){for(var k in o)q[k]=o[k];}
-  });});
+  DATA.yonalishlar.forEach(function(y){y.questions.forEach(applyOver);});
   route();
 }).catch(function(){app.innerHTML='<div class="center">Maʼlumot yuklanmadi. Internetni tekshiring.</div>'});
 
@@ -139,7 +138,7 @@ window.startPrez=function(){
    branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
  // hozircha barcha matematika yo'li 30 oson testni oladi (Bio/Ingliz banki keyin)
  fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
-   state.qs=d.questions.slice();state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};
+   state.qs=d.questions.slice().map(function(q){return applyOver(Object.assign({},q));});state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};
    renderQ();
  });
 };

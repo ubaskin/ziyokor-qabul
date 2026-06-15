@@ -51,7 +51,7 @@ mjx-container{color:var(--ink)}
  <div style="font-size:34px">🔐</div><h2>Qabul menejer</h2>
  <input id="pin" type="password" placeholder="PIN" style="text-align:center;font-size:20px">
  <button class="btn" style="width:100%;margin-top:12px" onclick="doLogin()">Kirish</button>
- <div class="mut" style="margin-top:8px">Filial: Abituriyent</div>
+ <div class="mut" style="margin-top:8px">Filial: kirgach tanlanadi (Abituriyent / Prezident maktabi)</div>
 </div>
 <div id="main" class="hidden">
  <div class="bar"><span class="logo">ZIYOKOR</span><b>Qabul menejer</b>
@@ -73,7 +73,7 @@ mjx-container{color:var(--ink)}
 </div>
 <script>
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";
-var PIN="2024",DATA=null,OVER={},SESS={};
+var PIN="2024",DATA=null,PREZ=null,OVER={},SESS={};
 function doLogin(){ if(document.getElementById('pin').value!==PIN){alert('PIN xato');return;}
  document.getElementById('login').classList.add('hidden');document.getElementById('main').classList.remove('hidden');loadAll();}
 function tab(t){['res','qs','imp'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
@@ -84,16 +84,28 @@ function branch(){return document.getElementById('branch').value;}
 function loadAll(){
  Promise.all([
    fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
+   fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).catch(function(){return null}),
    fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return{}}),
    fetch(DB+'/sessions.json').then(function(r){return r.json()}).catch(function(){return{}})
- ]).then(function(a){DATA=a[0];OVER=a[1]||{};SESS=a[2]||{};renderRes();renderQs();renderImp();});
+ ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};renderRes();renderQs();renderImp();});
 }
 function applyOver(q){var o=OVER[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
+// Joriy filialning yo'nalishlari (savol banki). Prezident — 30 savol bitta "yo'nalish" sifatida.
+function branchYon(){
+ if(branch()==='prezident'){
+   if(!PREZ||!PREZ.questions)return[];
+   return [{id:'prezident_math30',name:(PREZ.test||'Prezident maktabi — Matematika'),count:(PREZ.count||PREZ.questions.length),questions:PREZ.questions}];
+ }
+ return (DATA&&DATA.yonalishlar)||[];
+}
+// sessiya joriy filialga tegishlimi
+function inBranch(s){var b=(s&&s.info&&s.info.branch)||'abituriyent';return b===branch();}
+// id bo'yicha savolni joriy filial bankidan top
+function findQ(qid){var ys=branchYon();for(var i=0;i<ys.length;i++){var qs=ys[i].questions||[];for(var j=0;j<qs.length;j++)if(qs[j].id===qid)return qs[j];}return null;}
 
 function renderRes(){
  var el=document.getElementById('res');
- if(branch()!=='abituriyent'){el.innerHTML='<div class="card mut">Prezident maktabi natijalari mavjud manager.html da.</div>';return;}
- var rows=Object.keys(SESS||{}).map(function(k){return SESS[k];}).filter(Boolean);
+ var rows=Object.keys(SESS||{}).map(function(k){return SESS[k];}).filter(Boolean).filter(inBranch);
  rows.sort(function(a,b){return (b.finished||'').localeCompare(a.finished||'');});
  var h='<div class="card"><h3>Topshirganlar ('+rows.length+')</h3>';
  if(!rows.length){h+='<div class="mut">Hali natija yo‘q.</div></div>';el.innerHTML=h;return;}
@@ -108,9 +120,8 @@ function renderRes(){
 }
 function analyze(i){
  var s=window._rows[i],inf=s.info||{};
- var byFan={};var y=DATA.yonalishlar.find(function(x){return x.id===inf.yon;});
- var bank={};if(y)y.questions.forEach(function(q){bank[q.id]=applyOver(Object.assign({},q));});
- Object.keys(s.answers||{}).forEach(function(qid){var q=bank[qid];if(!q||!q.correct)return;
+ var byFan={};
+ Object.keys(s.answers||{}).forEach(function(qid){var raw=findQ(qid);if(!raw)return;var q=applyOver(Object.assign({},raw));if(!q.correct)return;
    var f=q.fan||'?';byFan[f]=byFan[f]||{c:0,t:0};byFan[f].t++;if(s.answers[qid]===q.correct)byFan[f].c++;});
  var h='<div class="card"><h3>AI tahlil — '+(inf.name||'')+'</h3>';
  var fans=Object.keys(byFan);
@@ -124,18 +135,20 @@ function analyze(i){
 var curYon=null,curQ=null;
 function renderQs(){
  var el=document.getElementById('qs');
- if(branch()!=='abituriyent'){el.innerHTML='<div class="card mut">Prezident savollari manager.html da.</div>';return;}
- var opts=DATA.yonalishlar.map(function(y){var rev=y.questions.filter(function(q){var qq=applyOver(Object.assign({},q));return qq.needs_review||!qq.correct;}).length;
+ var ys=branchYon();
+ if(!ys.length){el.innerHTML='<div class="card mut">Bu filial uchun savol banki topilmadi.</div>';return;}
+ var opts=ys.map(function(y){var rev=y.questions.filter(function(q){var qq=applyOver(Object.assign({},q));return qq.needs_review||!qq.correct;}).length;
    return '<option value="'+y.id+'">'+y.name+' — '+y.count+' savol ('+rev+' tekshirilmagan)</option>';}).join('');
  el.innerHTML='<div class="card"><label>Yo‘nalish</label><select id="ysel" onchange="showQList()">'+opts+'</select></div><div id="qlist"></div><div id="qedit"></div>';
  showQList();
 }
 function showQList(){
- curYon=DATA.yonalishlar.find(function(y){return y.id===document.getElementById('ysel').value;});
+ curYon=branchYon().find(function(y){return y.id===document.getElementById('ysel').value;});
  var h='<div class="card"><h3>'+curYon.name+'</h3>';
  curYon.questions.forEach(function(q,i){var qq=applyOver(Object.assign({},q));
   var bad=qq.needs_review||!qq.correct;
-  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span><span class="pill">'+(qq.fan||'')+'</span><span style="flex:1">'+(qq.text||'').slice(0,80)+'…</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
+  var preview=qq.img?'<img src="'+qq.img+'" style="height:38px;border-radius:6px">':(qq.text||'').slice(0,80)+'…';
+  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span><span class="pill">'+(qq.fan||'')+'</span><span style="flex:1">'+preview+'</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
  });
  h+='</div>';document.getElementById('qlist').innerHTML=h;document.getElementById('qedit').innerHTML='';typeset();
 }
@@ -143,7 +156,8 @@ function editQ(i){
  var q=applyOver(Object.assign({},curYon.questions[i]));curQ=q;
  var o=q.options||{};
  var h='<div class="card"><h3>Savolni tahrirlash</h3><div class="mut">'+q.id+'</div>'
-  +'<label>Savol matni (LaTeX: $...$)</label><textarea id="e_text">'+(q.text||'').replace(/</g,'&lt;')+'</textarea>'
+  +(q.img?'<img src="'+q.img+'" style="max-width:100%;border-radius:10px;margin:8px 0;border:1px solid var(--line)">':'')
+  +'<label>Savol matni '+(q.img?'(rasmli savol — matn ixtiyoriy)':'(LaTeX: $...$)')+'</label><textarea id="e_text">'+(q.text||'').replace(/</g,'&lt;')+'</textarea>'
   +'<label>Fan</label><input id="e_fan" value="'+(q.fan||'')+'">'
   +'<div class="row">'+['A','B','C','D'].map(function(L){return '<div><label>Variant '+L+'</label><input id="e_'+L+'" value="'+((o[L]||'')+'').replace(/"/g,'&quot;')+'"></div>';}).join('')+'</div>'
   +'<label>To‘g‘ri javob</label><select id="e_correct"><option value="">— tanlanmagan —</option>'+['A','B','C','D'].map(function(L){return '<option '+(q.correct===L?'selected':'')+'>'+L+'</option>';}).join('')+'</select>'
@@ -163,6 +177,7 @@ function saveQ(){
 
 function renderImp(){
  var el=document.getElementById('imp');
+ if(branch()==='prezident'){el.innerHTML='<div class="card mut">Prezident maktabi savollari rasm asosida (qabul-data orqali yuklanadi). Bu yerda faqat Abituriyent uchun matnli import mavjud.</div>';return;}
  var opts=DATA.yonalishlar.map(function(y){return '<option value="'+y.id+'">'+y.name+'</option>';}).join('');
  el.innerHTML='<div class="card"><h3>Word uslubidagi misolni qo‘shish (AI)</h3>'
   +'<div class="mut">Word/test matnini (savol + A) B) C) D) variantlar) shu yerga qo‘ying. AI uni tahlil qilib, javobini topib, tanlangan yo‘nalishga qo‘shadi.</div>'
