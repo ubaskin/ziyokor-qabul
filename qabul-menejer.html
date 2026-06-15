@@ -75,26 +75,28 @@ mjx-container{color:var(--ink)}
 </style></head><body>
 <div id="login" class="card">
  <div style="font-size:34px">🔐</div><h2>Qabul menejer</h2>
- <input id="pin" type="password" placeholder="PIN" style="text-align:center;font-size:20px">
+ <input id="pin" type="password" placeholder="PIN" style="text-align:center;font-size:20px" onkeydown="if(event.key==='Enter')doLogin()">
  <button class="btn" style="width:100%;margin-top:12px" onclick="doLogin()">Kirish</button>
- <div class="mut" style="margin-top:8px">Filial: kirgach tanlanadi (Abituriyent / Prezident maktabi)</div>
+ <div id="loginerr" style="color:#ff7a7a;margin-top:8px;min-height:16px"></div>
+ <div class="mut" style="margin-top:4px">Bo‘lim ruxsatingizga qarab kirgach tanlanadi</div>
 </div>
 <div id="main" class="hidden">
  <div class="bar"><span class="logo">ZIYOKOR</span><b>Qabul menejer</b>
-  <select id="branch" style="width:auto;margin-left:auto;color:#333" onchange="loadAll()">
-   <option value="abituriyent">Filial: Abituriyent</option>
-   <option value="prezident">Filial: Prezident maktabi</option>
-  </select>
+  <select id="branch" style="width:auto;margin-left:auto" onchange="loadAll()"></select>
+  <span id="mgrname" class="mut" style="margin-left:6px"></span>
+  <button class="btn sec sm" style="margin-left:6px" onclick="logout()">Chiqish</button>
  </div>
  <div class="tabs">
   <div class="tab on" data-t="res" onclick="tab('res')">📊 Natijalar</div>
   <div class="tab" data-t="qs" onclick="tab('qs')">📝 Savollar</div>
   <div class="tab" data-t="imp" onclick="tab('imp')">➕ Word→AI import</div>
+  <div class="tab hidden" id="tab_mgr" data-t="mgr" onclick="tab('mgr')">👤 Menejerlar</div>
  </div>
  <div class="wrap">
   <div id="res"></div>
   <div id="qs" class="hidden"></div>
   <div id="imp" class="hidden"></div>
+  <div id="mgr" class="hidden"></div>
  </div>
 </div>
 <div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0">➕ talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
@@ -102,18 +104,47 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
-var PIN="2024",DATA=null,PREZ=null,OVER={},SESS={},TCACHE={};
+var DATA=null,PREZ=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null;
+// Bo'limlar: qabul bo'limi + sinf → talim+ filial
+var SECTIONS={
+ abituriyent:{name:'Abituriyent',fil:'abit',test:'abituriyent'},
+ prezident46:{name:'Prezident maktabi (4–6)',fil:'pm',test:'prezident',sinf:[4,5,6]},
+ olimpus23:{name:'Olimpus (2–3)',fil:'olimpus',test:'prezident',sinf:[2,3]}
+};
+var SECKEYS=['abituriyent','prezident46','olimpus23'];
 // dual-write: yozuvni ikkala bazaga ham yuboradi (asosiy javobni qaytaradi)
 function dbWrite(sub,method,body){
  var o={method:method,headers:{'Content-Type':'application/json'}};if(body!=null)o.body=body;
  var p=fetch(DB+sub,o);fetch(DB2+sub,o).catch(function(){});return p;
 }
-function doLogin(){ if(document.getElementById('pin').value!==PIN){alert('PIN xato');return;}
- document.getElementById('login').classList.add('hidden');document.getElementById('main').classList.remove('hidden');loadAll();}
-function tab(t){['res','qs','imp'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
- document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.dataset.t===t);});}
+var DEFAULT_ADMIN={id:'admin',name:'Ubaydullo (admin)',pin:'2024',sections:SECKEYS.slice(),admin:true};
+function doLogin(){
+ var pin=document.getElementById('pin').value.trim();
+ fetch(DB+'/managers.json').then(function(r){return r.json()}).then(function(m){
+  MGRS=m||{};
+  // birinchi marta — admin seed
+  if(!Object.keys(MGRS).length){MGRS={admin:DEFAULT_ADMIN};dbWrite('/managers/admin.json','PUT',JSON.stringify(DEFAULT_ADMIN));}
+  var found=null;for(var k in MGRS){if(String(MGRS[k].pin)===pin){found=MGRS[k];found._key=k;}}
+  if(!found){document.getElementById('loginerr').textContent='PIN xato';return;}
+  CURMGR=found;
+  document.getElementById('login').classList.add('hidden');document.getElementById('main').classList.remove('hidden');
+  document.getElementById('mgrname').textContent=found.name||'';
+  document.getElementById('tab_mgr').classList.toggle('hidden',!found.admin);
+  // ruxsat berilgan bo'limlar
+  var allowed=(found.sections&&found.sections.length)?found.sections:SECKEYS;
+  var sel=document.getElementById('branch');
+  sel.innerHTML=allowed.map(function(s){return '<option value="'+s+'">Bo‘lim: '+SECTIONS[s].name+'</option>';}).join('');
+  loadAll();
+ }).catch(function(){document.getElementById('loginerr').textContent='Ulanmadi';});
+}
+function logout(){CURMGR=null;document.getElementById('main').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('pin').value='';}
+function tab(t){['res','qs','imp','mgr'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
+ document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.dataset.t===t);});
+ if(t==='mgr')renderMgr();}
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 function branch(){return document.getElementById('branch').value;}
+function secObj(){return SECTIONS[branch()]||SECTIONS.abituriyent;}
+function sinfNum(s){var v=parseInt((s.info||{}).sinf,10);return isNaN(v)?null:v;}
 
 function loadAll(){
  Promise.all([
@@ -126,14 +157,17 @@ function loadAll(){
 function applyOver(q){var o=OVER[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 // Joriy filialning yo'nalishlari (savol banki). Prezident — 30 savol bitta "yo'nalish" sifatida.
 function branchYon(){
- if(branch()==='prezident'){
+ if(secObj().test==='prezident'){
    if(!PREZ||!PREZ.questions)return[];
    return [{id:'prezident_math30',name:(PREZ.test||'Prezident maktabi — Matematika'),count:(PREZ.count||PREZ.questions.length),questions:PREZ.questions}];
  }
  return (DATA&&DATA.yonalishlar)||[];
 }
 // sessiya joriy filialga tegishlimi
-function inBranch(s){var b=(s&&s.info&&s.info.branch)||'abituriyent';return b===branch();}
+function inBranch(s){var o=secObj();var b=(s&&s.info&&s.info.branch)||'abituriyent';
+ if(o.test!==b)return false;
+ if(o.sinf){var n=sinfNum(s);return o.sinf.indexOf(n)>=0;}
+ return true;}
 // id bo'yicha savolni joriy filial bankidan top
 function findQ(qid){var ys=branchYon();for(var i=0;i<ys.length;i++){var qs=ys[i].questions||[];for(var j=0;j<qs.length;j++)if(qs[j].id===qid)return qs[j];}return null;}
 
@@ -262,7 +296,7 @@ function showQList(){
 function editQ(i){
  var q=applyOver(Object.assign({},curYon.questions[i]));curQ=q;
  var o=q.options||{};
- var srcImg=(branch()==='prezident'&&/^pm-q/.test(q.id))?('./prezident-imgs/'+q.id.replace('pm-','')+'.png'):null;
+ var srcImg=(secObj().test==='prezident'&&/^pm-q/.test(q.id))?('./prezident-imgs/'+q.id.replace('pm-','')+'.png'):null;
  var h='<div class="card"><h3>Savolni tahrirlash</h3><div class="mut">'+q.id+'</div>'
   +(q.img?'<img src="'+q.img+'" style="max-width:100%;border-radius:10px;margin:8px 0;border:1px solid var(--line)">':'')
   +(srcImg?'<div class="mut" style="margin-top:8px">Asl rasm (solishtirish uchun):</div><img src="'+srcImg+'" style="max-width:100%;border-radius:10px;margin:6px 0;border:1px solid var(--line)" onerror="this.style.display=\'none\'">':'')
@@ -294,7 +328,7 @@ function tdata(filial,cb){
  ]).then(function(a){TCACHE[filial]={teachers:a[0]||{},groups:a[1]||{}};cb(TCACHE[filial]);})
   .catch(function(){cb({teachers:{},groups:{}});});
 }
-function openTalim(key){TKEY=key;TSEL={filial:'pm',fan:'',teacher:'',group:''};
+function openTalim(key){TKEY=key;TSEL={filial:secObj().fil,fan:'',teacher:'',group:''};
  document.getElementById('tmodal').classList.remove('hidden');tStep();}
 function closeTalim(){document.getElementById('tmodal').classList.add('hidden');}
 function tStep(){
@@ -304,7 +338,7 @@ function tStep(){
   var teachers=Object.keys(D.teachers).filter(function(t){return D.teachers[t].fan===TSEL.fan;}).map(function(t){return {id:t,name:(D.teachers[t].name||'').trim()};}).sort(function(a,b){return a.name.localeCompare(b.name);});
   var groups=[];for(var g in D.groups){var gg=D.groups[g];if(gg&&gg.active&&String(g).split('_')[0]===TSEL.teacher)groups.push(gg);}
   var h='<div class="lead-meta" style="margin-bottom:12px">O‘quvchi: <b style="color:var(--ink)">'+esc(inf.name||'')+'</b> · '+esc(inf.sinf||'')+'-sinf · '+esc(inf.tel||'')+'</div>';
-  h+='<label>Filial</label><select onchange="TSEL.filial=this.value;TSEL.fan=\'\';TSEL.teacher=\'\';TSEL.group=\'\';tStep();"><option value="pm" '+(TSEL.filial==='pm'?'selected':'')+'>PM (kurs)</option><option value="abit" '+(TSEL.filial==='abit'?'selected':'')+'>Abituriyent</option></select>';
+  h+='<div class="mut" style="margin-bottom:6px">Bo‘lim: <b style="color:var(--ink)">'+esc(secObj().name)+'</b> → talim+ filial: <b style="color:#7fe3b6">'+esc(TSEL.filial)+'</b></div>';
   h+='<label>1) Fan</label><select onchange="TSEL.fan=this.value;TSEL.teacher=\'\';TSEL.group=\'\';tStep();"><option value="">— tanlang —</option>'+fans.map(function(f){return '<option '+(TSEL.fan===f?'selected':'')+'>'+esc(f)+'</option>';}).join('')+'</select>';
   if(TSEL.fan)h+='<label>2) O‘qituvchi</label><select onchange="TSEL.teacher=this.value;TSEL.group=\'\';tStep();"><option value="">— tanlang —</option>'+teachers.map(function(t){return '<option value="'+t.id+'" '+(TSEL.teacher===t.id?'selected':'')+'>'+esc(t.name)+'</option>';}).join('')+'</select>';
   if(TSEL.teacher){h+='<label>3) Guruh</label><select onchange="TSEL.group=this.value;tStep();"><option value="">— tanlang —</option>'+groups.map(function(g){return '<option value="'+g.id+'" '+(TSEL.group===g.id?'selected':'')+'>'+esc(g.name)+(g.room?' · '+esc(g.room):'')+'</option>';}).join('')+'</select>';
@@ -319,6 +353,9 @@ function doEnroll(){
  var inf=(SESS[TKEY]||{}).info||{};var fil=TSEL.filial,gid=TSEL.group;
  var D=TCACHE[fil]||{teachers:{},groups:{}};
  var gname=(D.groups[gid]||{}).name||gid;var tname=((D.teachers[TSEL.teacher]||{}).name||'').trim();
+ var tel=phoneDigits(inf.tel);
+ var dup=tel&&Object.keys(SESS).some(function(k){var ss=SESS[k]||{};return k!==TKEY&&ss.talim&&phoneDigits((ss.info||{}).tel)===tel;});
+ if(dup&&!confirm('⚠️ Bu telefon bilan allaqachon talim+ ga qo‘shilgan. Baribir davom etamizmi?'))return;
  if(!confirm('“'+(inf.name||'')+'” ni REAL talim+ bazasiga qo‘shamizmi?\n'+fil.toUpperCase()+' / '+tname+' / '+gname))return;
  var msg=document.getElementById('tmsg');msg.textContent='⏳ ID olinmoqda...';
  fetch(TDB+'/'+fil+'/talabalar/all.json?shallow=true').then(function(r){return r.json()}).then(function(all){
@@ -327,7 +364,7 @@ function doEnroll(){
   var stud={name:inf.name||'',tel:inf.tel||'',sinf:inf.sinf||'',aktiv:true,address:'',source:'qabul',qabulYon:inf.yon_name||'',created:today};
   var mem={active:true,joinedDate:today,startDate:today};
   var patch={};patch[fil+'/talabalar/all/'+id]=stud;patch[fil+'/members/'+gid+'/'+id]=mem;patch[fil+'/studentGroups/'+id+'/'+gid]=mem;
-  var audit={studentId:id,filial:fil,group:gid,groupName:gname,teacher:tname,student:inf.name||'',sessionKey:TKEY,at:new Date().toISOString()};
+  var audit={studentId:id,filial:fil,group:gid,groupName:gname,teacher:tname,student:inf.name||'',sessionKey:TKEY,by:(CURMGR&&CURMGR.name)||'',at:new Date().toISOString()};
   msg.textContent='⏳ Qo‘shilmoqda...';
   fetch(TDB+'/.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(patch)}).then(function(r){
     if(!r.ok)throw 0;
@@ -341,9 +378,37 @@ function doEnroll(){
   }).catch(function(){msg.textContent='❌ Xato — qo‘shilmadi';});
  }).catch(function(){msg.textContent='❌ ID olinmadi';});
 }
+// ===== Menejerlar (admin) =====
+function renderMgr(){
+ if(!CURMGR||!CURMGR.admin){document.getElementById('mgr').innerHTML='<div class="card mut">Faqat admin uchun.</div>';return;}
+ var rows=Object.keys(MGRS).map(function(k){var m=MGRS[k];return '<tr><td><b>'+esc(m.name||'')+'</b></td><td class="mut">PIN: '+esc(m.pin)+'</td><td>'+esc((m.sections||[]).map(function(s){return SECTIONS[s]?SECTIONS[s].name:s;}).join(', ')||'—')+'</td><td>'+(m.admin?'✅':'')+'</td><td><button class="btn sec sm" onclick="delMgr(\''+k+'\')" '+(k===CURMGR._key?'disabled':'')+'>🗑</button></td></tr>';}).join('');
+ var checks=SECKEYS.map(function(s){return '<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" class="m_sec" value="'+s+'" style="width:auto"> '+SECTIONS[s].name+'</label>';}).join('');
+ document.getElementById('mgr').innerHTML='<div class="card"><h3>Menejerlar</h3>'
+  +'<table><tr><th>Ism</th><th>PIN</th><th>Bo‘limlar</th><th>Admin</th><th></th></tr>'+rows+'</table></div>'
+  +'<div class="card"><h3>➕ Yangi menejer</h3>'
+  +'<label>Ism</label><input id="m_name">'
+  +'<label>PIN (kirish kodi)</label><input id="m_pin" inputmode="numeric">'
+  +'<label>Ruxsat berilgan bo‘limlar</label><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">'+checks+'</div>'
+  +'<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink);margin-top:10px"><input type="checkbox" id="m_admin" style="width:auto"> Admin (hamma bo‘lim + menejer boshqaruvi)</label>'
+  +'<button class="btn" style="margin-top:14px" onclick="saveMgr()">💾 Saqlash</button><div id="mmsg" class="ok" style="margin-top:8px"></div></div>';
+}
+function saveMgr(){
+ var name=document.getElementById('m_name').value.trim(),pin=document.getElementById('m_pin').value.trim();
+ if(!name||!pin){alert('Ism va PIN kiriting');return;}
+ for(var k in MGRS){if(String(MGRS[k].pin)===pin){alert('Bu PIN band — boshqasini tanlang');return;}}
+ var secs=[].slice.call(document.querySelectorAll('.m_sec:checked')).map(function(e){return e.value;});
+ var admin=document.getElementById('m_admin').checked;if(admin)secs=SECKEYS.slice();
+ if(!secs.length){alert('Kamida bitta bo‘lim tanlang');return;}
+ var id='m'+Date.now();
+ var rec={id:id,name:name,pin:pin,sections:secs,admin:admin,created:new Date().toISOString()};
+ dbWrite('/managers/'+id+'.json','PUT',JSON.stringify(rec)).then(function(){MGRS[id]=rec;document.getElementById('mmsg').textContent='✅ Saqlandi';renderMgr();}).catch(function(){document.getElementById('mmsg').textContent='❌ Xato';});
+}
+function delMgr(key){if(key===(CURMGR&&CURMGR._key)){alert('O‘zingizni o‘chira olmaysiz');return;}
+ if(!confirm('Menejerni o‘chirasizmi?'))return;
+ dbWrite('/managers/'+key+'.json','DELETE');delete MGRS[key];renderMgr();}
 function renderImp(){
  var el=document.getElementById('imp');
- if(branch()==='prezident'){el.innerHTML='<div class="card mut">Prezident maktabi savollari rasm asosida (qabul-data orqali yuklanadi). Bu yerda faqat Abituriyent uchun matnli import mavjud.</div>';return;}
+ if(secObj().test==='prezident'){el.innerHTML='<div class="card mut">Prezident/Olimpus savollari alohida bankда. Bu yerda faqat Abituriyent uchun matnli import mavjud.</div>';return;}
  var opts=DATA.yonalishlar.map(function(y){return '<option value="'+y.id+'">'+y.name+'</option>';}).join('');
  el.innerHTML='<div class="card"><h3>Word uslubidagi misolni qo‘shish (AI)</h3>'
   +'<div class="mut">Word/test matnini (savol + A) B) C) D) variantlar) shu yerga qo‘ying. AI uni tahlil qilib, javobini topib, tanlangan yo‘nalishga qo‘shadi.</div>'
