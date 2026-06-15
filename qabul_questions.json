@@ -1,12 +1,12 @@
 {
  "version": 2,
  "branch": "abituriyent",
- "updated": "2026-06-13T19:30",
- "note": "Auto-extract. needs_review=true bo'lganlar menejer/AI tekshiradi.",
+ "updated": "2026-06-15T11:55",
+ "note": "Tuzilma tozalandi (2026-06-15): nomlar fan bo'yicha tiklandi, axlat savol o'chirildi, ochiq/javobsiz savollar needs_review. Javoblar kalitdan to'ldiriladi.",
  "yonalishlar": [
   {
    "id": "aniq_fanlar__m_f_",
-   "name": "Aniq fanlar M F",
+   "name": "Aniq fanlar — Matematika + Fizika",
    "count": 17,
    "questions": [
     {
@@ -240,7 +240,7 @@
   },
   {
    "id": "aniq_fanlar__rus_",
-   "name": "Aniq fanlar (rus)",
+   "name": "Aniq fanlar (rus) — Математика + Физика",
    "count": 30,
    "questions": [
     {
@@ -638,7 +638,7 @@
   },
   {
    "id": "bot__b_o_",
-   "name": "BOT B O",
+   "name": "BOT — Biologiya + O'zbek tili",
    "count": 30,
    "questions": [
     {
@@ -1035,7 +1035,7 @@
   },
   {
    "id": "boshlang_ich__o_m_",
-   "name": "Boshlang ich O M",
+   "name": "Boshlang'ich — O'zbek tili + Matematika",
    "count": 30,
    "questions": [
     {
@@ -1434,7 +1434,7 @@
   },
   {
    "id": "boshlang_ich__rus_",
-   "name": "Boshlang ich (rus)",
+   "name": "Boshlang'ich (rus) — Русский язык + Математика",
    "count": 30,
    "questions": [
     {
@@ -1863,7 +1863,7 @@
   },
   {
    "id": "geografiya__g_m_",
-   "name": "Geografiya G M",
+   "name": "Geografiya — Geografiya + Matematika",
    "count": 30,
    "questions": [
     {
@@ -2290,7 +2290,7 @@
   },
   {
    "id": "iijtimoiy_-__o_t_",
-   "name": "Iijtimoiy - O T",
+   "name": "Ijtimoiy — O'zbek tili + Tarix",
    "count": 30,
    "questions": [
     {
@@ -2688,7 +2688,7 @@
   },
   {
    "id": "ijtimoiy__t_i_",
-   "name": "Ijtimoiy T I",
+   "name": "Ijtimoiy — Tarix + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -2762,7 +2762,8 @@
      "type": "open",
      "text": "Arablar «Daryoning narigi tomoni» degan hududni yozing.",
      "options": {},
-     "correct": "Movarounnahr"
+     "correct": "Movarounnahr",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-7",
@@ -2770,7 +2771,8 @@
      "type": "open",
      "text": "“Oq kiyimlilar” qo‘zg‘oloni kimlarga qarshi olib borilgan?",
      "options": {},
-     "correct": "Arab xalifaligiga (arablarga)"
+     "correct": "Arab xalifaligiga (arablarga)",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-8",
@@ -2778,7 +2780,8 @@
      "type": "open",
      "text": "Rim papasi minnatdorchilik sifatida 800-yilning dekabrida Rimga kelgan Karlga avliyo Pyotr ibodatxonasida imperatorlik tojini kiygizadi. Shu tariqa Karlning muhrida ko‘rsatilgan “Yangi Rim imperiyasi” tashkil topadi, uning markazi qaysi shaharda bo‘lgan?",
      "options": {},
-     "correct": "Axen (Aachen)"
+     "correct": "Axen (Aachen)",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-9",
@@ -2786,7 +2789,8 @@
      "type": "open",
      "text": "1066-yildagi Vilgelm I va anglosakslar o‘rtasidagi jang qaysi?",
      "options": {},
-     "correct": "Hastings jangi"
+     "correct": "Hastings jangi",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-10",
@@ -2794,7 +2798,8 @@
      "type": "open",
      "text": "Ismoil Somoniy maqbarasi qayerda joylashgan?",
      "options": {},
-     "correct": "Buxoro shahrida"
+     "correct": "Buxoro shahrida",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-11",
@@ -2802,7 +2807,8 @@
      "type": "open",
      "text": "Bu kitobni tartib beruvchi Bolasog‘unda tug‘ilgan, sabr-qanoatli kishidir. Ammo bu kitobni Qoshg‘arda tugal qilib, Mashriq maliki Tavg‘achxon dargohiga keltiribdir. Malik uni yorlaqab, ulug‘lab, o‘z saroyida Xos Hojiblik lavozimini beribdi. Shuning uchun Yusuf Ulug‘ Xos Hojib deb mashhur nomi tarqalibdi. Qaysi asar haqida aytilgan?",
      "options": {},
-     "correct": "Qutadg‘u bilig"
+     "correct": "Qutadg‘u bilig",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-12",
@@ -2810,7 +2816,8 @@
      "type": "open",
      "text": "Qaysi Mo‘g‘ul xoni 1258-yilda Bag‘dodni egallagandan so‘ng, Arab xalifaligi barham topadi.",
      "options": {},
-     "correct": "Xulagu (Hulaku)"
+     "correct": "Xulagu (Hulaku)",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-13",
@@ -2818,7 +2825,8 @@
      "type": "open",
      "text": "Chingizxon qaysi davlatga asos solgan?",
      "options": {},
-     "correct": "Mo‘g‘ullar imperiyasi"
+     "correct": "Mo‘g‘ullar imperiyasi",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-14",
@@ -2826,7 +2834,8 @@
      "type": "open",
      "text": "1370-yilda Movarounnahrda o‘z davlatiga asos solgan shaxsni nomini yozing.",
      "options": {},
-     "correct": "Amir Temur"
+     "correct": "Amir Temur",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-15",
@@ -2834,7 +2843,8 @@
      "type": "open",
      "text": "Qachon G‘arbiy Rim imperiyasi tugatilgan?",
      "options": {},
-     "correct": "476-yilda"
+     "correct": "476-yilda",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-16",
@@ -2902,7 +2912,8 @@
      "type": "open",
      "text": "Right now, they ________________________ (play) football in the yard.",
      "options": {},
-     "correct": "are playing"
+     "correct": "are playing",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-22",
@@ -2910,7 +2921,8 @@
      "type": "open",
      "text": "Last year, we __________________________ (go) to Samarkand for our holiday.",
      "options": {},
-     "correct": "went"
+     "correct": "went",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-23",
@@ -2918,7 +2930,8 @@
      "type": "open",
      "text": "There aren’t ________________ apples in the fridge.",
      "options": {},
-     "correct": "any"
+     "correct": "any",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-24",
@@ -2935,7 +2948,8 @@
      "type": "open",
      "text": "This is the boy __________________ bag was lost yesterday.",
      "options": {},
-     "correct": "whose"
+     "correct": "whose",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-26",
@@ -2956,7 +2970,8 @@
      "type": "open",
      "text": "According to the passage, what did Beth say after she was tricked?",
      "options": {},
-     "correct": "\"He tricked me. It isn’t correct.\""
+     "correct": "\"He tricked me. It isn’t correct.\"",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-28",
@@ -2964,7 +2979,8 @@
      "type": "open",
      "text": "According to the passage, where did the man hold the pig?",
      "options": {},
-     "correct": "Above his head."
+     "correct": "Above his head.",
+     "needs_review": true
     },
     {
      "id": "ijtimoiy__t_i_-29",
@@ -2996,7 +3012,7 @@
   },
   {
    "id": "ijtimoiy__rus_r_t_",
-   "name": "Ijtimoiy (rus) R T",
+   "name": "Ijtimoiy (rus) — Русский язык + История",
    "count": 30,
    "questions": [
     {
@@ -3423,7 +3439,7 @@
   },
   {
    "id": "ijtimoiy__rus_t_i_",
-   "name": "Ijtimoiy (rus) T I",
+   "name": "Ijtimoiy (rus) — История + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -3850,7 +3866,7 @@
   },
   {
    "id": "kimyo_texnologiya__k_m_",
-   "name": "Kimyo texnologiya K M",
+   "name": "Kimyo texnologiya — Kimyo + Matematika",
    "count": 30,
    "questions": [
     {
@@ -4248,7 +4264,7 @@
   },
   {
    "id": "madrasa___i_t_",
-   "name": "Madrasa  I T",
+   "name": "Madrasa — Tarix + Islom tarixi",
    "count": 15,
    "questions": [
     {
@@ -4451,7 +4467,7 @@
   },
   {
    "id": "o_zbek_filologiyasi__o_i_",
-   "name": "O zbek filologiyasi O I",
+   "name": "O'zbek filologiyasi — O'zbek tili + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -4850,7 +4866,7 @@
   },
   {
    "id": "rus_filologiyasi__r_i_",
-   "name": "Rus filologiyasi R I",
+   "name": "Rus filologiyasi — Русский язык + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -5281,7 +5297,7 @@
   },
   {
    "id": "tabiiy_fanlar__b_k_",
-   "name": "Tabiiy fanlar B K",
+   "name": "Tabiiy fanlar — Biologiya + Kimyo",
    "count": 30,
    "questions": [
     {
@@ -5598,7 +5614,7 @@
   },
   {
    "id": "tabiiy_fanlar__rus_",
-   "name": "Tabiiy fanlar (rus)",
+   "name": "Tabiiy fanlar (rus) — Биология + Химия",
    "count": 30,
    "questions": [
     {
@@ -5998,7 +6014,7 @@
   },
   {
    "id": "xorijiy__i_o_",
-   "name": "Xorijiy I O",
+   "name": "Xorijiy — Ingliz tili + O'zbek tili",
    "count": 30,
    "questions": [
     {
@@ -6398,7 +6414,7 @@
   },
   {
    "id": "xorijiy__rus_i_r_",
-   "name": "Xorijiy (rus) I R",
+   "name": "Xorijiy (rus) — Ingliz tili + Русский язык",
    "count": 30,
    "questions": [
     {
@@ -6797,7 +6813,7 @@
   },
   {
    "id": "yurisprudensiya__h_i_",
-   "name": "Yurisprudensiya H I",
+   "name": "Yurisprudensiya — Huquq + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -7199,7 +7215,7 @@
   },
   {
    "id": "yurisprudensiya__rus_h_i_",
-   "name": "Yurisprudensiya (rus) H I",
+   "name": "Yurisprudensiya (rus) — Право + Ingliz tili",
    "count": 30,
    "questions": [
     {
@@ -7598,7 +7614,7 @@
   },
   {
    "id": "ijtimoiy__t_g_",
-   "name": "ijtimoiy T G",
+   "name": "Ijtimoiy — Tarix + Geografiya",
    "count": 30,
    "questions": [
     {
@@ -7995,8 +8011,8 @@
   },
   {
    "id": "iqtisod__m_i_",
-   "name": "iqtisod M I",
-   "count": 30,
+   "name": "Iqtisod — Matematika + Ingliz tili",
+   "count": 29,
    "questions": [
     {
      "id": "iqtisod__m_i_-1",
@@ -8153,20 +8169,6 @@
       "D": "2"
      },
      "correct": "B"
-    },
-    {
-     "id": "iqtisod__m_i_-13",
-     "fan": "Matematika",
-     "type": "mcq",
-     "text": "$\\begin{cases} 2x + y = 7 \\\\ \\ldots \\end{cases}$, $x = ?$",
-     "options": {
-      "A": "?",
-      "B": "?",
-      "C": "?",
-      "D": "?"
-     },
-     "correct": null,
-     "needs_review": true
     },
     {
      "id": "iqtisod__m_i_-14",
@@ -8389,7 +8391,7 @@
   },
   {
    "id": "iqtisod__rus_m_i_",
-   "name": "iqtisod (rus) M I",
+   "name": "Iqtisod (rus) — Математика + Ingliz tili",
    "count": 30,
    "questions": [
     {

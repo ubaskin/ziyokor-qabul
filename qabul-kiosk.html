@@ -87,9 +87,13 @@ document.getElementById('fbadge').textContent='Filial: '+(BRANCHES[state.branch]
 document.getElementById('gear').addEventListener('click',managerMenu);
 function managerMenu(){
  var pin=prompt('Menejer PIN:');if(pin!==EXIT_PIN)return;
- var b=prompt('Filialni o\'zgartirish:\n1 - Abituriyent\n2 - Prezident maktabi\n(bekor: yopish)');
+ var isApk=!!(window.AndroidKiosk&&AndroidKiosk.exitApp);
+ var msg='1 - Abituriyent filiali\n2 - Prezident maktabi filiali';
+ if(isApk)msg+='\n3 - Ilovadan chiqish (kiosk qulfini yechish)';
+ var b=prompt(msg+'\n(bekor: yopish)');
  if(b==='1'){localStorage.setItem('zq_branch','abituriyent');location.reload();}
  if(b==='2'){localStorage.setItem('zq_branch','prezident');location.reload();}
+ if(b==='3'&&isApk){AndroidKiosk.exitApp();}
 }
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 
@@ -198,7 +202,7 @@ window.nextQ=function(){saveTxt();state.idx++;renderQ();};
 function saveTxt(){var t=document.getElementById('txtans');if(t)state.ans[state.qs[state.idx].id]=t.value.trim();}
 function finish(){
  var correct=0,graded=0;
- state.qs.forEach(function(q){ if(q.correct){graded++; if(state.ans[q.id]===q.correct)correct++;} });
+ state.qs.forEach(function(q){ var o=q.options||{}; if(q.correct&&o[q.correct]!==undefined){graded++; if(state.ans[q.id]===q.correct)correct++;} });
  var ansd=Object.keys(state.ans).length;
  var rec={info:state.info,answers:state.ans,answered:ansd,total:state.qs.length,
    graded:graded,correct:correct,finished:new Date().toISOString()};
