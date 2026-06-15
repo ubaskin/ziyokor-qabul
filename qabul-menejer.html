@@ -104,7 +104,7 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
-var DATA=null,PREZ=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null;
+var DATA=null,PREZ=null,OLIMP=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null;
 // Bo'limlar: qabul bo'limi + sinf → talim+ filial
 var SECTIONS={
  abituriyent:{name:'Abituriyent',fil:'abit',test:'abituriyent'},
@@ -151,12 +151,17 @@ function loadAll(){
    fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
    fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).catch(function(){return null}),
    fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return{}}),
-   fetch(DB+'/sessions.json').then(function(r){return r.json()}).catch(function(){return{}})
- ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};renderRes();renderQs();renderImp();});
+   fetch(DB+'/sessions.json').then(function(r){return r.json()}).catch(function(){return{}}),
+   fetch('./olimpus_questions.json?v='+Date.now()).then(function(r){return r.json()}).catch(function(){return null})
+ ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};OLIMP=a[4];renderRes();renderQs();renderImp();});
 }
 function applyOver(q){var o=OVER[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 // Joriy filialning yo'nalishlari (savol banki). Prezident — 30 savol bitta "yo'nalish" sifatida.
 function branchYon(){
+ if(branch()==='olimpus23'){
+   if(!OLIMP||!OLIMP.sinflar)return[];
+   return ['2','3'].filter(function(s){return OLIMP.sinflar[s];}).map(function(s){var o=OLIMP.sinflar[s];return {id:'olimpus_'+s,name:o.name||('Olimpus '+s+'-sinf'),count:(o.questions||[]).length,questions:o.questions||[]};});
+ }
  if(secObj().test==='prezident'){
    if(!PREZ||!PREZ.questions)return[];
    return [{id:'prezident_math30',name:(PREZ.test||'Prezident maktabi — Matematika'),count:(PREZ.count||PREZ.questions.length),questions:PREZ.questions}];

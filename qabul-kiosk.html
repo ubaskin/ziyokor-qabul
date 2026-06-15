@@ -139,13 +139,23 @@ window.pickSchool=function(sc){prezSel.school=sc;
 function checkPrez(){document.getElementById('prezstart').disabled=!(prezSel.sinf&&prezSel.school);}
 window.startPrez=function(){
  var nm=document.getElementById('i_name').value.trim();if(!nm){alert('Ism familiyani kiriting');return;}
- state.info={name:nm,sinf:prezSel.sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
+ var sinf=prezSel.sinf;
+ state.info={name:nm,sinf:sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
    branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
- // hozircha barcha matematika yo'li 30 oson testni oladi (Bio/Ingliz banki keyin)
- fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
-   state.qs=d.questions.slice().map(function(q){return applyOver(Object.assign({},q));});state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};
-   renderQ();
- });
+ function startSet(qs){state.qs=qs.slice().map(function(q){return applyOver(Object.assign({},q));});
+   state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};renderQ();}
+ if(sinf===2||sinf===3){
+   // Olimpus bo'limi (2-3 sinf) — alohida yengilroq bank
+   state.info.yon='olimpus_'+sinf;state.info.yon_name='Olimpus '+sinf+'-sinf';
+   fetch('./olimpus_questions.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
+     var set=(d.sinflar&&d.sinflar[String(sinf)])||{questions:[]};startSet(set.questions);
+   }).catch(function(){app.innerHTML='<div class="center">Savollar yuklanmadi.</div>';});
+ } else {
+   // 4-5-6 sinf — Prezident maktabi 30 savol
+   fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
+     startSet(d.questions);
+   }).catch(function(){app.innerHTML='<div class="center">Savollar yuklanmadi.</div>';});
+ }
 };
 function screenYon(){
  var h='<h1>Yo‘nalishni tanlang</h1><div class="sub">Abituriyent qabul testi</div><div class="grid">';

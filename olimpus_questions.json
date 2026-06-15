@@ -1,0 +1,787 @@
+{
+ "version": 1,
+ "branch": "olimpus",
+ "updated": "2026-06-15T15:35",
+ "note": "Olimpus 2-3 sinf banki (Ubaskin DOCX, 2026-06-15). Matematika+Ingliz, har sinf 30 savol.",
+ "sinflar": {
+  "2": {
+   "name": "Olimpus 2-sinf",
+   "count": 30,
+   "questions": [
+    {
+     "id": "ol-2-m-1",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Bir sonni 2 ga ko‘paytirib, ustiga 6 qo‘shsak 20 chiqdi. O‘ylangan son nechchi?",
+     "options": {
+      "A": "6",
+      "B": "7",
+      "C": "8",
+      "D": "9"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-m-2",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "3 ta bir xil qalam 18 so‘m turadi. 1 ta qalam nech pul?",
+     "options": {
+      "A": "5",
+      "B": "6",
+      "C": "7",
+      "D": "8"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-m-3",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "45 sonidan nechta 5 ni ayirsak 0 bo‘ladi?",
+     "options": {
+      "A": "5",
+      "B": "7",
+      "C": "9",
+      "D": "10"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-4",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "1 dan 20 gacha bo‘lgan sonlar ichida nechta juft son bor?",
+     "options": {
+      "A": "8",
+      "B": "9",
+      "C": "10",
+      "D": "11"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-5",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "4 ta bola har biri 3 tadan konfet yedi. Jami nechta konfet yeyildi?",
+     "options": {
+      "A": "7",
+      "B": "10",
+      "C": "12",
+      "D": "14"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-6",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Agar 28 ga 12 qo‘shib, keyin 10 ayirsak nechiga teng bo‘ladi?",
+     "options": {
+      "A": "20",
+      "B": "30",
+      "C": "40",
+      "D": "50"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-m-7",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Bir qatorga 2 tadan qilib 10 ta olma qo‘yildi. Qator nechta?",
+     "options": {
+      "A": "4",
+      "B": "5",
+      "C": "6",
+      "D": "7"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-m-8",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "60 ni shunday ikkita songa ajratingki, ular teng bo‘lsin. Har biri nechiga teng?",
+     "options": {
+      "A": "20",
+      "B": "25",
+      "C": "30",
+      "D": "35"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-9",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$5 \\times 6 - 10 = ?$",
+     "options": {
+      "A": "20",
+      "B": "25",
+      "C": "30",
+      "D": "35"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-m-10",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Agar bir hafta 7 kun bo‘lsa, 3 haftada nechta kun bor?",
+     "options": {
+      "A": "14",
+      "B": "21",
+      "C": "24",
+      "D": "28"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-m-11",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "3 ta mushuk 3 ta sichqonni 3 daqiqada tutsa, 1 ta mushuk 1 ta sichqonni necha daqiqada tutadi?",
+     "options": {
+      "A": "1",
+      "B": "2",
+      "C": "3",
+      "D": "9"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-12",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Bir qutida 10 ta olma bor. 3 tasini oldik. Qutida nechta olma qoldi?",
+     "options": {
+      "A": "7",
+      "B": "3",
+      "C": "10",
+      "D": "6"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-m-13",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Akmalda 5 ta olma bor edi. U yana 5 ta oldi va 5 tasini berdi. Unda nechta olma qoldi?",
+     "options": {
+      "A": "5",
+      "B": "10",
+      "C": "0",
+      "D": "15"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-m-14",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Bir daraxtda 6 ta qush bor edi. Ovchi 1 tasini otib oldi. Daraxtda nechta qush qoldi?",
+     "options": {
+      "A": "5",
+      "B": "1",
+      "C": "0",
+      "D": "6"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-m-15",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "2 ota va 2 o‘g‘il baliq ovlashdi. Ular 3 ta baliq tutishdi. Har biri bittadan oldi. Bu qanday bo‘lishi mumkin?",
+     "options": {
+      "A": "Xato",
+      "B": "4 kishi edi",
+      "C": "3 kishi edi",
+      "D": "2 kishi edi"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-e-1",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "You ______ twelve years old.",
+     "options": {
+      "A": "are",
+      "B": "is",
+      "C": "am",
+      "D": "be"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-e-2",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ name is Juan.",
+     "options": {
+      "A": "He",
+      "B": "His",
+      "C": "Him",
+      "D": "They"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-e-3",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "My ______ is my mum’s brother.",
+     "options": {
+      "A": "aunt",
+      "B": "nephew",
+      "C": "cousin",
+      "D": "uncle"
+     },
+     "correct": "D"
+    },
+    {
+     "id": "ol-2-e-4",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "My favourite animal is a ______.",
+     "options": {
+      "A": "map",
+      "B": "banana",
+      "C": "cat",
+      "D": "school"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-e-5",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "My birthday is in ______.",
+     "options": {
+      "A": "month",
+      "B": "February",
+      "C": "Turkey",
+      "D": "eleven"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-e-6",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ is my favourite colour.",
+     "options": {
+      "A": "seven",
+      "B": "hobby",
+      "C": "Russian",
+      "D": "green"
+     },
+     "correct": "D"
+    },
+    {
+     "id": "ol-2-e-7",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Raul is ______.",
+     "options": {
+      "A": "Spain",
+      "B": "Spanish",
+      "C": "Spanian",
+      "D": "Spanese"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-e-8",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Swimming is ______.",
+     "options": {
+      "A": "a map",
+      "B": "a month",
+      "C": "a sport",
+      "D": "a country"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-e-9",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "A: Is your brother twelve years old? B: Yes, ______.",
+     "options": {
+      "A": "he do",
+      "B": "is he",
+      "C": "he is",
+      "D": "is"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-e-10",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ from Australia.",
+     "options": {
+      "A": "Tom",
+      "B": "Tom’s",
+      "C": "Tom be",
+      "D": "Tom’re"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-2-e-11",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "My bed is in my ______.",
+     "options": {
+      "A": "kitchen",
+      "B": "garage",
+      "C": "bedroom",
+      "D": "balcony"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-2-e-12",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "A: Have you got a garden? B: No, I ______.",
+     "options": {
+      "A": "haven’t",
+      "B": "not got",
+      "C": "don’t",
+      "D": "not have"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-e-13",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "There ______ any stairs in my house.",
+     "options": {
+      "A": "is",
+      "B": "isn’t",
+      "C": "are",
+      "D": "aren’t"
+     },
+     "correct": "D"
+    },
+    {
+     "id": "ol-2-e-14",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "I ______ breakfast at 7.15 a.m.",
+     "options": {
+      "A": "have",
+      "B": "get",
+      "C": "do",
+      "D": "am"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-2-e-15",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "When I am sick, I go to the ______.",
+     "options": {
+      "A": "hospital",
+      "B": "bank",
+      "C": "cafe",
+      "D": "park"
+     },
+     "correct": "A"
+    }
+   ]
+  },
+  "3": {
+   "name": "Olimpus 3-sinf",
+   "count": 30,
+   "questions": [
+    {
+     "id": "ol-3-m-1",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$999 + 999 + 999 = ?$",
+     "options": {
+      "A": "1997",
+      "B": "2997",
+      "C": "3000",
+      "D": "2999"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-m-2",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$1000 - 999 + 998 - 997 + 996 = ?$",
+     "options": {
+      "A": "998",
+      "B": "999",
+      "C": "1000",
+      "D": "1001"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-m-3",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$125 \\times 16 = ?$",
+     "options": {
+      "A": "1500",
+      "B": "2000",
+      "C": "2500",
+      "D": "3000"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-m-4",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$48 \\times 25 = ?$",
+     "options": {
+      "A": "1000",
+      "B": "1100",
+      "C": "1200",
+      "D": "1250"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-m-5",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$720 \\div 9 \\times 5 = ?$",
+     "options": {
+      "A": "300",
+      "B": "350",
+      "C": "400",
+      "D": "450"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-m-6",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$(500 - 200) \\times (12 \\div 3) = ?$",
+     "options": {
+      "A": "1000",
+      "B": "1200",
+      "C": "1400",
+      "D": "1600"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-m-7",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$111 \\times 9 = ?$",
+     "options": {
+      "A": "999",
+      "B": "1000",
+      "C": "909",
+      "D": "919"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-m-8",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$64 \\times 125 = ?$",
+     "options": {
+      "A": "6000",
+      "B": "7000",
+      "C": "8000",
+      "D": "9000"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-m-9",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$3600 \\div (12 \\times 3) = ?$",
+     "options": {
+      "A": "50",
+      "B": "100",
+      "C": "150",
+      "D": "200"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-m-10",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "$250 \\times 4 \\times 5 = ?$",
+     "options": {
+      "A": "4000",
+      "B": "4500",
+      "C": "5000",
+      "D": "5500"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-m-11",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "1 dan 100 gacha nechta son 2 ga bo‘linadi, lekin 4 ga bo‘linmaydi?",
+     "options": {
+      "A": "25",
+      "B": "30",
+      "C": "35",
+      "D": "50"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-m-12",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Ketma-ketlikni toping: 1, 4, 9, 16, 25, __",
+     "options": {
+      "A": "30",
+      "B": "35",
+      "C": "36",
+      "D": "49"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-m-13",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Agar bugun payshanba bo‘lsa, 100 kundan keyin qaysi kun bo‘ladi?",
+     "options": {
+      "A": "Yakshanba",
+      "B": "Dushanba",
+      "C": "Seshanba",
+      "D": "Chorshanba"
+     },
+     "correct": null,
+     "needs_review": true
+    },
+    {
+     "id": "ol-3-m-14",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "3 ta qalam va 2 ta daftar 16 so‘m turadi. 1 ta qalam 2 so‘m bo‘lsa, 1 ta daftar nech pul?",
+     "options": {
+      "A": "4",
+      "B": "5",
+      "C": "6",
+      "D": "7"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-m-15",
+     "fan": "Matematika",
+     "type": "mcq",
+     "text": "Bir ota o‘z yoshini o‘g‘lining yoshidan 4 baravar katta dedi. 10 yildan keyin u 2 baravar katta bo‘ladi. Hozir ota nech yoshda?",
+     "options": {
+      "A": "30",
+      "B": "40",
+      "C": "50",
+      "D": "60"
+     },
+     "correct": null,
+     "needs_review": true
+    },
+    {
+     "id": "ol-3-e-1",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ often live in nests.",
+     "options": {
+      "A": "birds",
+      "B": "hippos",
+      "C": "goats"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-2",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Snakes and parrots live in a ______.",
+     "options": {
+      "A": "cave",
+      "B": "farm",
+      "C": "jungle"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-e-3",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ are black and they fly.",
+     "options": {
+      "A": "Penguins",
+      "B": "Bats",
+      "C": "Chickens"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-e-4",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Dolphins and ______ live in the sea.",
+     "options": {
+      "A": "crocodiles",
+      "B": "polar bears",
+      "C": "whales"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-e-5",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Kangaroos can ______ very far.",
+     "options": {
+      "A": "jump",
+      "B": "fly",
+      "C": "swim"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-6",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "I have a bath every week. I don’t ______ have a bath.",
+     "options": {
+      "A": "never",
+      "B": "often",
+      "C": "sometimes"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-7",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ is your dad? In the kitchen!",
+     "options": {
+      "A": "Where",
+      "B": "What",
+      "C": "Who"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-8",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Snakes ______ walk!",
+     "options": {
+      "A": "sometimes",
+      "B": "always",
+      "C": "never"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-e-9",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ don’t you play volleyball? I don’t like it.",
+     "options": {
+      "A": "What",
+      "B": "Why",
+      "C": "How"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-e-10",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ is the party? At Bill’s house!",
+     "options": {
+      "A": "Where",
+      "B": "How",
+      "C": "When"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-11",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "(My New School) The journey didn’t take a ______ time.",
+     "options": {
+      "A": "big",
+      "B": "long",
+      "C": "tall"
+     },
+     "correct": "B"
+    },
+    {
+     "id": "ol-3-e-12",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "I went to the office ______ asked where to go for my new class.",
+     "options": {
+      "A": "so",
+      "B": "but",
+      "C": "and"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-e-13",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "I sat ______ a boy called Ivor.",
+     "options": {
+      "A": "next to",
+      "B": "under",
+      "C": "between"
+     },
+     "correct": "A"
+    },
+    {
+     "id": "ol-3-e-14",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "______ one o’clock, I ate with Ivor and his friend Claire.",
+     "options": {
+      "A": "In",
+      "B": "On",
+      "C": "At"
+     },
+     "correct": "C"
+    },
+    {
+     "id": "ol-3-e-15",
+     "fan": "Ingliz tili",
+     "type": "mcq",
+     "text": "Then I ______ my first homework from my new school.",
+     "options": {
+      "A": "did",
+      "B": "worked",
+      "C": "took"
+     },
+     "correct": "A"
+    }
+   ]
+  }
+ }
+}

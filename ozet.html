@@ -58,8 +58,9 @@ else Promise.all([
   fetch(DB+'/sessions/'+id+'.json').then(r=>r.json()),
   fetch('./qabul_questions.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
   fetch('./prezident_math30.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
-  fetch(DB+'/overrides.json').then(r=>r.json()).catch(()=>({}))
-]).then(([s,DATA,PREZ,OVER])=>{
+  fetch(DB+'/overrides.json').then(r=>r.json()).catch(()=>({})),
+  fetch('./olimpus_questions.json?v='+Date.now()).then(r=>r.json()).catch(()=>null)
+]).then(([s,DATA,PREZ,OVER,OLIMP])=>{
   OVER=OVER||{};
   if(!s){ document.getElementById('wrap').innerHTML='<div class="err">Natija topilmadi.</div>'; return; }
   // savol kartasi (id -> {fan,correct}), override qo'llab
@@ -67,6 +68,7 @@ else Promise.all([
   function add(q){const o=OVER[q.id]||{};qmap[q.id]={fan:o.fan||q.fan,correct:('correct'in o)?o.correct:q.correct};}
   if(DATA&&DATA.yonalishlar)DATA.yonalishlar.forEach(y=>(y.questions||[]).forEach(add));
   if(PREZ&&PREZ.questions)PREZ.questions.forEach(add);
+  if(OLIMP&&OLIMP.sinflar)Object.keys(OLIMP.sinflar).forEach(k=>(OLIMP.sinflar[k].questions||[]).forEach(add));
   // fan bo'yicha tahlil
   const byFan={};Object.keys(s.answers||{}).forEach(qid=>{const q=qmap[qid];if(!q||!q.correct)return;const f=q.fan||'?';byFan[f]=byFan[f]||{c:0,t:0};byFan[f].t++;if(s.answers[qid]===q.correct)byFan[f].c++;});
   const fans=Object.keys(byFan);
