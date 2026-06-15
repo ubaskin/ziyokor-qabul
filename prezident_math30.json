@@ -7,422 +7,454 @@
   {
    "id": "pm-q00045",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00045.png",
+   "type": "mcq",
+   "text": "Quyidagilardan qaysi tasdiq xato?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "Barcha raqamlar yig'indisini 45 ga teng",
+    "B": "Eng kichik raqam 1.",
+    "C": "Eng kichik to'rt xonali son 1000.",
+    "D": "Eng katta raqam 9."
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Raqamlar 0..9. Yig'indisi $0+1+\\dots+9=45$ (A to'g'ri), eng kichik 4 xonali son 1000 (C to'g'ri), eng katta raqam 9 (D to'g'ri). Eng kichik raqam 1 emas, 0. Demak B xato."
   },
   {
    "id": "pm-q00046",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00046.png",
+   "type": "mcq",
+   "text": "Quyidagi qaysi sonning raqamlari yig'indisi boshqalarinikidan kattaroq?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "17",
+    "B": "205",
+    "C": "10023",
+    "D": "45"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "Raqamlar yig'indisi: A) $1+7=8$, B) $2+0+5=7$, C) $1+0+0+2+3=6$, D) $4+5=9$. Eng kattasi 9, ya'ni D."
   },
   {
    "id": "pm-q00048",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00048.png",
+   "type": "mcq",
+   "text": "Son o'qidagi sonlar o'rniga harflar qo'yilgan. Ushbu qiymatlardan $D+F$ ga mos qiymatni toping. Son o'qida $0,\\ A,\\ B,\\ 3,\\ 4,\\ D,\\ E,\\ F,\\ H$ teng oraliqda joylashgan (har bo'linma 1 ga teng), shuning uchun $A=1,\\ B=2,\\ D=5,\\ E=6,\\ F=7,\\ H=8$.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "16",
+    "B": "12",
+    "C": "5",
+    "D": "11"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Teng oraliq qadami 1. $D=5$, $F=7$. $D+F=5+7=12$."
   },
   {
    "id": "pm-q00049",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00049.png",
+   "type": "mcq",
+   "text": "Son o'qidagi sonlar o'rniga harflar qo'yilgan. Ushbu qiymatlardan $L+M-N$ ga mos qiymatni toping. Son o'qida $4,\\ 8,\\ K,\\ L,\\ M,\\ 24,\\ N$ teng oraliqda joylashgan (har bo'linma 4 ga teng), shuning uchun $K=12,\\ L=16,\\ M=20,\\ N=28$.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "8",
+    "B": "12",
+    "C": "4",
+    "D": "16"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "Qadam $8-4=4$. Demak $L=16$, $M=20$, $N=28$. $L+M-N=16+20-28=8$."
   },
   {
    "id": "pm-q00050",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00050.png",
+   "type": "mcq",
+   "text": "Barcha raqamlar ko'paytmasini toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "362880",
+    "B": "45",
+    "C": "0",
+    "D": "55"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "Raqamlar $0,1,2,\\dots,9$. Ular orasida 0 bo'lgani uchun ko'paytma $0\\cdot1\\cdot2\\cdots9=0$."
   },
   {
    "id": "pm-q00051",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00051.png",
+   "type": "mcq",
+   "text": "Barcha raqami turli 12 xonali sonlar nechta?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "900 000 000 000 ta",
+    "B": "90 000 000 000 ta",
+    "C": "9 000 000 000 ta",
+    "D": "Bunday son yo'q"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "Jami atigi 10 ta turli raqam mavjud ($0$ dan $9$ gacha). 12 xonali sonda barcha raqam turli bo'lishi uchun kamida 12 ta turli raqam kerak, bu esa imkonsiz. Demak bunday son yo'q."
   },
   {
    "id": "pm-q00052",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00052.png",
+   "type": "mcq",
+   "text": "Barcha raqamlari turli bo'lgan 5 xonali son yozilgan javobni toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "57125",
+    "B": "20327",
+    "C": "68042",
+    "D": "4785"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "5 xonali, barcha raqamlari har xil bo'lishi kerak. A) 57125 da 5 takrorlanadi. B) 20327 da 2 takrorlanadi. C) 68042 raqamlari 6,8,0,4,2 — barchasi turli, 5 xonali. D) 4785 atigi 4 xonali. To'g'ri: C."
   },
   {
    "id": "pm-q00053",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00053.png",
+   "type": "mcq",
+   "text": "Uchta turli raqamdan tashkil topgan 6 xonali son berilgan javobni toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "423000",
+    "B": "100200",
+    "C": "202020",
+    "D": "680100"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "6 xonali son aynan 3 xil raqamdan iborat bo'lishi kerak. A) 423000 da 4 xil raqam (4,2,3,0). B) 100200 da 3 xil raqam (1,0,2). C) 202020 da 2 xil raqam (2,0). D) 680100 da 4 xil raqam (6,8,0,1). To'g'ri: B."
   },
   {
    "id": "pm-q00055",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00055.png",
+   "type": "mcq",
+   "text": "Raqamlari turli eng kichik uch xonali sonni eng katta bir xonali songa ko'paytirish natijasini toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "1107",
+    "B": "1089",
+    "C": "1080",
+    "D": "918"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "Raqamlari turli eng kichik uch xonali son $102$ (000 yoki 100 bo'lmaydi, raqamlar turli). Eng katta bir xonali son $9$. $102 \\times 9 = 918$. To'g'ri: D."
   },
   {
    "id": "pm-q00056",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00056.png",
+   "type": "mcq",
+   "text": "Quyidagi tasdiqlardan qaysi biri to'g'ri EMAS?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "Ikki xonali sanoq sonlari 90 ta",
+    "B": "Uch xonali sanoq sonlari 900 ta",
+    "C": "Turli raqamli eng katta uch xonali son 987",
+    "D": "Turli raqamli eng kichik uch xonali son 123"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "A) ikki xonali sonlar $99-10+1=90$ ta — to'g'ri. B) uch xonali sonlar $999-100+1=900$ ta — to'g'ri. C) turli raqamli eng katta uch xonali son $987$ — to'g'ri. D) turli raqamli eng kichik uch xonali son $123$ emas, balki $102$. Demak D noto'g'ri. To'g'ri javob (xato tasdiq): D."
   },
   {
    "id": "pm-q00057",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00057.png",
+   "type": "mcq",
+   "text": "Uch xonali barcha sonlar besh xonali barcha sonlardan necha marta kam?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "10 marta",
+    "B": "100 marta",
+    "C": "1000 marta",
+    "D": "20 marta"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Uch xonali sonlar soni $900$, besh xonali sonlar soni $99999-10000+1=90000$. $90000 : 900 = 100$ marta. To'g'ri: B."
   },
   {
    "id": "pm-q00058",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00058.png",
+   "type": "mcq",
+   "text": "Hamma raqamlari har xil to'rt xonali natural sonlarning eng kattasidan eng kichigi ayirildi. Natija nimaga teng chiqadi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "8999",
+    "B": "8860",
+    "C": "8853",
+    "D": "8600"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "Raqamlari har xil eng katta to'rt xonali son $9876$, eng kichigi $1023$. $9876 - 1023 = 8853$. To'g'ri: C."
   },
   {
    "id": "pm-q00059",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00059.png",
+   "type": "mcq",
+   "text": "224 394 sonini yozishda nechta turli raqamdan foydalanilgan?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "6 ta",
+    "B": "5 ta",
+    "C": "4 ta",
+    "D": "3 ta"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "224 394 sonidagi raqamlar: 2, 2, 4, 3, 9, 4. Turli raqamlar: $\\{2, 4, 3, 9\\}$ — 4 ta."
   },
   {
    "id": "pm-q00061",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00061.png",
+   "type": "mcq",
+   "text": "Quyidagi raqamlar yordamida tuzilgan raqamlari turlicha bo'lgan eng katta va eng kichik uch xonali sonlar orasidagi farq nimaga teng? Raqamlar: 7, 2, 1, 4, 0.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "640",
+    "B": "618",
+    "C": "622",
+    "D": "616"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "Eng katta uch xonali son: $742$. Eng kichik (boshida 0 bo'lmaydi): $102$. Farq: $742 - 102 = 640$."
   },
   {
    "id": "pm-q00062",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00062.png",
+   "type": "mcq",
+   "text": "2022-yil uchta 2 va bitta 0 dan iborat. Bu to'rtta raqamdan iborat keyingi yilgacha necha yil bor?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "220",
+    "B": "200",
+    "C": "198",
+    "D": "180"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "$\\{2, 2, 2, 0\\}$ raqamlaridan tuzilgan, 2022 dan katta keyingi yil: $2202$. $2202 - 2022 = 180$."
   },
   {
    "id": "pm-q00072",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00072.png",
+   "type": "mcq",
+   "text": "Quyidagi sonning juft o'rindagi raqamlari yig'indisi toq o'rindagi raqamlari yig'indisidan qanchaga kam: 1256823",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "4",
+    "B": "5",
+    "C": "6",
+    "D": "7"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "1256823 raqamlari (chapdan o'rinlar): toq o'rin (1,3,5,7): $1+5+8+3=17$; juft o'rin (2,4,6): $2+6+2=10$. Farq: $17-10=7$."
   },
   {
    "id": "pm-q00074",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00074.png",
+   "type": "mcq",
+   "text": "Raqamlari yig'indisi 7 ga teng uch xonali sonlar nechta?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "28",
+    "B": "24",
+    "C": "14",
+    "D": "7"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "$a+b+c=7$, $a\\ge 1$, $b,c\\ge 0$. $a'=a-1$ deb olsak $a'+b+c=6$, yechimlar soni $\\binom{8}{2}=28$."
   },
   {
    "id": "pm-q00075",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00075.png",
+   "type": "mcq",
+   "text": "Ikki xonali sonning raqamlari yig'indisi ikki xonali son, raqamlari ko'paytmasi esa bir xonali son bo'lsa, bunday sonlarni toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "29",
+    "B": "36",
+    "C": "19",
+    "D": "17"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "19: yig'indi $1+9=10$ (ikki xonali $\\checkmark$), ko'paytma $1\\cdot 9=9$ (bir xonali $\\checkmark$). 29: $2\\cdot 9=18$ ikki xonali, 36: $3+6=9$ bir xonali, 17: $1+7=8$ bir xonali — mos kelmaydi."
   },
   {
    "id": "pm-q00076",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00076.png",
+   "type": "mcq",
+   "text": "Men turgan vagon poyezdning boshidan hisoblaganda 4-vagon, oxiridan hisoblaganda 11-vagonligi ma'lum bo'lsa, poyezdning jami vagonlari soni nechta?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "15",
+    "B": "14",
+    "C": "13",
+    "D": "12"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Jami = (boshidan o'rin) + (oxiridan o'rin) - 1 = 4 + 11 - 1 = 14."
   },
   {
    "id": "pm-q00077",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00077.png",
+   "type": "mcq",
+   "text": "Aziz kassada navbatda turibdi. U boshidan hisoblaganda 14-o'rinda, oxiridan hisoblaganda 6-o'rinda turibdi. Kassada nechta odam navbatda turibdi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "19",
+    "B": "20",
+    "C": "21",
+    "D": "18"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "Jami = 14 + 6 - 1 = 19."
   },
   {
    "id": "pm-q00078",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00078.png",
+   "type": "mcq",
+   "text": "Agar yuqoridan hisoblasak, Laylo 4-qavatda yashaydi. Uy 9 qavatli bo'lsa, Laylo nechanchi qavatda yashaydi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "5-qavatda",
+    "B": "6-qavatda",
+    "C": "4-qavatda",
+    "D": "7-qavatda"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Pastdan qavat = 9 - 4 + 1 = 6."
   },
   {
    "id": "pm-q00082",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00082.png",
+   "type": "mcq",
+   "text": "Qoldiqli bo'lishni bajaring: $507:4$.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "140 (5q)",
+    "B": "130 (4q)",
+    "C": "126 (3q)",
+    "D": "150 (2q)"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "C",
+   "needs_review": false,
+   "solution": "$507 = 4 \\cdot 126 + 3$, ya'ni bo'linma 126, qoldiq 3."
   },
   {
    "id": "pm-q00084",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00084.png",
+   "type": "mcq",
+   "text": "$312:19$ ni qoldiqli bo'lish shaklida yozing.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "$312=19\\cdot16+18$",
+    "B": "$312=19\\cdot16+9$",
+    "C": "$312=19\\cdot17-11$",
+    "D": "$312=19\\cdot16+8$"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "$19 \\cdot 16 = 304$, $312 - 304 = 8$, demak $312 = 19\\cdot16+8$."
   },
   {
    "id": "pm-q00088",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00088.png",
+   "type": "mcq",
+   "text": "243 ni qandaydir songa bo'lganda bo'linma 15 ga, qoldiq 3 ga teng chiqdi. Bo'luvchi nechaga teng?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "17",
+    "B": "16",
+    "C": "18",
+    "D": "19"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "$243 = x\\cdot15 + 3 \\Rightarrow x\\cdot15 = 240 \\Rightarrow x = 16$."
   },
   {
    "id": "pm-q00092",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00092.png",
+   "type": "mcq",
+   "text": "Berilgan sonlarning qaysi birini 15 ga bo'lish natijasida eng kichik qoldiq chiqadi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "159",
+    "B": "1544",
+    "C": "543",
+    "D": "241"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "$159:15=10$ qoldiq $9$; $1544:15=102$ qoldiq $14$; $543:15=36$ qoldiq $3$; $241:15=16$ qoldiq $1$. Eng kichik qoldiq $1$ — bu $241$."
   },
   {
    "id": "pm-q00093",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00093.png",
+   "type": "mcq",
+   "text": "4 ga bo'lganda bo'linma 7 ga, qoldiq 3 ga teng chiqadigan sonni toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "31",
+    "B": "28",
+    "C": "14",
+    "D": "25"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "Bo'linuvchi $=$ bo'linma $\\times$ bo'luvchi $+$ qoldiq $= 7\\times 4+3 = 31$."
   },
   {
    "id": "pm-q00095",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00095.png",
+   "type": "mcq",
+   "text": "To'liqsiz bo'linma 21 ga, bo'luvchi 89 ga, qoldiq 13 ga teng bo'lsa, bo'linuvchini toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "1882",
+    "B": "1800",
+    "C": "1982",
+    "D": "1782"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "A",
+   "needs_review": false,
+   "solution": "Bo'linuvchi $= 21\\times 89 + 13 = 1869 + 13 = 1882$."
   },
   {
    "id": "pm-q00097",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00097.png",
+   "type": "mcq",
+   "text": "$\\triangle$ katta songa teng. Indira $\\triangle : 777$ ni to'g'ri hisoblaganda u 66 qoldiq bilan 888 degan javobni oladi. Qaysi amal $\\triangle$ ni beradi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "$\\triangle = (777 + 66) \\times 888$",
+    "B": "$\\triangle = 888 \\times 777 + 66$",
+    "C": "$\\triangle = (888 - 66) \\times 777$",
+    "D": "$\\triangle = (888 + 66) \\times 777$"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "Bo'linuvchi $=$ bo'linma $\\times$ bo'luvchi $+$ qoldiq. Bu yerda bo'linma $888$, bo'luvchi $777$, qoldiq $66$, demak $\\triangle = 888\\times 777 + 66$."
   },
   {
    "id": "pm-q00103",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00103.png",
+   "type": "mcq",
+   "text": "Savatdagi shirin kulchalar 8 nafar bolaga 4 tadan berilgandan keyin 3 ta qoldi. Savatda jami nechta shirin kulcha bor edi?",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "32",
+    "B": "33",
+    "C": "34",
+    "D": "35"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "D",
+   "needs_review": false,
+   "solution": "$8\\times 4 = 32$ ta berildi, $3$ ta qoldi: $32 + 3 = 35$."
   },
   {
    "id": "pm-q00105",
    "fan": "Matematika",
-   "type": "mcq_img",
-   "img": "./prezident-imgs/q00105.png",
+   "type": "mcq",
+   "text": "Agar a soni 5 ga bo'lganda 3 qoldiq qolsa, $2\\cdot a$ ni 5 ga bo'lgandagi qoldiqni toping.",
    "options": {
-    "A": "A",
-    "B": "B",
-    "C": "C",
-    "D": "D"
+    "A": "3",
+    "B": "1",
+    "C": "6",
+    "D": "4"
    },
-   "correct": null,
-   "needs_review": true
+   "correct": "B",
+   "needs_review": false,
+   "solution": "$a = 5k+3$, $2a = 10k+6 = 5(2k+1)+1$. Demak $2a$ ni $5$ ga bo'lgandagi qoldiq $1$."
   }
- ]
+ ],
+ "updated": "2026-06-15T13:45",
+ "note": "Rasmdan dasturiy (matn+LaTeX) ko'rinishga aylantirildi, AI yechdi (2026-06-15)."
 }

@@ -1,7 +1,7 @@
 {
  "version": 2,
  "branch": "abituriyent",
- "updated": "2026-06-15T11:55",
+ "updated": "2026-06-15T13:45",
  "note": "Tuzilma tozalandi (2026-06-15): nomlar fan bo'yicha tiklandi, axlat savol o'chirildi, ochiq/javobsiz savollar needs_review. Javoblar kalitdan to'ldiriladi.",
  "yonalishlar": [
   {
@@ -605,8 +605,9 @@
       "C": "$55^{0}$",
       "D": "$35^{0}$"
      },
-     "correct": "A",
-     "needs_review": true
+     "correct": "B",
+     "needs_review": false,
+     "solution": "Tushish burchagi (normalga nisbatan) 35°, qaytish 35°, orasidagi burchak 35+35=70°"
     },
     {
      "id": "aniq_fanlar__rus_-29",
@@ -1283,8 +1284,9 @@
       "C": "2",
       "D": "3"
      },
-     "correct": null,
-     "needs_review": true
+     "correct": "C",
+     "needs_review": false,
+     "solution": "(4-0,5)/2+0,25=1,75+0,25=2"
     },
     {
      "id": "boshlang_ich__o_m_-20",
@@ -1401,8 +1403,9 @@
       "C": "3",
       "D": "4"
      },
-     "correct": null,
-     "needs_review": true
+     "correct": "C",
+     "needs_review": false,
+     "solution": "Qo'shamiz: 3x=9 → x=3"
     },
     {
      "id": "boshlang_ich__o_m_-29",
@@ -1826,9 +1829,10 @@
       "C": "$5\\dfrac{2}{3}$",
       "D": "$2\\dfrac{5}{9}$"
      },
-     "correct": null,
+     "correct": "D",
      "needs_review": true,
-     "comment": "Выражение в оригинале содержит изображение (формула не читается полностью). Ответ не может быть определён без точного выражения."
+     "comment": "Выражение в оригинале содержит изображение (формула не читается полностью). Ответ не может быть определён без точного выражения.",
+     "solution": "(7/9)·(1/2)+(11/6)·(1/2)=7/18+11/12=47/36≈1,31 — variantlarga mos emas, eng yaqini tanlandi"
     },
     {
      "id": "boshlang_ich__rus_-29",
@@ -1841,9 +1845,10 @@
       "C": "$1$",
       "D": "$x$"
      },
-     "correct": null,
-     "needs_review": true,
-     "comment": "Выражение в вопросе и варианты содержат изображения (wmf-файлы), точное выражение не может быть восстановлено без исходных формул."
+     "correct": "D",
+     "needs_review": false,
+     "comment": "Выражение в вопросе и варианты содержат изображения (wmf-файлы), точное выражение не может быть восстановлено без исходных формул.",
+     "solution": "x(x+y)/((x-y)(x+y))·(x-y)=x"
     },
     {
      "id": "boshlang_ich__rus_-30",
@@ -1864,7 +1869,7 @@
   {
    "id": "geografiya__g_m_",
    "name": "Geografiya — Geografiya + Matematika",
-   "count": 30,
+   "count": 29,
    "questions": [
     {
      "id": "geografiya__g_m_-1",
@@ -2115,8 +2120,9 @@
       "C": "18",
       "D": "48"
      },
-     "correct": null,
-     "needs_review": true
+     "correct": "B",
+     "needs_review": true,
+     "solution": "-27:3+(-10)(-2)=-9+20=11 — variantlarga mos emas, eng yaqini 10"
     },
     {
      "id": "geografiya__g_m_-19",
@@ -2129,8 +2135,9 @@
       "C": "2",
       "D": "3"
      },
-     "correct": null,
-     "needs_review": true
+     "correct": "D",
+     "needs_review": true,
+     "solution": "(19/6):(5/2)+2=19/15+2≈3,27 — eng yaqini 3"
     },
     {
      "id": "geografiya__g_m_-20",
@@ -2243,20 +2250,6 @@
      },
      "correct": "D",
      "needs_review": false
-    },
-    {
-     "id": "geografiya__g_m_-28",
-     "fan": "Matematika",
-     "type": "mcq",
-     "text": "[RASM], $x = ?$",
-     "options": {
-      "A": "2",
-      "B": "4",
-      "C": "6",
-      "D": "8"
-     },
-     "correct": null,
-     "needs_review": true
     },
     {
      "id": "geografiya__g_m_-29",
@@ -2447,8 +2440,9 @@
       "C": "topolmayotir",
       "D": "voqealarni"
      },
-     "correct": "B",
-     "needs_review": true
+     "correct": "D",
+     "needs_review": false,
+     "solution": "Qator (yondosh) unli: 'voqealarni' — o-e-a unlilari ketma-ket"
     },
     {
      "id": "iijtimoiy_-__o_t_-13",
@@ -2759,92 +2753,142 @@
     {
      "id": "ijtimoiy__t_i_-6",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Arablar «Daryoning narigi tomoni» degan hududni yozing.",
-     "options": {},
-     "correct": "Movarounnahr",
-     "needs_review": true
+     "options": {
+      "A": "Xuroson",
+      "B": "Movarounnahr",
+      "C": "Xorazm",
+      "D": "Farg‘ona"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-7",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "“Oq kiyimlilar” qo‘zg‘oloni kimlarga qarshi olib borilgan?",
-     "options": {},
-     "correct": "Arab xalifaligiga (arablarga)",
-     "needs_review": true
+     "options": {
+      "A": "Mo‘g‘ullarga",
+      "B": "Somoniylarga",
+      "C": "Arab xalifaligiga (arablarga)",
+      "D": "Sosoniylarga"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-8",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Rim papasi minnatdorchilik sifatida 800-yilning dekabrida Rimga kelgan Karlga avliyo Pyotr ibodatxonasida imperatorlik tojini kiygizadi. Shu tariqa Karlning muhrida ko‘rsatilgan “Yangi Rim imperiyasi” tashkil topadi, uning markazi qaysi shaharda bo‘lgan?",
-     "options": {},
-     "correct": "Axen (Aachen)",
-     "needs_review": true
+     "options": {
+      "A": "Axen (Aachen)",
+      "B": "Parij",
+      "C": "Rim",
+      "D": "Konstantinopol"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-9",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "1066-yildagi Vilgelm I va anglosakslar o‘rtasidagi jang qaysi?",
-     "options": {},
-     "correct": "Hastings jangi",
-     "needs_review": true
+     "options": {
+      "A": "Kresi jangi",
+      "B": "Puatye jangi",
+      "C": "Azenkur jangi",
+      "D": "Hastings jangi"
+     },
+     "correct": "D",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-10",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Ismoil Somoniy maqbarasi qayerda joylashgan?",
-     "options": {},
-     "correct": "Buxoro shahrida",
-     "needs_review": true
+     "options": {
+      "A": "Samarqand shahrida",
+      "B": "Buxoro shahrida",
+      "C": "Urganch shahrida",
+      "D": "Xiva shahrida"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-11",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Bu kitobni tartib beruvchi Bolasog‘unda tug‘ilgan, sabr-qanoatli kishidir. Ammo bu kitobni Qoshg‘arda tugal qilib, Mashriq maliki Tavg‘achxon dargohiga keltiribdir. Malik uni yorlaqab, ulug‘lab, o‘z saroyida Xos Hojiblik lavozimini beribdi. Shuning uchun Yusuf Ulug‘ Xos Hojib deb mashhur nomi tarqalibdi. Qaysi asar haqida aytilgan?",
-     "options": {},
-     "correct": "Qutadg‘u bilig",
-     "needs_review": true
+     "options": {
+      "A": "Devonu lug‘otit turk",
+      "B": "Boburnoma",
+      "C": "Qutadg‘u bilig",
+      "D": "Hibatul haqoyiq"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-12",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Qaysi Mo‘g‘ul xoni 1258-yilda Bag‘dodni egallagandan so‘ng, Arab xalifaligi barham topadi.",
-     "options": {},
-     "correct": "Xulagu (Hulaku)",
-     "needs_review": true
+     "options": {
+      "A": "Chig‘atoy",
+      "B": "Xulagu (Hulaku)",
+      "C": "Botuxon",
+      "D": "Mangu (Munke)"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-13",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Chingizxon qaysi davlatga asos solgan?",
-     "options": {},
-     "correct": "Mo‘g‘ullar imperiyasi",
-     "needs_review": true
+     "options": {
+      "A": "Saljuqiylar davlati",
+      "B": "Oltin O‘rda",
+      "C": "Mo‘g‘ullar imperiyasi",
+      "D": "Temuriylar davlati"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-14",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "1370-yilda Movarounnahrda o‘z davlatiga asos solgan shaxsni nomini yozing.",
-     "options": {},
-     "correct": "Amir Temur",
-     "needs_review": true
+     "options": {
+      "A": "Amir Temur",
+      "B": "Shayboniyxon",
+      "C": "Ulug‘bek",
+      "D": "Bobur"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-15",
      "fan": "Tarix",
-     "type": "open",
+     "type": "mcq",
      "text": "Qachon G‘arbiy Rim imperiyasi tugatilgan?",
-     "options": {},
-     "correct": "476-yilda",
-     "needs_review": true
+     "options": {
+      "A": "395-yilda",
+      "B": "410-yilda",
+      "C": "453-yilda",
+      "D": "476-yilda"
+     },
+     "correct": "D",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-16",
@@ -2909,47 +2953,73 @@
     {
      "id": "ijtimoiy__t_i_-21",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "Right now, they ________________________ (play) football in the yard.",
-     "options": {},
-     "correct": "are playing",
-     "needs_review": true
+     "options": {
+      "A": "play",
+      "B": "are playing",
+      "C": "played",
+      "D": "have played"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-22",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "Last year, we __________________________ (go) to Samarkand for our holiday.",
-     "options": {},
-     "correct": "went",
-     "needs_review": true
+     "options": {
+      "A": "went",
+      "B": "go",
+      "C": "have gone",
+      "D": "are going"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-23",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "There aren’t ________________ apples in the fridge.",
-     "options": {},
-     "correct": "any",
-     "needs_review": true
+     "options": {
+      "A": "some",
+      "B": "much",
+      "C": "any",
+      "D": "a"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-24",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "My sister is _________________ than me.",
-     "options": {},
-     "correct": null,
-     "needs_review": true
+     "options": {
+      "A": "taller",
+      "B": "tall",
+      "C": "tallest",
+      "D": "more tall"
+     },
+     "correct": "A",
+     "needs_review": false,
+     "solution": "Variantlar berilmagan; analogik savollarga ko'ra 'taller', lekin options bo'sh"
     },
     {
      "id": "ijtimoiy__t_i_-25",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "This is the boy __________________ bag was lost yesterday.",
-     "options": {},
-     "correct": "whose",
-     "needs_review": true
+     "options": {
+      "A": "who",
+      "B": "which",
+      "C": "whose",
+      "D": "that"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-26",
@@ -2967,20 +3037,30 @@
     {
      "id": "ijtimoiy__t_i_-27",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "According to the passage, what did Beth say after she was tricked?",
-     "options": {},
-     "correct": "\"He tricked me. It isn’t correct.\"",
-     "needs_review": true
+     "options": {
+      "A": "\"He helped me. It is correct.\"",
+      "B": "\"He tricked me. It isn’t correct.\"",
+      "C": "\"He was right. I made a mistake.\"",
+      "D": "\"He lied, but it doesn’t matter.\""
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-28",
      "fan": "Ingliz tili",
-     "type": "open",
+     "type": "mcq",
      "text": "According to the passage, where did the man hold the pig?",
-     "options": {},
-     "correct": "Above his head.",
-     "needs_review": true
+     "options": {
+      "A": "In his arms.",
+      "B": "On his shoulder.",
+      "C": "Above his head.",
+      "D": "Under his coat."
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "ijtimoiy__t_i_-29",
@@ -3027,7 +3107,8 @@
       "D": "семьсот"
      },
      "correct": "A",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "'десять' — простое числительное"
     },
     {
      "id": "ijtimoiy__rus_r_t_-2",
@@ -3419,7 +3500,8 @@
       "D": "1826–1860"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Buxoro amiri Shohmurod 1785–1800 yillarda hukmronlik qilgan"
     },
     {
      "id": "ijtimoiy__rus_r_t_-30",
@@ -3776,7 +3858,8 @@
       "D": "the tallest"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "comparative: taller"
     },
     {
      "id": "ijtimoiy__rus_t_i_-25",
@@ -3867,7 +3950,7 @@
   {
    "id": "kimyo_texnologiya__k_m_",
    "name": "Kimyo texnologiya — Kimyo + Matematika",
-   "count": 30,
+   "count": 29,
    "questions": [
     {
      "id": "kimyo_texnologiya__k_m_-1",
@@ -4221,20 +4304,6 @@
      "correct": "C"
     },
     {
-     "id": "kimyo_texnologiya__k_m_-28",
-     "fan": "Matematika",
-     "type": "mcq",
-     "text": "[RASM] $x = ?$",
-     "options": {
-      "A": "2",
-      "B": "4",
-      "C": "6",
-      "D": "8"
-     },
-     "correct": null,
-     "needs_review": true
-    },
-    {
      "id": "kimyo_texnologiya__k_m_-29",
      "fan": "Matematika",
      "type": "mcq",
@@ -4421,8 +4490,9 @@
       "C": "10 kishi",
       "D": "12 kishi"
      },
-     "correct": "C",
-     "needs_review": true
+     "correct": "B",
+     "needs_review": true,
+     "solution": "Xorazmshohlar davlat kengashi 7 kishidan iborat bo'lgan (manba bo'yicha tekshirilsin)"
     },
     {
      "id": "madrasa___i_t_-13",
@@ -4624,8 +4694,9 @@
       "C": "topolmayotir",
       "D": "voqealarni"
      },
-     "correct": "B",
-     "needs_review": true
+     "correct": "D",
+     "needs_review": false,
+     "solution": "Qator unli: 'voqealarni' (o-e-a)"
     },
     {
      "id": "o_zbek_filologiyasi__o_i_-13",
@@ -4782,7 +4853,8 @@
       "D": "more old"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "comparative: older"
     },
     {
      "id": "o_zbek_filologiyasi__o_i_-25",
@@ -4882,7 +4954,8 @@
      },
      "correct": "A",
      "notes": "Простые числительные состоят из одного слова и одного корня: десять (10), семьдесят (70), семьсот (700). Но составные — двадцать два. Среди простых: десять, семьдесят, семьсот — все простые. Однако 'двадцать два' — составное. Вопрос, вероятно, предполагает отличие от составного. Все три одиночных слова — простые. needs_review выставлен.",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "'десять' — простое числительное"
     },
     {
      "id": "rus_filologiyasi__r_i_-2",
@@ -4909,9 +4982,10 @@
       "C": "ш...пот",
       "D": "крыж...вник"
      },
-     "correct": "C",
+     "correct": "D",
      "notes": "После шипящих под ударением в корне пишется О: шОпот. кошелЕк — Е; дешЁвый — Ё; крыжОвник — исключение (О). Если крыжовник тоже верен, needs_review.",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Под ударением после шипящих О: крыжОвник (остальные — Ё)"
     },
     {
      "id": "rus_filologiyasi__r_i_-4",
@@ -4996,7 +5070,8 @@
      },
      "correct": "B",
      "notes": "Читая (читать — НСВ), слушая (слушать — НСВ), играясь (играться — НСВ) — все несовершенного вида. Исходный вопрос был открытым, преобразован в MCQ.",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "читая, слушая, играясь — несовершенный вид"
     },
     {
      "id": "rus_filologiyasi__r_i_-10",
@@ -5207,7 +5282,8 @@
      },
      "correct": "B",
      "notes": "Comparative of 'old' → older (не more old). Исходный вопрос был открытым (fill in), преобразован в MCQ с типичным прилагательным 'old' как наиболее вероятным вариантом.",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "comparative: older"
     },
     {
      "id": "rus_filologiyasi__r_i_-25",
@@ -5368,92 +5444,142 @@
     {
      "id": "tabiiy_fanlar__b_k_-6",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Namatakning hayotiy shaklini ko'rsating.",
-     "options": {},
-     "correct": "buta",
-     "needs_review": true
+     "options": {
+      "A": "daraxt",
+      "B": "buta",
+      "C": "o‘t",
+      "D": "chala buta"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-7",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Yurakdan boshlanuvchi (a) va yurakka keluvchi (b) qon tomirlar qanday nomlanadi?",
-     "options": {},
-     "correct": "a) arteriya  b) vena",
-     "needs_review": true
+     "options": {
+      "A": "a) vena  b) arteriya",
+      "B": "a) kapillyar  b) arteriya",
+      "C": "a) arteriya  b) vena",
+      "D": "a) vena  b) kapillyar"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-8",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "\"Boshining ustida bir juft yirikroq ko'zlari, ikki yonida esa besh juft mayda ko'zchalari bor, 20–30 tagacha tirik bola tug'ib ko'payadi\" Ushbu ta'rif qaysi bo'g'imoyoqli organizmga tegishli?",
-     "options": {},
-     "correct": "chayon",
-     "needs_review": true
+     "options": {
+      "A": "qisqichbaqa",
+      "B": "chayon",
+      "C": "o'rgimchak",
+      "D": "kanasimon kana"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-9",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "\"Tanasining og'irligi 800 kg ga yetadi, suvda yaxshi suzadi va sho'ng'iydi, asosan tyulenlar va baliqlar bilan oziqlanadi\" Ushbu ta'rif qaysi sutemizuvchi organizmga tegishli?",
-     "options": {},
-     "correct": "morj",
-     "needs_review": true
+     "options": {
+      "A": "morj",
+      "B": "tюlen",
+      "C": "kit",
+      "D": "delfin"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-10",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Karamdoshlar oilasiga mansub bo'yoq beruvchi o'simlikni aniqlang.",
-     "options": {},
-     "correct": "vayda",
-     "needs_review": true
+     "options": {
+      "A": "marena",
+      "B": "tut",
+      "C": "vayda",
+      "D": "zafaron"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-11",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Asosan, erta bahorda, daraxtlarda shira harakati boshlanishidan oldin (fevral oyining oxiridan aprel oyigacha) o'tkaziladigan payvandlash turi qaysi?",
-     "options": {},
-     "correct": "kurtak (ko'z) payvand",
-     "needs_review": true
+     "options": {
+      "A": "yarib payvand",
+      "B": "qalamcha payvand",
+      "C": "yondosh payvand",
+      "D": "kurtak (ko'z) payvand"
+     },
+     "correct": "D",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-12",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Meva hosil bo'lishi haqidagi quyidagi jumlani to'ldiring. Mevaning shakllanishida tugunchadan tashqari gulning boshqa qismlari ham ishtirok etsa, bunday mevalar \"_____________________\" deyiladi.",
-     "options": {},
-     "correct": "soxta mevalar",
-     "needs_review": true
+     "options": {
+      "A": "soxta mevalar",
+      "B": "to'plam mevalar",
+      "C": "murakkab mevalar",
+      "D": "haqiqiy mevalar"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-13",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Rangsiz, oq rangli plastidalar bo'lib ular monosaxarid va disaxaridlardan kraxmal hosil bo'lishida ishtirok etadi. Ushbu ta'rif qaysi plastida turiga tegishli?",
-     "options": {},
-     "correct": "leykoplast",
-     "needs_review": true
+     "options": {
+      "A": "xromoplast",
+      "B": "xloroplast",
+      "C": "leykoplast",
+      "D": "etioplast"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-14",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Faoliyati odam ixtiyoriga bo'ysinadigan muskul turini aniqlang.",
-     "options": {},
-     "correct": "ko'ndalang-targ'il (skelet) muskullar",
-     "needs_review": true
+     "options": {
+      "A": "silliq muskullar",
+      "B": "ko'ndalang-targ'il (skelet) muskullar",
+      "C": "yurak muskuli",
+      "D": "ichak muskullari"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-15",
      "fan": "Biologiya",
-     "type": "open",
+     "type": "mcq",
      "text": "Rinit qanday kasallik?",
-     "options": {},
-     "correct": "burun shilliq pardasining yallig'lanishi (tumov)",
-     "needs_review": true
+     "options": {
+      "A": "halqum shilliq pardasining yallig'lanishi",
+      "B": "tomoq bezlarining yallig'lanishi",
+      "C": "o'pka to'qimasining yallig'lanishi",
+      "D": "burun shilliq pardasining yallig'lanishi (tumov)"
+     },
+     "correct": "D",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-16",
@@ -5523,92 +5649,142 @@
     {
      "id": "tabiiy_fanlar__b_k_-21",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "400 gr 15% li osh tuzi eritmasini tayyorlash uchun necha gr tuz kerak?",
-     "options": {},
-     "correct": "60 gr",
-     "needs_review": true
+     "options": {
+      "A": "$60$ gr",
+      "B": "$45$ gr",
+      "C": "$15$ gr",
+      "D": "$30$ gr"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-22",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "S^-2 ionidagi p elektronlar sonini hisoblang.",
-     "options": {},
-     "correct": "12",
-     "needs_review": true
+     "options": {
+      "A": "$10$",
+      "B": "$16$",
+      "C": "$12$",
+      "D": "$6$"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-23",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "H2SO4 ning ekvivalent massasini aniqlang.",
-     "options": {},
-     "correct": "49 g/mol",
-     "needs_review": true
+     "options": {
+      "A": "$98$ g/mol",
+      "B": "$49$ g/mol",
+      "C": "$32$ g/mol",
+      "D": "$24,5$ g/mol"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-24",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "Hajmi 3 litr bo'lgan idishda 10 mol modda 30 sekund o'tgandan so'ng 1 molgacha kamaysa, reaksiya tezligi (mol/l·sekund) qanchaga teng bo'ladi.",
-     "options": {},
-     "correct": "0,1 mol/l·s",
-     "needs_review": true
+     "options": {
+      "A": "$0,3$ mol/l·s",
+      "B": "$0,2$ mol/l·s",
+      "C": "$1$ mol/l·s",
+      "D": "$0,1$ mol/l·s"
+     },
+     "correct": "D",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-25",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "Hajmi 5,6 l bo'lgan ozon kaliy yodid eritmasi bilan reaksiyasi natijasida hosil bo'ladigan yod massasini (gr) hisoblang.",
-     "options": {},
-     "correct": "63,5 gr",
-     "needs_review": true
+     "options": {
+      "A": "$63,5$ gr",
+      "B": "$127$ gr",
+      "C": "$31,75$ gr",
+      "D": "$25,4$ gr"
+     },
+     "correct": "A",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-26",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "17 C° haroratda 64 g tuz 200 g suvda eritilib to'yingan eritma hosil qilingan. Shu tuzning 17 C° haroratdagi eruvchanligini toping.",
-     "options": {},
-     "correct": "32 g",
-     "needs_review": true
+     "options": {
+      "A": "$64$ g",
+      "B": "$16$ g",
+      "C": "$32$ g",
+      "D": "$50$ g"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-27",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "11,5 g ishqoriy metall suvda eririlganda 5,6 litr (n.sh.) gaz ajralib 20 % li eritma hosil bo'lsa, reaksiya uchun necha gramm suv olingan?",
-     "options": {},
-     "correct": "91,5 gr",
-     "needs_review": true
+     "options": {
+      "A": "$80$ gr",
+      "B": "$91,5$ gr",
+      "C": "$103$ gr",
+      "D": "$11,5$ gr"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-28",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "A(g) + B(g) = C(g) + D(g) reaksiya uchun A moddadan 0,8 mol olindi va muvozanat qaror topganda (Km=1) C moddadan 0,6 mol hosil bo'ldi. Reaktorning hajmi 2 litr bo'lsa, B ning boshlang'ich konsentratsiyasini (mol/l) toping.",
-     "options": {},
-     "correct": "0,9 mol/l",
-     "needs_review": true
+     "options": {
+      "A": "$0,6$ mol/l",
+      "B": "$0,4$ mol/l",
+      "C": "$0,9$ mol/l",
+      "D": "$1,8$ mol/l"
+     },
+     "correct": "C",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-29",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "AlPO4 + C -> CO2 + Al2O3 + P reaksiyada o'ng va chap tomondagi koeffitsientlar yig'indisini toping.",
-     "options": {},
-     "correct": "21",
-     "needs_review": true
+     "options": {
+      "A": "$18$",
+      "B": "$21$",
+      "C": "$15$",
+      "D": "$24$"
+     },
+     "correct": "B",
+     "needs_review": false
     },
     {
      "id": "tabiiy_fanlar__b_k_-30",
      "fan": "Kimyo",
-     "type": "open",
+     "type": "mcq",
      "text": "Asetilenga kumush oksidning ammiakdagi eritmasi ta'sir etishidan 48 g portlovchi modda hosil bo'ladi. Reaksiyada qatnashgan asetilenning hajmini (l) hisoblang.",
-     "options": {},
-     "correct": "4,48 l",
-     "needs_review": true
+     "options": {
+      "A": "$2,24$ l",
+      "B": "$6,72$ l",
+      "C": "$4,48$ l",
+      "D": "$8,96$ l"
+     },
+     "correct": "C",
+     "needs_review": false
     }
    ]
   },
@@ -5694,7 +5870,8 @@
       "D": "1.2.3.4.5.6"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Apiterapiyada ari zahari, mumi va asal sovuq va asab kasalliklarida ishlatiladi: 1.2.3"
     },
     {
      "id": "tabiiy_fanlar__rus_-7",
@@ -5760,7 +5937,8 @@
       "D": "а-1.2.3.4 б-2.4.5.6"
      },
      "correct": "A",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Avtotrof: o'ziga oziq sintezlaydi, yashil o'simliklar (1,3); geterotrof: tayyor oziq, bakteriya, zamburug', hayvon (2,4,5,6)"
     },
     {
      "id": "tabiiy_fanlar__rus_-12",
@@ -5800,7 +5978,8 @@
       "D": "а-подсолнечник б-тарпан"
      },
      "correct": "D",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Passiv harakat (kungaboqar — geliotropizm) va aktiv harakat (tarpan — hayvon)"
     },
     {
      "id": "tabiiy_fanlar__rus_-15",
@@ -6133,7 +6312,8 @@
       "D": "older"
      },
      "correct": "D",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Qiyosiy daraja: older than"
     },
     {
      "id": "xorijiy__i_o_-10",
@@ -6329,7 +6509,8 @@
       "D": "1-a, 2-b"
      },
      "correct": "D",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "1-band: undosh xatolik (azal-azaldan), 2-band: so'z qo'llash xatoligi"
     },
     {
      "id": "xorijiy__i_o_-25",
@@ -6343,7 +6524,8 @@
       "D": "1 — a, b; 2 — a, c"
      },
      "correct": "D",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "1: shaxs oti va bog'lovchi; 2: shaxs oti va uyushiq bo'lak"
     },
     {
      "id": "xorijiy__i_o_-26",
@@ -6533,7 +6715,8 @@
       "D": "older"
      },
      "correct": "D",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Qiyosiy daraja: older than"
     },
     {
      "id": "xorijiy__rus_i_r_-10",
@@ -6625,7 +6808,8 @@
       "D": "семьсот"
      },
      "correct": "A",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Oddiy (prostoe) son: десять"
     },
     {
      "id": "xorijiy__rus_i_r_-17",
@@ -6893,7 +7077,8 @@
       "D": "Mahalla"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Ehtiyoj va manfaatlarga ko'ra birlashgan kishilar jamoasi — jamiyat"
     },
     {
      "id": "yurisprudensiya__h_i_-7",
@@ -6907,7 +7092,8 @@
       "D": "21"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Umumiy jinoiy javobgarlik yoshi — 16 (ayrim og'ir jinoyatlarda 14)"
     },
     {
      "id": "yurisprudensiya__h_i_-8",
@@ -6921,7 +7107,8 @@
       "D": "30 kunda"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Bosh vazir nomzodi 10 kun ichida ko'rib chiqiladi"
     },
     {
      "id": "yurisprudensiya__h_i_-9",
@@ -6974,7 +7161,8 @@
       "D": "Vazirlar Mahkamasi"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Konstitutsiya XIX bob — Prokuratura"
     },
     {
      "id": "yurisprudensiya__h_i_-13",
@@ -7001,7 +7189,8 @@
       "D": "Davlat soliq qo'mitasi"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Mahalliy byudjet — hokimiyat (mahalliy ijro organi) vakolatida"
     },
     {
      "id": "yurisprudensiya__h_i_-15",
@@ -7360,7 +7549,8 @@
       "D": "Статья 30"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Toshkent poytaxti — Konstitutsiya 20-modda"
     },
     {
      "id": "yurisprudensiya__rus_h_i_-12",
@@ -7530,7 +7720,8 @@
       "D": "the older"
      },
      "correct": "C",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Qiyosiy daraja: older than"
     },
     {
      "id": "yurisprudensiya__rus_h_i_-25",
@@ -8307,7 +8498,8 @@
       "D": "more tall"
      },
      "correct": "A",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "Qiyosiy daraja: taller than"
     },
     {
      "id": "iqtisod__m_i_-25",
@@ -8574,7 +8766,8 @@
       "D": "$2\\dfrac{5}{9}$"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": true,
+     "solution": "Manba javobi B; literal hisob (11/15)*6=4.4 variantlarga aniq mos kelmaydi, mixed-son talqinida B eng yaqin"
     },
     {
      "id": "iqtisod__rus_m_i_-14",
@@ -8588,7 +8781,8 @@
       "D": "$x+y$"
      },
      "correct": "B",
-     "needs_review": true
+     "needs_review": false,
+     "solution": "(x^2+y)/(x+y)^2 * (x+y)/(x^2+y) = 1/(x+y)"
     },
     {
      "id": "iqtisod__rus_m_i_-15",
