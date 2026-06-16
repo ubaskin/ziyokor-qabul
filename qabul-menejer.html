@@ -98,6 +98,12 @@ mjx-container{color:var(--ink)}
 .tab svg,.pf-mi svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .login-lock{line-height:0}
 .login-lock svg{width:38px;height:38px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 5px 16px rgba(39,194,133,.4))}
+.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.lactions a,.lactions button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.hook .ic{color:var(--gold);margin-right:3px;vertical-align:-3px}
+.btn .ic{vertical-align:-3px;margin-right:5px}
+h3 .ic{color:var(--emer);vertical-align:-3px;margin-right:6px}
+.fsrch{position:relative}.fsrch .ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--mut);pointer-events:none}.fsrch input{padding-left:34px}
 .bar{flex-wrap:nowrap}
 @media(max-width:560px){
  .pf-meta{display:none}.bar-title{display:none}
@@ -153,7 +159,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
   <div id="mgr" class="hidden"></div>
  </div>
 </div>
-<div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0">➕ talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
+<div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M12 5v14"/><path d="M5 12h14"/></svg>talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
 <script>
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
@@ -166,6 +172,19 @@ var SECTIONS={
  olimpus23:{name:'Olimpus (2–3)',fil:'olimpus',test:'prezident',sinf:[2,3]}
 };
 var SECKEYS=['abituriyent','prezident46','olimpus23'];
+// === SVG ikonkalar (emoji emas — mavzuga mos) ===
+var IC={
+ phone:'<svg class="ic" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+ ai:'<svg class="ic" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 13.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>',
+ doc:'<svg class="ic" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>',
+ plus:'<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>',
+ trash:'<svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>',
+ bulb:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>',
+ dl:'<svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>',
+ save:'<svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>',
+ search:'<svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>',
+ check:'<svg class="ic" viewBox="0 0 24 24" style="color:var(--emer)"><path d="M20 6L9 17l-5-5"/></svg>'
+};
 // dual-write: yozuvni ikkala bazaga ham yuboradi (asosiy javobni qaytaradi)
 function dbWrite(sub,method,body){
  var o={method:method,headers:{'Content-Type':'application/json'}};if(body!=null)o.body=body;
@@ -275,9 +294,9 @@ function renderRes(){
    +'<div class="stat"><b>'+bogl+'</b>Bog‘lanildi</div>'
    +'<div class="stat"><b>'+yoz+'</b>Yozildi</div></div>';
  h+='<div class="card" style="padding:12px;margin:8px 0"><div class="row">'
-   +'<input id="fsearch" placeholder="🔎 Ism / telefon / yo‘nalish" value="'+FSEARCH.replace(/"/g,'&quot;')+'">'
+   +'<div class="fsrch">'+IC.search+'<input id="fsearch" placeholder="Ism / telefon / yo‘nalish" value="'+FSEARCH.replace(/"/g,'&quot;')+'"></div>'
    +'<select id="fstatus"><option value="all">Barcha holat</option>'+STATUSES.map(function(s){return '<option '+(FSTATUS===s?'selected':'')+'>'+s+'</option>';}).join('')+'</select>'
-   +'<button class="btn sec" style="flex:0 0 auto" onclick="exportCsv()">📥 Excel</button>'
+   +'<button class="btn sec" style="flex:0 0 auto" onclick="exportCsv()">'+IC.dl+'Excel</button>'
    +'</div></div><div id="cardwrap"></div><div id="anal"></div>';
  el.innerHTML=h;
  var fs=document.getElementById('fsearch');fs.oninput=function(){FSEARCH=this.value;renderCards();};
@@ -307,16 +326,16 @@ function renderCards(){
      +'<div class="level-badge lv'+L+'">'+(L?'Daraja '+L:'—')+'</div></div>'
    +'<div class="score">Natija: '+(s.graded?('<b class=ok>'+s.correct+'/'+s.graded+'</b> ('+pct+'%)'):'<span class="mut">baholanmagan</span>')+' · javob '+(s.answered||0)+'/'+(s.total||0)+'</div>'
    +(bars?'<div class="bars">'+bars+'</div>':'')
-   +'<div class="hook">💡 '+hook+'</div>'
+   +'<div class="hook">'+IC.bulb+hook+'</div>'
    +'<div class="row" style="margin-top:10px;gap:8px">'
      +'<select onchange="setStatus(\''+key+'\',this.value)" style="flex:1">'+STATUSES.map(function(x){return '<option '+(st===x?'selected':'')+'>'+x+'</option>';}).join('')+'</select>'
      +'<input placeholder="izoh..." value="'+(s.note||'').replace(/"/g,'&quot;')+'" onchange="saveNote(\''+key+'\',this.value)" style="flex:1.4">'
    +'</div>'
-   +'<div class="lactions">'+(tel?'<a class="acall" href="tel:'+tel+'">📞</a>':'')
-     +'<button class="aanal" onclick="analyze('+i+')">🤖 Tahlil</button>'
-     +'<a class="aanal" href="ozet.html?id='+encodeURIComponent(key)+'" target="_blank">📄 Xulosa</a>'
-     +'<button class="aanal" style="color:#7fe3b6;border-color:rgba(39,194,133,.4)!important" onclick="openTalim(\''+key+'\')">➕ talim+</button>'
-     +'<button class="aanal" style="color:#ff7a7a" onclick="delLead(\''+key+'\')">🗑</button>'
+   +'<div class="lactions">'+(tel?'<a class="acall" href="tel:'+tel+'" title="Qo‘ng‘iroq">'+IC.phone+'</a>':'')
+     +'<button class="aanal" onclick="analyze('+i+')">'+IC.ai+'Tahlil</button>'
+     +'<a class="aanal" href="ozet.html?id='+encodeURIComponent(key)+'" target="_blank">'+IC.doc+'Xulosa</a>'
+     +'<button class="aanal" style="color:#7fe3b6;border-color:rgba(39,194,133,.4)!important" onclick="openTalim(\''+key+'\')">'+IC.plus+'talim+</button>'
+     +'<button class="aanal" style="color:#ff7a7a" title="O‘chirish" onclick="delLead(\''+key+'\')">'+IC.trash+'</button>'
    +'</div></div>';
  });
  wrap.innerHTML=h+'</div>';
@@ -382,7 +401,7 @@ function editQ(i){
   +'<label>Fan</label><input id="e_fan" value="'+(q.fan||'')+'">'
   +'<div class="row">'+['A','B','C','D'].map(function(L){return '<div><label>Variant '+L+'</label><input id="e_'+L+'" value="'+((o[L]||'')+'').replace(/"/g,'&quot;')+'"></div>';}).join('')+'</div>'
   +'<label>To‘g‘ri javob</label><select id="e_correct"><option value="">— tanlanmagan —</option>'+['A','B','C','D'].map(function(L){return '<option '+(q.correct===L?'selected':'')+'>'+L+'</option>';}).join('')+'</select>'
-  +'<div style="margin-top:14px;display:flex;gap:10px"><button class="btn" onclick="saveQ()">💾 Saqlash</button><button class="btn sec" onclick="document.getElementById(\'qedit\').innerHTML=\'\'">Bekor</button></div>'
+  +'<div style="margin-top:14px;display:flex;gap:10px"><button class="btn" onclick="saveQ()">'+IC.save+'Saqlash</button><button class="btn sec" onclick="document.getElementById(\'qedit\').innerHTML=\'\'">Bekor</button></div>'
   +'<div id="savemsg" class="ok" style="margin-top:8px"></div></div>';
  document.getElementById('qedit').innerHTML=h;document.getElementById('qedit').scrollIntoView({behavior:'smooth'});
 }
@@ -459,17 +478,17 @@ function doEnroll(){
 // ===== Menejerlar (admin) =====
 function renderMgr(){
  if(!CURMGR||!CURMGR.admin){document.getElementById('mgr').innerHTML='<div class="card mut">Faqat admin uchun.</div>';return;}
- var rows=Object.keys(MGRS).map(function(k){var m=MGRS[k];return '<tr><td><b>'+esc(m.name||'')+'</b></td><td class="mut">'+esc(m.login||'—')+'</td><td class="mut">'+esc(m.pin)+'</td><td>'+esc((m.sections||[]).map(function(s){return SECTIONS[s]?SECTIONS[s].name:s;}).join(', ')||'—')+'</td><td>'+(m.admin?'✅':'')+'</td><td><button class="btn sec sm" onclick="delMgr(\''+k+'\')" '+(k===CURMGR._key?'disabled':'')+'>🗑</button></td></tr>';}).join('');
+ var rows=Object.keys(MGRS).map(function(k){var m=MGRS[k];return '<tr><td><b>'+esc(m.name||'')+'</b></td><td class="mut">'+esc(m.login||'—')+'</td><td class="mut">'+esc(m.pin)+'</td><td>'+esc((m.sections||[]).map(function(s){return SECTIONS[s]?SECTIONS[s].name:s;}).join(', ')||'—')+'</td><td>'+(m.admin?IC.check:'')+'</td><td><button class="btn sec sm" onclick="delMgr(\''+k+'\')" '+(k===CURMGR._key?'disabled':'')+'>'+IC.trash+'</button></td></tr>';}).join('');
  var checks=SECKEYS.map(function(s){return '<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" class="m_sec" value="'+s+'" style="width:auto"> '+SECTIONS[s].name+'</label>';}).join('');
  document.getElementById('mgr').innerHTML='<div class="card"><h3>Menejerlar</h3>'
   +'<table><tr><th>Ism</th><th>Login</th><th>Parol</th><th>Bo‘limlar</th><th>Admin</th><th></th></tr>'+rows+'</table></div>'
-  +'<div class="card"><h3>➕ Yangi menejer</h3>'
+  +'<div class="card"><h3>'+IC.plus+'Yangi menejer</h3>'
   +'<label>Ism</label><input id="m_name">'
   +'<label>Login (kirish nomi)</label><input id="m_login" autocomplete="off">'
   +'<label>Parol</label><input id="m_pin" inputmode="numeric">'
   +'<label>Ruxsat berilgan bo‘limlar</label><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">'+checks+'</div>'
   +'<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink);margin-top:10px"><input type="checkbox" id="m_admin" style="width:auto"> Admin (hamma bo‘lim + menejer boshqaruvi)</label>'
-  +'<button class="btn" style="margin-top:14px" onclick="saveMgr()">💾 Saqlash</button><div id="mmsg" class="ok" style="margin-top:8px"></div></div>';
+  +'<button class="btn" style="margin-top:14px" onclick="saveMgr()">'+IC.save+'Saqlash</button><div id="mmsg" class="ok" style="margin-top:8px"></div></div>';
 }
 function saveMgr(){
  var name=document.getElementById('m_name').value.trim(),login=document.getElementById('m_login').value.trim(),pin=document.getElementById('m_pin').value.trim();
@@ -494,7 +513,7 @@ function renderImp(){
   +'<label>Yo‘nalish</label><select id="imp_yon">'+opts+'</select>'
   +'<label>Savol matni</label><textarea id="imp_text" placeholder="1. Hisoblang: 2+2\nA) 3  B) 4  C) 5  D) 6"></textarea>'
   +'<label>Fan (ixtiyoriy)</label><input id="imp_fan" placeholder="masalan Matematika">'
-  +'<button class="btn" style="margin-top:12px" onclick="queueImport()">🤖 AI bilan qo‘shish</button>'
+  +'<button class="btn" style="margin-top:12px" onclick="queueImport()">'+IC.ai+'AI bilan qo‘shish</button>'
   +'<div id="impmsg" class="ok" style="margin-top:10px"></div>'
   +'<div class="mut" style="margin-top:6px">Eslatma: AI ishlovchi (worker) navbatdan olib qayta ishlaydi — bir necha daqiqada savol bankga qo‘shiladi.</div></div>';
 }
