@@ -323,7 +323,7 @@ function renderCards(){
   var tel=phoneDigits(inf.tel);var st=statusOf(s);
   h+='<div class="lead l'+L+'">'
    +'<div class="lead-top"><div><div class="lead-name">'+esc(inf.name||'—')+'</div>'
-     +'<div class="lead-meta">'+esc(inf.yon_name||'—')+'<br>'+esc(inf.sinf||'—')+'-sinf'+(inf.tel?' · '+esc(inf.tel):'')+(inf.tuman?' · '+esc(inf.tuman):'')+' · '+((s.finished||'').slice(0,16).replace('T',' '))+(inf.source?'<br><span style="color:#8fcaf6">Manba: '+esc(inf.source)+'</span>':'')+'</div></div>'
+     +'<div class="lead-meta">'+esc(inf.yon_name||'—')+'<br>'+esc(inf.sinf||'—')+'-sinf'+(inf.tel?' · '+esc(inf.tel):'')+((inf.viloyat||inf.tuman)?' · '+esc([inf.viloyat,inf.tuman].filter(Boolean).join(', ')):'')+' · '+((s.finished||'').slice(0,16).replace('T',' '))+(inf.source?'<br><span style="color:#8fcaf6">Manba: '+esc(inf.source)+'</span>':'')+'</div></div>'
      +'<div class="level-badge lv'+L+'">'+(L?'Daraja '+L:'—')+'</div></div>'
    +'<div class="score">Natija: '+(s.graded?('<b class=ok>'+s.correct+'/'+s.graded+'</b> ('+pct+'%)'):'<span class="mut">baholanmagan</span>')+' · javob '+(s.answered||0)+'/'+(s.total||0)+'</div>'
    +(bars?'<div class="bars">'+bars+'</div>':'')
@@ -346,10 +346,10 @@ function saveNote(key,val){if(SESS[key])SESS[key].note=val;dbWrite('/sessions/'+
 function delLead(key){if(!confirm('Bu natijani o‘chirasizmi? (qaytarib bo‘lmaydi)'))return;
  dbWrite('/sessions/'+key+'.json','DELETE');delete SESS[key];renderRes();}
 function exportCsv(){
- var rows=window._rows||[];var lines=['Ism,Yo‘nalish,Sinf,Telefon,Tuman/shahar,Manba,Ball,Foiz,Holat,Izoh,Sana'];
+ var rows=window._rows||[];var lines=['Ism,Yo‘nalish,Sinf,Telefon,Viloyat,Tuman,Manba,Ball,Foiz,Holat,Izoh,Sana'];
  rows.forEach(function(s){var inf=s.info||{};var pct=s.graded?Math.round(s.correct/s.graded*100):'';
    function c(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"';}
-   lines.push([c(inf.name),c(inf.yon_name),c(inf.sinf),c(inf.tel),c(inf.tuman),c(inf.source),c(s.graded?s.correct+'/'+s.graded:''),c(pct),c(statusOf(s)),c(s.note||''),c((s.finished||'').slice(0,16).replace('T',' '))].join(','));});
+   lines.push([c(inf.name),c(inf.yon_name),c(inf.sinf),c(inf.tel),c(inf.viloyat),c(inf.tuman),c(inf.source),c(s.graded?s.correct+'/'+s.graded:''),c(pct),c(statusOf(s)),c(s.note||''),c((s.finished||'').slice(0,16).replace('T',' '))].join(','));});
  var blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='qabul_natijalar_'+branch()+'.csv';a.click();
 }
