@@ -42,7 +42,7 @@ textarea{min-height:120px}
 .qrow{padding:11px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer;display:flex;gap:8px;align-items:center;background:var(--surf2)}
 .qrow:hover{border-color:rgba(255,255,255,.22);background:#13213e}
 #login{max-width:360px;margin:90px auto;text-align:center}
-.hidden{display:none}
+.hidden{display:none!important}
 .ok{color:#7fe3b6;font-weight:700}
 [style*="c0392b"]{color:#ff7a7a!important}
 mjx-container{color:var(--ink)}
@@ -93,14 +93,29 @@ mjx-container{color:var(--ink)}
 .pf-menu .pf-who b{font-family:'Sora',sans-serif;font-size:14px}
 .pf-mi{padding:10px 12px;border-radius:8px;font-weight:700;font-size:14px;color:#ff9b9b;cursor:pointer;display:flex;gap:9px;align-items:center}
 .pf-mi:hover{background:rgba(255,122,122,.12)}
-@media(max-width:560px){.pf-meta{display:none}.bar-title{display:none}}
+/* tab + menyu ikonkalari (SVG — mavzuga mos, emoji emas) */
+.tab{display:inline-flex;align-items:center;gap:7px}
+.tab svg,.pf-mi svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.login-lock{line-height:0}
+.login-lock svg{width:38px;height:38px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 5px 16px rgba(39,194,133,.4))}
+.bar{flex-wrap:nowrap}
+@media(max-width:560px){
+ .pf-meta{display:none}.bar-title{display:none}
+ .bar{gap:7px;padding:12px 11px}
+ .bar select{max-width:42vw;min-width:0;flex-shrink:1;text-overflow:ellipsis}
+ .profile{margin-left:4px;padding:4px 8px 4px 4px;flex:0 0 auto}
+ .pf-menu{right:6px}
+ #login.lwrap{padding:16px}
+ .login-card{padding:26px 20px}
+ .tabs{padding:10px 12px}
+}
 /* aurora — fonni jonlantiradi (premium his) */
 body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 @keyframes auroraFloat{0%{transform:scale(1.06) translateY(0)}100%{transform:scale(1.13) translateY(-16px)}}
 </style></head><body>
 <div id="login" class="lwrap">
  <div class="login-card">
-  <div class="login-lock">🔐</div>
+  <div class="login-lock"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/><path d="M12 15v2"/></svg></div>
   <div class="logo">ZIYOKOR</div>
   <div class="login-sub">Qabul menejer paneli</div>
   <label class="lf">Login</label>
@@ -121,15 +136,15 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
    <span class="pf-caret">▾</span>
    <div class="pf-menu hidden" id="pfmenu">
     <div class="pf-who">Tizimda: <b id="mgrname2"></b><div class="mut" id="mgrrole2" style="font-size:11px"></div></div>
-    <div class="pf-mi" onclick="logout()">🚪 Profildan chiqish</div>
+    <div class="pf-mi" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Profildan chiqish</div>
    </div>
   </div>
  </div>
  <div class="tabs">
-  <div class="tab on" data-t="res" onclick="tab('res')">📊 Natijalar</div>
-  <div class="tab" data-t="qs" onclick="tab('qs')">📝 Savollar</div>
-  <div class="tab" data-t="imp" onclick="tab('imp')">➕ Word→AI import</div>
-  <div class="tab hidden" id="tab_mgr" data-t="mgr" onclick="tab('mgr')">👤 Menejerlar</div>
+  <div class="tab on" data-t="res" onclick="tab('res')"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M7 21v-7"/><path d="M12 21V8"/><path d="M17 21v-11"/></svg>Natijalar</div>
+  <div class="tab" data-t="qs" onclick="tab('qs')"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>Savollar</div>
+  <div class="tab" data-t="imp" onclick="tab('imp')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>Word→AI import</div>
+  <div class="tab hidden" id="tab_mgr" data-t="mgr" onclick="tab('mgr')"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Menejerlar</div>
  </div>
  <div class="wrap">
   <div id="res"></div>
