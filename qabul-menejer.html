@@ -72,19 +72,58 @@ mjx-container{color:var(--ink)}
 .tmodal{position:fixed;inset:0;z-index:50;background:rgba(3,7,16,.74);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 14px}
 .tmodal.hidden{display:none}
 .tmodal .card{max-width:470px;width:100%}
+/* === premium login === */
+#login.lwrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;max-width:none;margin:0}
+.login-card{max-width:382px;width:100%;text-align:center;padding:32px 28px;background:rgba(15,28,56,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07)}
+.login-card .logo{font-size:31px;letter-spacing:1.2px}
+.login-sub{color:var(--mut);font-size:13px;margin:7px 0 20px;letter-spacing:.02em}
+.login-card label.lf{text-align:left;margin:13px 0 5px}
+.login-card input{font-size:16px}
+.login-lock{font-size:30px;margin-bottom:6px;filter:drop-shadow(0 4px 14px rgba(39,194,133,.35))}
+/* === profil chip + chiqish === */
+.profile{position:relative;display:flex;align-items:center;gap:9px;margin-left:10px;padding:5px 11px 5px 5px;border:1px solid var(--line);border-radius:30px;cursor:pointer;background:rgba(255,255,255,.03);user-select:none}
+.profile:hover{border-color:rgba(255,255,255,.24)}
+.pf-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#04130c;background:linear-gradient(135deg,var(--emer),var(--gold));font-family:'Sora',sans-serif;flex:0 0 auto}
+.pf-meta{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.pf-name{font-weight:700;font-size:13px;color:var(--ink)}
+.pf-role{font-size:10.5px;color:var(--mut)}
+.pf-caret{color:var(--mut);font-size:11px}
+.pf-menu{position:absolute;right:0;top:48px;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 46px rgba(0,0,0,.5);padding:6px;z-index:60}
+.pf-menu .pf-who{padding:9px 12px 11px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.pf-menu .pf-who b{font-family:'Sora',sans-serif;font-size:14px}
+.pf-mi{padding:10px 12px;border-radius:8px;font-weight:700;font-size:14px;color:#ff9b9b;cursor:pointer;display:flex;gap:9px;align-items:center}
+.pf-mi:hover{background:rgba(255,122,122,.12)}
+@media(max-width:560px){.pf-meta{display:none}.bar-title{display:none}}
+/* aurora — fonni jonlantiradi (premium his) */
+body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
+@keyframes auroraFloat{0%{transform:scale(1.06) translateY(0)}100%{transform:scale(1.13) translateY(-16px)}}
 </style></head><body>
-<div id="login" class="card">
- <div style="font-size:34px">🔐</div><h2>Qabul menejer</h2>
- <input id="pin" type="password" placeholder="PIN" style="text-align:center;font-size:20px" onkeydown="if(event.key==='Enter')doLogin()">
- <button class="btn" style="width:100%;margin-top:12px" onclick="doLogin()">Kirish</button>
- <div id="loginerr" style="color:#ff7a7a;margin-top:8px;min-height:16px"></div>
- <div class="mut" style="margin-top:4px">Bo‘lim ruxsatingizga qarab kirgach tanlanadi</div>
+<div id="login" class="lwrap">
+ <div class="login-card">
+  <div class="login-lock">🔐</div>
+  <div class="logo">ZIYOKOR</div>
+  <div class="login-sub">Qabul menejer paneli</div>
+  <label class="lf">Login</label>
+  <input id="mlogin" type="text" autocomplete="username" placeholder="Login" onkeydown="if(event.key==='Enter')doLogin()">
+  <label class="lf">Parol</label>
+  <input id="pin" type="password" autocomplete="current-password" placeholder="Parol" onkeydown="if(event.key==='Enter')doLogin()">
+  <button class="btn" style="width:100%;margin-top:18px" onclick="doLogin()">Kirish →</button>
+  <div id="loginerr" style="color:#ff7a7a;margin-top:10px;min-height:16px"></div>
+  <div class="mut" style="margin-top:4px">Bo‘lim ruxsatingizga qarab kirgach tanlanadi</div>
+ </div>
 </div>
 <div id="main" class="hidden">
- <div class="bar"><span class="logo">ZIYOKOR</span><b>Qabul menejer</b>
+ <div class="bar"><span class="logo">ZIYOKOR</span><b class="bar-title">Qabul menejer</b>
   <select id="branch" style="width:auto;margin-left:auto" onchange="loadAll()"></select>
-  <span id="mgrname" class="mut" style="margin-left:6px"></span>
-  <button class="btn sec sm" style="margin-left:6px" onclick="logout()">Chiqish</button>
+  <div class="profile" id="profile" onclick="toggleProfile(event)">
+   <div class="pf-av" id="pfav">U</div>
+   <div class="pf-meta"><span class="pf-name" id="mgrname"></span><span class="pf-role" id="mgrrole"></span></div>
+   <span class="pf-caret">▾</span>
+   <div class="pf-menu hidden" id="pfmenu">
+    <div class="pf-who">Tizimda: <b id="mgrname2"></b><div class="mut" id="mgrrole2" style="font-size:11px"></div></div>
+    <div class="pf-mi" onclick="logout()">🚪 Profildan chiqish</div>
+   </div>
+  </div>
  </div>
  <div class="tabs">
   <div class="tab on" data-t="res" onclick="tab('res')">📊 Natijalar</div>
@@ -117,18 +156,31 @@ function dbWrite(sub,method,body){
  var o={method:method,headers:{'Content-Type':'application/json'}};if(body!=null)o.body=body;
  var p=fetch(DB+sub,o);fetch(DB2+sub,o).catch(function(){});return p;
 }
-var DEFAULT_ADMIN={id:'admin',name:'Ubaydullo (admin)',pin:'2024',sections:SECKEYS.slice(),admin:true};
+var DEFAULT_ADMIN={id:'admin',name:'Ubaydullo (admin)',login:'Ubaydullo',pin:'2024',sections:SECKEYS.slice(),admin:true};
 function doLogin(){
+ var login=(document.getElementById('mlogin').value||'').trim();
  var pin=document.getElementById('pin').value.trim();
+ if(!login||!pin){document.getElementById('loginerr').textContent='Login va parolni kiriting';return;}
  fetch(DB+'/managers.json').then(function(r){return r.json()}).then(function(m){
   MGRS=m||{};
-  // birinchi marta — admin seed
+  // birinchi marta — admin seed (login: Ubaydullo / parol: 2024)
   if(!Object.keys(MGRS).length){MGRS={admin:DEFAULT_ADMIN};dbWrite('/managers/admin.json','PUT',JSON.stringify(DEFAULT_ADMIN));}
-  var found=null;for(var k in MGRS){if(String(MGRS[k].pin)===pin){found=MGRS[k];found._key=k;}}
-  if(!found){document.getElementById('loginerr').textContent='PIN xato';return;}
+  // eski admin yozuvida login bo'lmasa — bir martalik to'ldirish
+  for(var ak in MGRS){var am=MGRS[ak];if(am&&am.admin&&!am.login){am.login=(am.name||'').split(/[\s(]/)[0]||'Ubaydullo';dbWrite('/managers/'+ak+'/login.json','PUT',JSON.stringify(am.login));}}
+  var lc=login.toLowerCase();
+  var found=null;
+  for(var k in MGRS){var mm=MGRS[k];
+    var uname=(mm.login||'').toLowerCase();
+    var nameFirst=(mm.name||'').toLowerCase().split(/[\s(]/)[0];
+    if(lc&&(uname===lc||nameFirst===lc)&&String(mm.pin)===pin){found=mm;found._key=k;break;}
+  }
+  if(!found){document.getElementById('loginerr').textContent='Login yoki parol xato';return;}
   CURMGR=found;
   document.getElementById('login').classList.add('hidden');document.getElementById('main').classList.remove('hidden');
-  document.getElementById('mgrname').textContent=found.name||'';
+  var nm=found.name||found.login||'';var role=found.admin?'Administrator':'Menejer';
+  document.getElementById('mgrname').textContent=nm;document.getElementById('mgrname2').textContent=nm;
+  document.getElementById('mgrrole').textContent=role;document.getElementById('mgrrole2').textContent=role;
+  document.getElementById('pfav').textContent=((nm.trim()[0])||'?').toUpperCase();
   document.getElementById('tab_mgr').classList.toggle('hidden',!found.admin);
   // ruxsat berilgan bo'limlar
   var allowed=(found.sections&&found.sections.length)?found.sections:SECKEYS;
@@ -137,7 +189,13 @@ function doLogin(){
   loadAll();
  }).catch(function(){document.getElementById('loginerr').textContent='Ulanmadi';});
 }
-function logout(){CURMGR=null;document.getElementById('main').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('pin').value='';}
+function toggleProfile(e){e.stopPropagation();var m=document.getElementById('pfmenu');if(m)m.classList.toggle('hidden');}
+document.addEventListener('click',function(){var m=document.getElementById('pfmenu');if(m&&!m.classList.contains('hidden'))m.classList.add('hidden');});
+function logout(){CURMGR=null;
+ var mn=document.getElementById('pfmenu');if(mn)mn.classList.add('hidden');
+ document.getElementById('main').classList.add('hidden');document.getElementById('login').classList.remove('hidden');
+ document.getElementById('pin').value='';var ml=document.getElementById('mlogin');if(ml)ml.value='';
+ document.getElementById('loginerr').textContent='';}
 function tab(t){['res','qs','imp','mgr'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
  document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.dataset.t===t);});
  if(t==='mgr')renderMgr();}
@@ -386,26 +444,27 @@ function doEnroll(){
 // ===== Menejerlar (admin) =====
 function renderMgr(){
  if(!CURMGR||!CURMGR.admin){document.getElementById('mgr').innerHTML='<div class="card mut">Faqat admin uchun.</div>';return;}
- var rows=Object.keys(MGRS).map(function(k){var m=MGRS[k];return '<tr><td><b>'+esc(m.name||'')+'</b></td><td class="mut">PIN: '+esc(m.pin)+'</td><td>'+esc((m.sections||[]).map(function(s){return SECTIONS[s]?SECTIONS[s].name:s;}).join(', ')||'—')+'</td><td>'+(m.admin?'✅':'')+'</td><td><button class="btn sec sm" onclick="delMgr(\''+k+'\')" '+(k===CURMGR._key?'disabled':'')+'>🗑</button></td></tr>';}).join('');
+ var rows=Object.keys(MGRS).map(function(k){var m=MGRS[k];return '<tr><td><b>'+esc(m.name||'')+'</b></td><td class="mut">'+esc(m.login||'—')+'</td><td class="mut">'+esc(m.pin)+'</td><td>'+esc((m.sections||[]).map(function(s){return SECTIONS[s]?SECTIONS[s].name:s;}).join(', ')||'—')+'</td><td>'+(m.admin?'✅':'')+'</td><td><button class="btn sec sm" onclick="delMgr(\''+k+'\')" '+(k===CURMGR._key?'disabled':'')+'>🗑</button></td></tr>';}).join('');
  var checks=SECKEYS.map(function(s){return '<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" class="m_sec" value="'+s+'" style="width:auto"> '+SECTIONS[s].name+'</label>';}).join('');
  document.getElementById('mgr').innerHTML='<div class="card"><h3>Menejerlar</h3>'
-  +'<table><tr><th>Ism</th><th>PIN</th><th>Bo‘limlar</th><th>Admin</th><th></th></tr>'+rows+'</table></div>'
+  +'<table><tr><th>Ism</th><th>Login</th><th>Parol</th><th>Bo‘limlar</th><th>Admin</th><th></th></tr>'+rows+'</table></div>'
   +'<div class="card"><h3>➕ Yangi menejer</h3>'
   +'<label>Ism</label><input id="m_name">'
-  +'<label>PIN (kirish kodi)</label><input id="m_pin" inputmode="numeric">'
+  +'<label>Login (kirish nomi)</label><input id="m_login" autocomplete="off">'
+  +'<label>Parol</label><input id="m_pin" inputmode="numeric">'
   +'<label>Ruxsat berilgan bo‘limlar</label><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">'+checks+'</div>'
   +'<label style="text-transform:none;font-weight:600;display:flex;gap:6px;align-items:center;color:var(--ink);margin-top:10px"><input type="checkbox" id="m_admin" style="width:auto"> Admin (hamma bo‘lim + menejer boshqaruvi)</label>'
   +'<button class="btn" style="margin-top:14px" onclick="saveMgr()">💾 Saqlash</button><div id="mmsg" class="ok" style="margin-top:8px"></div></div>';
 }
 function saveMgr(){
- var name=document.getElementById('m_name').value.trim(),pin=document.getElementById('m_pin').value.trim();
- if(!name||!pin){alert('Ism va PIN kiriting');return;}
- for(var k in MGRS){if(String(MGRS[k].pin)===pin){alert('Bu PIN band — boshqasini tanlang');return;}}
+ var name=document.getElementById('m_name').value.trim(),login=document.getElementById('m_login').value.trim(),pin=document.getElementById('m_pin').value.trim();
+ if(!name||!login||!pin){alert('Ism, login va parol kiriting');return;}
+ for(var k in MGRS){if((MGRS[k].login||'').toLowerCase()===login.toLowerCase()){alert('Bu login band — boshqasini tanlang');return;}}
  var secs=[].slice.call(document.querySelectorAll('.m_sec:checked')).map(function(e){return e.value;});
  var admin=document.getElementById('m_admin').checked;if(admin)secs=SECKEYS.slice();
  if(!secs.length){alert('Kamida bitta bo‘lim tanlang');return;}
  var id='m'+Date.now();
- var rec={id:id,name:name,pin:pin,sections:secs,admin:admin,created:new Date().toISOString()};
+ var rec={id:id,name:name,login:login,pin:pin,sections:secs,admin:admin,created:new Date().toISOString()};
  dbWrite('/managers/'+id+'.json','PUT',JSON.stringify(rec)).then(function(){MGRS[id]=rec;document.getElementById('mmsg').textContent='✅ Saqlandi';renderMgr();}).catch(function(){document.getElementById('mmsg').textContent='❌ Xato';});
 }
 function delMgr(key){if(key===(CURMGR&&CURMGR._key)){alert('O‘zingizni o‘chira olmaysiz');return;}
