@@ -109,6 +109,34 @@ function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetProm
 // "Bizni qayerdan eshitdingiz" maydoni (har ikkala intake'da)
 function sourceField(){return '<div class="field"><label>Bizni qayerdan eshitdingiz?</label><select id="i_source"><option value="">Tanlang</option>'
  +['Instagram','Telegram','Tanishlar','Reklama banneri','Boshqa'].map(function(s){return '<option>'+s+'</option>';}).join('')+'</select></div>';}
+// O'zbekiston viloyatlari → tumanlar (kaskad)
+var UZB={
+ "Toshkent shahri":["Bektemir","Chilonzor","Mirobod","Mirzo Ulug'bek","Olmazor","Sergeli","Shayxontohur","Uchtepa","Yakkasaroy","Yashnobod","Yangihayot","Yunusobod"],
+ "Toshkent viloyati":["Angren","Bekobod","Bo'ka","Bo'stonliq","Chinoz","Chirchiq","Ohangaron","Olmaliq","Oqqo'rg'on","Parkent","Piskent","Qibray","Quyi Chirchiq","Nurafshon","O'rta Chirchiq","Toshkent tumani","Yangiyo'l","Yuqori Chirchiq","Zangiota"],
+ "Andijon viloyati":["Andijon shahri","Andijon tumani","Asaka","Baliqchi","Bo'z","Buloqboshi","Izboskan","Jalaquduq","Marhamat","Oltinko'l","Paxtaobod","Qo'rg'ontepa","Shahrixon","Ulug'nor","Xo'jaobod","Xonobod"],
+ "Buxoro viloyati":["Buxoro shahri","Buxoro tumani","G'ijduvon","Jondor","Kogon","Olot","Peshku","Qorako'l","Qorovulbozor","Romitan","Shofirkon","Vobkent"],
+ "Farg'ona viloyati":["Farg'ona shahri","Marg'ilon","Qo'qon","Quvasoy","Oltiariq","Bag'dod","Beshariq","Buvayda","Dang'ara","Farg'ona tumani","Furqat","Qo'shtepa","Quva","Rishton","So'x","Toshloq","Uchko'prik","Yozyovon"],
+ "Jizzax viloyati":["Jizzax shahri","Arnasoy","Baxmal","Do'stlik","Forish","G'allaorol","Mirzacho'l","Paxtakor","Sharof Rashidov","Yangiobod","Zafarobod","Zarbdor","Zomin"],
+ "Xorazm viloyati":["Urganch shahri","Xiva","Bog'ot","Gurlan","Hazorasp","Xonqa","Qo'shko'pir","Shovot","Urganch tumani","Yangiariq","Yangibozor","Tuproqqal'a"],
+ "Namangan viloyati":["Namangan shahri","Chortoq","Chust","Kosonsoy","Mingbuloq","Namangan tumani","Norin","Pop","To'raqo'rg'on","Uchqo'rg'on","Uychi","Yangiqo'rg'on","Davlatobod"],
+ "Navoiy viloyati":["Navoiy shahri","Zarafshon","Karmana","Konimex","Navbahor","Nurota","Qiziltepa","Tomdi","Uchquduq","Xatirchi"],
+ "Qashqadaryo viloyati":["Qarshi shahri","Shahrisabz","Chiroqchi","Dehqonobod","G'uzor","Kasbi","Kitob","Koson","Mirishkor","Muborak","Nishon","Qamashi","Qarshi tumani","Yakkabog'","Ko'kdala"],
+ "Qoraqalpog'iston":["Nukus shahri","Nukus tumani","Amudaryo","Beruniy","Chimboy","Ellikqal'a","Kegeyli","Mo'ynoq","Qanliko'l","Qo'ng'irot","Qorao'zak","Shumanay","Taxtako'pir","To'rtko'l","Xo'jayli","Bo'zatov"],
+ "Samarqand viloyati":["Samarqand shahri","Kattaqo'rg'on","Bulung'ur","Ishtixon","Jomboy","Qo'shrabot","Narpay","Nurobod","Oqdaryo","Past Darg'om","Paxtachi","Payariq","Samarqand tumani","Toyloq","Urgut"],
+ "Sirdaryo viloyati":["Guliston shahri","Yangiyer","Shirin","Boyovut","Mirzaobod","Oqoltin","Sayxunobod","Sardoba","Sirdaryo","Xovos","Guliston tumani","Sho'rko'l"],
+ "Surxondaryo viloyati":["Termiz shahri","Angor","Bandixon","Boysun","Denov","Jarqo'rg'on","Qiziriq","Qumqo'rg'on","Muzrabot","Oltinsoy","Sariosiyo","Sherobod","Sho'rchi","Termiz tumani","Uzun"]
+};
+// Viloyat → Tuman ikki bog'liq select
+function tumanField(){
+ var opts=Object.keys(UZB).map(function(v){return '<option>'+v+'</option>';}).join('');
+ return '<div class="field"><label>Viloyat / shahar</label><select id="i_viloyat" onchange="onViloyat()"><option value="">Tanlang</option>'+opts+'</select></div>'
+   +'<div class="field"><label>Tuman</label><select id="i_tuman" disabled><option value="">Avval viloyatni tanlang</option></select></div>';
+}
+window.onViloyat=function(){
+ var v=document.getElementById('i_viloyat').value;var t=document.getElementById('i_tuman');
+ if(!v||!UZB[v]){t.innerHTML='<option value="">Avval viloyatni tanlang</option>';t.disabled=true;return;}
+ t.innerHTML='<option value="">Tanlang</option>'+UZB[v].map(function(d){return '<option>'+d+'</option>';}).join('');t.disabled=false;
+};
 // Umumiy vaqt taymeri (savol soni × admin belgilagan daqiqa)
 var CLOCK='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 var timerIv=null;
@@ -155,7 +183,7 @@ function screenPrezInfo(){
  +[2,3,4,5,6].map(function(s){return '<div class="yo" style="text-align:center;padding:14px" onclick="pickSinf('+s+')">'+s+'</div>'}).join('')+'</div></div>'
  +'<div id="schoolwrap"></div>'
  +'<div class="field"><label>Ota-ona telefon</label><input id="i_tel" inputmode="tel" placeholder="+998"></div>'
- +'<div class="field"><label>Tuman / shahar</label><input id="i_tuman" autocomplete="off" placeholder="Masalan: Chilonzor, Toshkent"></div>'
+ +tumanField()
  +sourceField()
  +'<button class="btn" id="prezstart" onclick="startPrez()" disabled>Testni boshlash →</button>';
 }
@@ -177,7 +205,7 @@ window.startPrez=function(){
  var nm=document.getElementById('i_name').value.trim();if(!nm){alert('Ism familiyani kiriting');return;}
  var sinf=prezSel.sinf;
  state.info={name:nm,sinf:sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
-   tuman:document.getElementById('i_tuman').value.trim(),source:document.getElementById('i_source').value,
+   viloyat:document.getElementById('i_viloyat').value,tuman:document.getElementById('i_tuman').value,source:document.getElementById('i_source').value,
    branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
  function startSet(qs){state.qs=qs.slice().map(function(q){return applyOver(Object.assign({},q));});
    state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};startTimer();renderQ();}
@@ -212,7 +240,7 @@ function screenInfo(){
  +'<div class="field"><label>Sinf</label><select id="i_sinf"><option value="">Tanlang</option>'
  +[9,10,11].map(function(s){return '<option>'+s+'</option>'}).join('')+'<option>Bitiruvchi</option></select></div>'
  +'<div class="field"><label>Telefon</label><input id="i_tel" inputmode="tel" autocomplete="off" placeholder="+998"></div>'
- +'<div class="field"><label>Tuman / shahar</label><input id="i_tuman" autocomplete="off" placeholder="Masalan: Chilonzor, Toshkent"></div>'
+ +tumanField()
  +sourceField()
  +'<button class="btn" onclick="startTest()">Boshlash →</button>';
 }
@@ -220,7 +248,7 @@ window.startTest=function(){
  var nm=document.getElementById('i_name').value.trim();
  if(!nm){alert('Ism familiyani kiriting');return;}
  state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:document.getElementById('i_tel').value.trim(),
-   tuman:document.getElementById('i_tuman').value.trim(),source:document.getElementById('i_source').value,
+   viloyat:document.getElementById('i_viloyat').value,tuman:document.getElementById('i_tuman').value,source:document.getElementById('i_source').value,
    yon:state.yon.id,yon_name:state.yon.name,branch:state.branch,started:new Date().toISOString()};
  state.idx=0;startTimer();renderQ();
 };
