@@ -63,13 +63,22 @@ h1{font-family:'Sora','Manrope',sans-serif;font-size:27px;font-weight:800;letter
 .txtin:focus{outline:none;border-color:var(--emer);box-shadow:0 0 0 3px rgba(39,194,133,.18)}
 .center{text-align:center;padding:46px 18px}
 .big{font-size:60px}
-.hidden{display:none}
+.hidden{display:none!important}
 .note{font-size:12px;color:#6f80a0;margin-top:10px}
 mjx-container{color:var(--ink)}
+.timer{margin-left:auto;display:flex;align-items:center;gap:5px;background:rgba(224,187,99,.13);color:var(--gold);font-weight:800;font-size:14.5px;padding:6px 13px;border-radius:30px;border:1px solid rgba(224,187,99,.3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.timer svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.timer.warn{background:rgba(239,68,68,.16);color:#ff9b9b;border-color:rgba(239,68,68,.42)}
+.qnav{display:flex;flex-wrap:wrap;gap:7px;margin:2px 0 16px}
+.qn{width:35px;height:35px;border-radius:9px;border:1px solid var(--line);background:var(--surf2);color:var(--mut);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.12s}
+.qn:hover{border-color:rgba(255,255,255,.3)}
+.qn.ans{background:rgba(39,194,133,.16);color:#7fe3b6;border-color:rgba(39,194,133,.38)}
+.qn.cur{background:var(--emer);color:#04130c;border-color:var(--emer);box-shadow:0 4px 12px rgba(39,194,133,.3)}
 </style></head>
 <body>
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
+ <span class="timer hidden" id="timer"></span>
  <span class="flt" id="fbadge">Filial: …</span>
  <div class="gear" id="gear" title="Menejer (filial almashtirish)">⚙️</div>
 </div>
@@ -97,14 +106,39 @@ function managerMenu(){
  if(b==='3'&&isApk){AndroidKiosk.exitApp();}
 }
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
+// "Bizni qayerdan eshitdingiz" maydoni (har ikkala intake'da)
+function sourceField(){return '<div class="field"><label>Bizni qayerdan eshitdingiz?</label><select id="i_source"><option value="">Tanlang</option>'
+ +['Instagram','Telegram','Tanishlar','Reklama banneri','Boshqa'].map(function(s){return '<option>'+s+'</option>';}).join('')+'</select></div>';}
+// Umumiy vaqt taymeri (savol soni × admin belgilagan daqiqa)
+var CLOCK='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+var timerIv=null;
+function startTimer(){
+ if(!state.qs||!state.qs.length)return;
+ var per=state.minPerQ||2;
+ state.deadline=Date.now()+Math.round(state.qs.length*per*60000);
+ var t=document.getElementById('timer');if(t)t.classList.remove('hidden');
+ tickTimer();if(timerIv)clearInterval(timerIv);timerIv=setInterval(tickTimer,1000);
+}
+function tickTimer(){
+ var t=document.getElementById('timer');if(!t||state.deadline==null)return;
+ var rem=Math.max(0,state.deadline-Date.now());
+ var m=Math.floor(rem/60000),s=Math.floor((rem%60000)/1000);
+ t.innerHTML=CLOCK+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+ t.classList.toggle('warn',rem<=60000);
+ if(rem<=0){clearInterval(timerIv);timerIv=null;state.deadline=null;alert('Vaqt tugadi — test yakunlanmoqda.');finish();}
+}
+// xohlagan savolga o'tish
+window.gotoQ=function(i){saveTxt();state.idx=i;renderQ();};
 
 var DATA=null,OV={};
 function applyOver(q){var o=OV[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 Promise.all([
   fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
-  fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null})
+  fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null}),
+  fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return null})
 ]).then(function(a){
   DATA=a[0];OV=a[1]||{};
+  var st=a[2]||{};state.minPerQ=parseFloat(st.min_per_q)>0?parseFloat(st.min_per_q):2;  // har savolga daqiqa (admin sozlaydi, default 2)
   // apply menejer overrides (tahrirlangan savol/javob jonli)
   DATA.yonalishlar.forEach(function(y){y.questions.forEach(applyOver);});
   route();
@@ -121,6 +155,8 @@ function screenPrezInfo(){
  +[2,3,4,5,6].map(function(s){return '<div class="yo" style="text-align:center;padding:14px" onclick="pickSinf('+s+')">'+s+'</div>'}).join('')+'</div></div>'
  +'<div id="schoolwrap"></div>'
  +'<div class="field"><label>Ota-ona telefon</label><input id="i_tel" inputmode="tel" placeholder="+998"></div>'
+ +'<div class="field"><label>Tuman / shahar</label><input id="i_tuman" autocomplete="off" placeholder="Masalan: Chilonzor, Toshkent"></div>'
+ +sourceField()
  +'<button class="btn" id="prezstart" onclick="startPrez()" disabled>Testni boshlash →</button>';
 }
 var prezSel={sinf:null,school:null};
@@ -141,9 +177,10 @@ window.startPrez=function(){
  var nm=document.getElementById('i_name').value.trim();if(!nm){alert('Ism familiyani kiriting');return;}
  var sinf=prezSel.sinf;
  state.info={name:nm,sinf:sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
+   tuman:document.getElementById('i_tuman').value.trim(),source:document.getElementById('i_source').value,
    branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
  function startSet(qs){state.qs=qs.slice().map(function(q){return applyOver(Object.assign({},q));});
-   state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};renderQ();}
+   state.idx=0;state.ans={};state.yon={id:state.info.yon,name:state.info.yon_name,questions:state.qs};startTimer();renderQ();}
  if(sinf===2||sinf===3){
    // Olimpus bo'limi (2-3 sinf) — alohida yengilroq bank
    state.info.yon='olimpus_'+sinf;state.info.yon_name='Olimpus '+sinf+'-sinf';
@@ -175,20 +212,28 @@ function screenInfo(){
  +'<div class="field"><label>Sinf</label><select id="i_sinf"><option value="">Tanlang</option>'
  +[9,10,11].map(function(s){return '<option>'+s+'</option>'}).join('')+'<option>Bitiruvchi</option></select></div>'
  +'<div class="field"><label>Telefon</label><input id="i_tel" inputmode="tel" autocomplete="off" placeholder="+998"></div>'
+ +'<div class="field"><label>Tuman / shahar</label><input id="i_tuman" autocomplete="off" placeholder="Masalan: Chilonzor, Toshkent"></div>'
+ +sourceField()
  +'<button class="btn" onclick="startTest()">Boshlash →</button>';
 }
 window.startTest=function(){
  var nm=document.getElementById('i_name').value.trim();
  if(!nm){alert('Ism familiyani kiriting');return;}
  state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:document.getElementById('i_tel').value.trim(),
+   tuman:document.getElementById('i_tuman').value.trim(),source:document.getElementById('i_source').value,
    yon:state.yon.id,yon_name:state.yon.name,branch:state.branch,started:new Date().toISOString()};
- state.idx=0;renderQ();
+ state.idx=0;startTimer();renderQ();
 };
 function renderQ(){
  if(state.idx>=state.qs.length){return finish();}
  var q=state.qs[state.idx];var n=state.qs.length;
  var h='<div class="prog"><i style="width:'+Math.round(state.idx/n*100)+'%"></i></div>';
  h+='<div style="display:flex;justify-content:space-between;color:var(--mut);font-weight:800;font-size:13px;margin-bottom:8px"><span>Savol '+(state.idx+1)+' / '+n+'</span><span>'+(q.fan||'')+'</span></div>';
+ // savol navigatori — xohlagan savolga o'tish
+ h+='<div class="qnav">';
+ for(var ni=0;ni<n;ni++){var qq=state.qs[ni];var done=state.ans[qq.id]!=null&&state.ans[qq.id]!=='';
+   h+='<div class="qn'+(ni===state.idx?' cur':(done?' ans':''))+'" onclick="gotoQ('+ni+')">'+(ni+1)+'</div>';}
+ h+='</div>';
  h+='<div class="qcard"><div class="qh"><span class="pill">'+(q.fan||'')+'</span></div>';
  if(q.img){h+='<img src="'+q.img+'" style="max-width:100%;border-radius:10px;margin:6px 0">';}
  else{h+='<div class="qtext">'+(q.text||'')+'</div>';}
@@ -212,6 +257,8 @@ window.prevQ=function(){saveTxt();if(state.idx>0){state.idx--;renderQ();}};
 window.nextQ=function(){saveTxt();state.idx++;renderQ();};
 function saveTxt(){var t=document.getElementById('txtans');if(t)state.ans[state.qs[state.idx].id]=t.value.trim();}
 function finish(){
+ if(timerIv){clearInterval(timerIv);timerIv=null;}state.deadline=null;
+ var tm=document.getElementById('timer');if(tm)tm.classList.add('hidden');
  var correct=0,graded=0;
  state.qs.forEach(function(q){ var o=q.options||{}; if(q.correct&&o[q.correct]!==undefined){graded++; if(state.ans[q.id]===q.correct)correct++;} });
  var ansd=Object.keys(state.ans).length;
