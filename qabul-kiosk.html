@@ -4,8 +4,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#070d1c">
-<script>window.MathJax={tex:{inlineMath:[['$','$']]},svg:{fontCache:'global'}};</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>window.MathJax={tex:{inlineMath:[['$','$']]},svg:{fontCache:'global'},startup:{typeset:false}};</script>
+<script src="./mathjax/tex-svg.js"></script>
 <style>
 :root{
   --bg:#070d1c;--surf:rgba(17,28,54,.72);--surf2:#0e1a34;--card:#0f1c38;
@@ -74,8 +74,30 @@ mjx-container{color:var(--ink)}
 .qn:hover{border-color:rgba(255,255,255,.3)}
 .qn.ans{background:rgba(39,194,133,.16);color:#7fe3b6;border-color:rgba(39,194,133,.38)}
 .qn.cur{background:var(--emer);color:#04130c;border-color:var(--emer);box-shadow:0 4px 12px rgba(39,194,133,.3)}
+/* form maydonlarini ikki ustunga ajratish uchun (albom) */
+.fgrid{display:grid;gap:0 18px}
+/* savol karta ichi: matn | variantlar */
+.qbody{display:block}
+/* qotirilgan +998 prefiksli telefon maydoni */
+.telwrap{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:12px;background:var(--surf2);overflow:hidden;transition:.15s}
+.telwrap:focus-within{border-color:var(--emer);box-shadow:0 0 0 3px rgba(39,194,133,.18)}
+.telwrap .telpfx{display:flex;align-items:center;padding:0 13px;font-size:16px;font-weight:800;color:var(--emer);background:rgba(39,194,133,.10);border-right:1px solid var(--line);white-space:nowrap;user-select:none}
+.telwrap .telinp{flex:1;width:100%;padding:14px;border:none;background:transparent;color:var(--ink);font-size:16px;outline:none;letter-spacing:1px}
+.telwrap .telinp::placeholder{color:#5d6e8c;letter-spacing:normal}
+/* === ALBOM (landscape) rejimi — planshet yotiq ushlanganda === */
+@media(orientation:landscape) and (min-width:900px){
+  .wrap{max-width:1180px;padding-top:18px}
+  h1{font-size:30px}
+  .grid{grid-template-columns:repeat(3,1fr)}        /* yo'nalishlar 3 ustun */
+  .fgrid{grid-template-columns:1fr 1fr}             /* intake maydonlari 2 ustun */
+  .qbody{display:grid;grid-template-columns:1.05fr 1fr;gap:6px 30px;align-items:start}
+  .qbody .qtext{margin-top:0}
+  .qbody img{margin-top:0}
+  .qopts{position:sticky;top:84px}                  /* variantlar ko'rinib tursin */
+}
 </style></head>
 <body>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>3&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
  <span class="timer hidden" id="timer"></span>
@@ -88,6 +110,7 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write — ma'lumot yo'qolmasin)
 var EXIT_PIN="2024";
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=3; // build versiyasi — version.json bilan sinxron
 var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
 var app=document.getElementById('app');
 var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};
@@ -98,17 +121,51 @@ document.getElementById('gear').addEventListener('click',managerMenu);
 function managerMenu(){
  var pin=prompt('Menejer PIN:');if(pin!==EXIT_PIN)return;
  var isApk=!!(window.AndroidKiosk&&AndroidKiosk.exitApp);
- var msg='1 - Abituriyent filiali\n2 - Prezident maktabi filiali';
+ var msg='1 - Abituriyent filiali\n2 - Prezident maktabi filiali\n4 - 🔄 Yangilanishni yuklash'+(window._updAvail?' (YANGI BOR!)':'');
  if(isApk)msg+='\n3 - Ilovadan chiqish (kiosk qulfini yechish)';
  var b=prompt(msg+'\n(bekor: yopish)');
  if(b==='1'){localStorage.setItem('zq_branch','abituriyent');location.reload();}
  if(b==='2'){localStorage.setItem('zq_branch','prezident');location.reload();}
  if(b==='3'&&isApk){AndroidKiosk.exitApp();}
+ if(b==='4'){doUpdate();}
+}
+// ===== OTA: webdan yangilanishni tortib olish (oflayn ham ishlaydi) =====
+function curVer(){return Math.max(APP_VER,parseInt(localStorage.getItem('zq_ota_ver')||'0',10));}
+// keshdagi (yuklangan) bankni afzal ko'r, bo'lmasa ichidagi (bundled) fayl
+function loadJSON(name){var ov=localStorage.getItem('zq_ota_'+name);if(ov){try{return Promise.resolve(JSON.parse(ov));}catch(e){}}return fetch('./'+name+'?v='+Date.now()).then(function(r){return r.json();});}
+function checkUpdate(){ if(!navigator.onLine)return;
+ fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
+   var rv=parseInt(d.version,10)||0;
+   if(rv>curVer()){window._updAvail=rv;var g=document.getElementById('gear');if(g){g.style.boxShadow='0 0 0 2px #ef4444';g.title='Yangilanish bor — ⚙️ → 4';}}
+ }).catch(function(){});
+}
+function doUpdate(){
+ if(!navigator.onLine){alert('Internet yo‘q — yangilash uchun ulanish kerak.');return;}
+ alert('⏳ Yangilanish yuklanmoqda...');
+ var files=['qabul-kiosk.html','qabul_questions.json','prezident_math30.json','olimpus_questions.json','prezident_ibnsino.json'];
+ Promise.all(files.map(function(f){return fetch(OTA_BASE+'/'+f+'?t='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.text();});}))
+  .then(function(t){
+    localStorage.setItem('zq_ota_html',t[0]);
+    localStorage.setItem('zq_ota_qabul_questions.json',t[1]);
+    localStorage.setItem('zq_ota_prezident_math30.json',t[2]);
+    localStorage.setItem('zq_ota_olimpus_questions.json',t[3]);
+    localStorage.setItem('zq_ota_prezident_ibnsino.json',t[4]);
+    return fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();});
+  }).then(function(d){
+    localStorage.setItem('zq_ota_ver',String(parseInt(d.version,10)||0));
+    alert('✅ Yangilandi! Ilova qayta ochiladi.');location.reload();
+  }).catch(function(){alert('❌ Yangilashda xato — internetni tekshiring.');});
 }
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 // "Bizni qayerdan eshitdingiz" maydoni (har ikkala intake'da)
 function sourceField(){return '<div class="field"><label>Bizni qayerdan eshitdingiz?</label><select id="i_source"><option value="">Tanlang</option>'
  +['Instagram','Telegram','Tanishlar','Reklama banneri','Boshqa'].map(function(s){return '<option>'+s+'</option>';}).join('')+'</select></div>';}
+// Telefon maydoni — +998 qotirilgan prefiks, faqat 9 raqam kiritiladi
+function telField(label){return '<div class="field"><label>'+label+'</label>'
+ +'<div class="telwrap"><span class="telpfx">+998</span>'
+ +'<input id="i_tel" class="telinp" inputmode="numeric" maxlength="9" autocomplete="off" placeholder="90 123 45 67" '
+ +'oninput="this.value=this.value.replace(/\\D/g,\'\').slice(0,9)"></div></div>';}
+function readTel(){var v=((document.getElementById('i_tel')||{}).value||'').replace(/\D/g,'');return v?'+998'+v:'';}
 // O'zbekiston viloyatlari → tumanlar (kaskad)
 var UZB={
  "Toshkent shahri":["Bektemir","Chilonzor","Mirobod","Mirzo Ulug'bek","Olmazor","Sergeli","Shayxontohur","Uchtepa","Yakkasaroy","Yashnobod","Yangihayot","Yunusobod"],
@@ -160,8 +217,9 @@ window.gotoQ=function(i){saveTxt();state.idx=i;renderQ();};
 
 var DATA=null,OV={};
 function applyOver(q){var o=OV[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
+checkUpdate(); // ochilganda jim yangilanish bor-yo'qligini tekshir
 Promise.all([
-  fetch('./qabul_questions.json?v='+Date.now()).then(function(r){return r.json()}),
+  loadJSON('qabul_questions.json'),
   fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null}),
   fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return null})
 ]).then(function(a){
@@ -182,9 +240,11 @@ function screenPrezInfo(){
  +'<div class="field"><label>Nechinchi sinf?</label><div id="sinfgrid" class="grid" style="grid-template-columns:repeat(5,1fr)">'
  +[2,3,4,5,6].map(function(s){return '<div class="yo" style="text-align:center;padding:14px" onclick="pickSinf('+s+')">'+s+'</div>'}).join('')+'</div></div>'
  +'<div id="schoolwrap"></div>'
- +'<div class="field"><label>Ota-ona telefon</label><input id="i_tel" inputmode="tel" placeholder="+998"></div>'
+ +'<div class="fgrid">'
+ +telField('Ota-ona telefon')
  +tumanField()
  +sourceField()
+ +'</div>'
  +'<button class="btn" id="prezstart" onclick="startPrez()" disabled>Testni boshlash →</button>';
 }
 var prezSel={sinf:null,school:null};
@@ -204,7 +264,7 @@ function checkPrez(){document.getElementById('prezstart').disabled=!(prezSel.sin
 window.startPrez=function(){
  var nm=document.getElementById('i_name').value.trim();if(!nm){alert('Ism familiyani kiriting');return;}
  var sinf=prezSel.sinf;
- state.info={name:nm,sinf:sinf,school:prezSel.school,tel:document.getElementById('i_tel').value.trim(),
+ state.info={name:nm,sinf:sinf,school:prezSel.school,tel:readTel(),
    viloyat:document.getElementById('i_viloyat').value,tuman:document.getElementById('i_tuman').value,source:document.getElementById('i_source').value,
    branch:'prezident',yon:'prezident_'+prezSel.school,yon_name:'Prezident maktabi ('+prezSel.school+')',started:new Date().toISOString()};
  function startSet(qs){state.qs=qs.slice().map(function(q){return applyOver(Object.assign({},q));});
@@ -212,12 +272,17 @@ window.startPrez=function(){
  if(sinf===2||sinf===3){
    // Olimpus bo'limi (2-3 sinf) — alohida yengilroq bank
    state.info.yon='olimpus_'+sinf;state.info.yon_name='Olimpus '+sinf+'-sinf';
-   fetch('./olimpus_questions.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
+   loadJSON('olimpus_questions.json').then(function(d){
      var set=(d.sinflar&&d.sinflar[String(sinf)])||{questions:[]};startSet(set.questions);
    }).catch(function(){app.innerHTML='<div class="center">Savollar yuklanmadi.</div>';});
+ } else if(prezSel.school==='ibn_sino'){
+   // Ibn Sino (5-6 sinf) — Biologiya + Ingliz tili banki
+   loadJSON('prezident_ibnsino.json').then(function(d){
+     startSet(d.questions);
+   }).catch(function(){app.innerHTML='<div class="center">Savollar yuklanmadi.</div>';});
  } else {
-   // 4-5-6 sinf — Prezident maktabi 30 savol
-   fetch('./prezident_math30.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){
+   // 4-sinf prezident yoki Mirzo Ulug'bek (5-6) — matematika 30 savol
+   loadJSON('prezident_math30.json').then(function(d){
      startSet(d.questions);
    }).catch(function(){app.innerHTML='<div class="center">Savollar yuklanmadi.</div>';});
  }
@@ -236,18 +301,20 @@ window.pickYon=function(id){
 };
 function screenInfo(){
  app.innerHTML='<h1>'+state.yon.name+'</h1><div class="sub">Maʼlumotlaringizni kiriting</div>'
+ +'<div class="fgrid">'
  +'<div class="field"><label>Ism familiya</label><input id="i_name" autocomplete="off"></div>'
  +'<div class="field"><label>Sinf</label><select id="i_sinf"><option value="">Tanlang</option>'
  +[9,10,11].map(function(s){return '<option>'+s+'</option>'}).join('')+'<option>Bitiruvchi</option></select></div>'
- +'<div class="field"><label>Telefon</label><input id="i_tel" inputmode="tel" autocomplete="off" placeholder="+998"></div>'
+ +telField('Telefon')
  +tumanField()
  +sourceField()
+ +'</div>'
  +'<button class="btn" onclick="startTest()">Boshlash →</button>';
 }
 window.startTest=function(){
  var nm=document.getElementById('i_name').value.trim();
  if(!nm){alert('Ism familiyani kiriting');return;}
- state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:document.getElementById('i_tel').value.trim(),
+ state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:readTel(),
    viloyat:document.getElementById('i_viloyat').value,tuman:document.getElementById('i_tuman').value,source:document.getElementById('i_source').value,
    yon:state.yon.id,yon_name:state.yon.name,branch:state.branch,started:new Date().toISOString()};
  state.idx=0;startTimer();renderQ();
@@ -263,8 +330,10 @@ function renderQ(){
    h+='<div class="qn'+(ni===state.idx?' cur':(done?' ans':''))+'" onclick="gotoQ('+ni+')">'+(ni+1)+'</div>';}
  h+='</div>';
  h+='<div class="qcard"><div class="qh"><span class="pill">'+(q.fan||'')+'</span></div>';
+ h+='<div class="qbody"><div class="qstem">';
  if(q.img){h+='<img src="'+q.img+'" style="max-width:100%;border-radius:10px;margin:6px 0">';}
  else{h+='<div class="qtext">'+(q.text||'')+'</div>';}
+ h+='</div><div class="qopts">';
  var hasOpts=q.options&&Object.keys(q.options).length>=2;
  if(hasOpts){
    ['A','B','C','D'].forEach(function(L){ if(q.options[L]===undefined)return;
@@ -274,7 +343,7 @@ function renderQ(){
  } else {
    h+='<input class="txtin" id="txtans" placeholder="Javobingiz..." value="'+(state.ans[q.id]||'')+'">';
  }
- h+='</div>';
+ h+='</div></div></div>';
  h+='<div style="display:flex;gap:10px;margin-top:16px">'
   +(state.idx>0?'<button class="btn sec" style="flex:.5" onclick="prevQ()">← Orqaga</button>':'')
   +'<button class="btn" style="flex:1" onclick="nextQ()">'+(state.idx===n-1?'Yakunlash ✓':'Keyingi →')+'</button></div>';
@@ -292,15 +361,38 @@ function finish(){
  var ansd=Object.keys(state.ans).length;
  var rec={info:state.info,answers:state.ans,answered:ansd,total:state.qs.length,
    graded:graded,correct:correct,finished:new Date().toISOString()};
- // save to Firebase (REST) — ikkala bazaga ham (dual-write)
- var body=JSON.stringify(rec);
- fetch(DB+'/sessions.json',{method:'POST',body:body}).catch(function(){});
- fetch(DB2+'/sessions.json',{method:'POST',body:body}).catch(function(){});
+ // OFFLINE-NAVBAT: avval telefon xotirasiga yoz, keyin yuborishga urin (internet yo'q bo'lsa saqlanib turadi)
+ queueRec(rec);
+ var pend=flushOutbox();  // hozir yuborishga urinadi; qaytaradi: navbatda qolgan soni
+ var sent=(pend===0&&navigator.onLine);
  app.innerHTML='<div class="center"><div class="big">🎉</div><h1>Rahmat!</h1>'
   +'<p class="sub">'+state.info.name+', testni yakunladingiz.</p>'
   +'<div style="font-size:18px;font-weight:800;margin:10px 0">Javob berilgan: '+ansd+' / '+state.qs.length+'</div>'
   +(graded?'<div style="color:var(--g);font-weight:800">Avtomat baholangan: '+correct+' / '+graded+' to‘g‘ri</div>':'')
-  +'<div class="note">Natija qabul menejeriga yuborildi.</div>'
+  +'<div class="note" id="sendnote">'+(sent?'✅ Natija qabul menejeriga yuborildi.':'📥 Natija telefon xotirasida saqlandi — internet ulanishi bilan avtomat yuboriladi.')+'</div>'
   +'<button class="btn" style="max-width:320px;margin:20px auto 0" onclick="location.reload()">Yangi test</button></div>';
 }
+// ===== Offline-navbat (outbox): natija yo'qolmaydi =====
+function outbox(){try{return JSON.parse(localStorage.getItem('zq_outbox')||'[]');}catch(e){return [];}}
+function setOutbox(a){try{localStorage.setItem('zq_outbox',JSON.stringify(a));}catch(e){}}
+function queueRec(rec){var a=outbox();a.push({id:'r'+Date.now()+'_'+Math.floor(Math.random()*1e6),rec:rec});setOutbox(a);}
+// Navbatni ketma-ket yuboradi; qaytaradi: hali navbatda qolgan yozuvlar soni
+function flushOutbox(){
+ var a=outbox();
+ if(!a.length||!navigator.onLine||window._flushing)return a.length;
+ window._flushing=true;
+ var item=a[0];var body=JSON.stringify(item.rec);
+ fetch(DB+'/sessions.json',{method:'POST',body:body}).then(function(r){
+   if(!r.ok)throw 0;
+   fetch(DB2+'/sessions.json',{method:'POST',body:body}).catch(function(){}); // zaxira baza — muvaffaqiyat shart emas
+   var cur=outbox();cur.shift();setOutbox(cur);
+   window._flushing=false;
+   var note=document.getElementById('sendnote');if(note&&!cur.length)note.innerHTML='✅ Natija qabul menejeriga yuborildi.';
+   if(cur.length)flushOutbox(); // keyingisini yubor
+ }).catch(function(){window._flushing=false;}); // tarmoq yo'q — keyinroq qayta urinadi
+ return a.length;
+}
+window.addEventListener('online',flushOutbox);
+setInterval(function(){if(outbox().length)flushOutbox();},30000); // har 30s qolgan navbatni tekshir
+flushOutbox(); // ilova ochilganda qolgan yozuvlarni yubor
 </script></body></html>

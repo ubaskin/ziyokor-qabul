@@ -1,0 +1,571 @@
+{
+ "version": 1,
+ "branch": "prezident",
+ "test": "ibn_sino_bio_eng_40",
+ "school": "ibn_sino",
+ "count": 40,
+ "questions": [
+  {
+   "id": "ibs-q001",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Nazorat qilinadigan tajribada qanday omillar hisobga olinadi?",
+   "options": {
+    "A": "Mustaqil, bog‘liq va nazorat qilinadigan o‘zgaruvchilar",
+    "B": "Faqat mustaqil o‘zgaruvchi",
+    "C": "Faqat bog‘liq o‘zgaruvchi",
+    "D": "Hech qanday o‘zgaruvchi hisobga olinmaydi"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q002",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Ilmiy tadqiqotlar qanday natijaga olib keladi?",
+   "options": {
+    "A": "Shaxsiy fikrlarni isbotlash",
+    "B": "Fan sohasida yangi tushunchalar yaratish",
+    "C": "Ilmiy bilimlarni kengaytirish va rivojlantirish",
+    "D": "Tajribalarning oldindan rejalashtirilgan natijalarini tasdiqlash"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q003",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Ovqat hazm qilish jarayoni qanday bosqichlardan iborat?",
+   "options": {
+    "A": "Faqat mexanik parchalanish",
+    "B": "Mexanik va kimyoviy parchalanish",
+    "C": "Faqat fermentativ parchalanish",
+    "D": "Faqat oshqozonda sodir bo‘ladigan jarayon"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q004",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Oshqozon qanday vazifani bajaradi?",
+   "options": {
+    "A": "Faqat ovqatni saqlaydi",
+    "B": "Ovqatni kimyoviy parchalashga tayyorlaydi",
+    "C": "Oziq moddalarni qonga o‘tkazadi",
+    "D": "Ichaklarga suv yuboradi"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q005",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Ichaklarda oziq moddalar qanday so‘riladi?",
+   "options": {
+    "A": "Faqat fermentlar yordamida",
+    "B": "Qon tomirlari orqali organizmga so‘riladi",
+    "C": "Me’da shirasining ta’siri bilan",
+    "D": "Ovqat mexanik ezilib, avtomatik so‘riladi"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q006",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Ovqat hazm qilish sistemasi tarkibiga qaysi organ kirmaydi?",
+   "options": {
+    "A": "Ichak",
+    "B": "Yurak",
+    "C": "Oshqozon",
+    "D": "Jig‘ildon"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q007",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Organizmda energiya manbai bo‘lib xizmat qiluvchi moddalar qaysilar?",
+   "options": {
+    "A": "Vitaminlar",
+    "B": "Uglevodlar va yog‘lar",
+    "C": "Suv",
+    "D": "Mineral moddalar"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q008",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Yuqumli kasalliklarning asosiy sababi nima?",
+   "options": {
+    "A": "Havoning ifloslanishi",
+    "B": "Virus va bakteriyalarning tarqalishi",
+    "C": "Haddan tashqari ovqatlanish",
+    "D": "Quruq havo"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q009",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Immunitet nima?",
+   "options": {
+    "A": "Organizmning kasalliklarga qarshi kurashish qobiliyati",
+    "B": "Barcha kasalliklardan himoyalanish vositasi",
+    "C": "Faqat yuqumli kasalliklarga qarshi tizim",
+    "D": "Dori vositalari orqali hosil bo‘ladigan himoya"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q010",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Qaysi organ immun tizimida asosiy rol o‘ynaydi?",
+   "options": {
+    "A": "Yurak",
+    "B": "Limfa tugunlari va taloq",
+    "C": "Me’da",
+    "D": "O‘pka"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q011",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Kasalliklarning oldini olish uchun eng yaxshi chora nima?",
+   "options": {
+    "A": "Tez-tez dori ichish",
+    "B": "Doim qo‘l yuvish",
+    "C": "Vaksina olish",
+    "D": "Uyda ko‘proq qolish"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q012",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Moddalarning erish jarayoni qanday ta’riflanadi?",
+   "options": {
+    "A": "Moddaning suyuqlikda butunlay yo‘qolishi",
+    "B": "Eruvchi modda zarralarining erituvchi zarralari orasida bir tekis taqsimlanishi",
+    "C": "Moddaning fizik xossalarini yo‘qotishi",
+    "D": "Erituvchi moddaning bug‘lanishi"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q013",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Erish tezligi nimaga bog‘liq?",
+   "options": {
+    "A": "Faqat erituvchining hajmiga",
+    "B": "Erituvchining haroratiga va moddaning maydalanganlik darajasiga",
+    "C": "Erituvchining bosimiga",
+    "D": "Erigan moddaning massasiga"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q014",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Qanday modda suvda erimaydi?",
+   "options": {
+    "A": "Tuz",
+    "B": "Yog‘",
+    "C": "Qand",
+    "D": "Soda"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q015",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Erish jarayoni qanday jarayonga kiradi?",
+   "options": {
+    "A": "Kimyoviy jarayon",
+    "B": "Fizik jarayon",
+    "C": "Biologik jarayon",
+    "D": "Termodinamik jarayon"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q016",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Moddalarning asosiy fizik xossalari qaysilar?",
+   "options": {
+    "A": "Rangi va shakli",
+    "B": "Shakl, hajm, ko’rinish",
+    "C": "Faqat agregat holati",
+    "D": "Elektromagnit maydoni"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q017",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Moddaning zichligi qanday hisoblanadi?",
+   "options": {
+    "A": "Massa hajmga bo‘linadi",
+    "B": "Hajm massasiga bo‘linadi",
+    "C": "Harorat zichlikka bo‘linadi",
+    "D": "Moddaning suyuqlanish harorati hisoblanadi"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q018",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Moddaning agregat holatlari qaysilar?",
+   "options": {
+    "A": "Qattiq, suyuq, gaz",
+    "B": "Faqat qattiq va suyuq",
+    "C": "Gaz va bug‘",
+    "D": "Ion va plazma"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q019",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Gazlar qattiq moddalarga nisbatan qanday xususiyatga ega?",
+   "options": {
+    "A": "Oson shaklini saqlaydi",
+    "B": "Oson siqiladi va hajmni egallaydi",
+    "C": "Suvga aralashadi",
+    "D": "Harorat ta’sirida hajmni o‘zgartirmaydi"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q020",
+   "fan": "Biologiya",
+   "type": "mcq",
+   "text": "Qanday modda elektr tokini yaxshi o‘tkazadi?",
+   "options": {
+    "A": "Plastmassa",
+    "B": "Yog‘och",
+    "C": "Mis",
+    "D": "Shisha"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q021",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Put on a warm _____ before you go out; it’s freezing today.",
+   "options": {
+    "A": "shorts",
+    "B": "dress",
+    "C": "shirt",
+    "D": "jumper"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q022",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Let’s meet at the tennis _____ after lunch.",
+   "options": {
+    "A": "pitch",
+    "B": "field",
+    "C": "track",
+    "D": "court"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q023",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Tom managed to _____ two points in the basketball game.",
+   "options": {
+    "A": "score",
+    "B": "hit",
+    "C": "throw",
+    "D": "kick"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q024",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "We saw lions and elephants when we went to the _____.",
+   "options": {
+    "A": "museum",
+    "B": "aquarium",
+    "C": "zoo",
+    "D": "cinema"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q025",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "I need to buy new _____ for my windows.",
+   "options": {
+    "A": "pillows",
+    "B": "carpets",
+    "C": "cushions",
+    "D": "curtains"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q026",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Mr Brown and his _____ are celebrating their wedding anniversary next week.",
+   "options": {
+    "A": "niece",
+    "B": "wife",
+    "C": "aunt",
+    "D": "daughter"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q027",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "My brother is quite _____ because he does a lot of exercise.",
+   "options": {
+    "A": "fat",
+    "B": "plump",
+    "C": "slim",
+    "D": "short"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q028",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "You have ten _____ on your hands altogether.",
+   "options": {
+    "A": "toes",
+    "B": "arms",
+    "C": "knees",
+    "D": "fingers"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q029",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "The weather is _____ today; I can’t see the buildings because of the thick grey air.",
+   "options": {
+    "A": "rainy",
+    "B": "foggy",
+    "C": "cloudy",
+    "D": "snowy"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q030",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "We travel by _____ to reach the island across the sea.",
+   "options": {
+    "A": "ship",
+    "B": "train",
+    "C": "bus",
+    "D": "car"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q031",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "_____ is the boy playing basketball over there?",
+   "options": {
+    "A": "What",
+    "B": "Where",
+    "C": "When",
+    "D": "Who"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q032",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Do you want to play football with _____?",
+   "options": {
+    "A": "she",
+    "B": "our",
+    "C": "us",
+    "D": "we"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q033",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Amy and Kim _____ best friends.",
+   "options": {
+    "A": "am",
+    "B": "are",
+    "C": "is",
+    "D": "isn’t"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q034",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "The Masons live there and the red car outside is _____.",
+   "options": {
+    "A": "theirs",
+    "B": "mine",
+    "C": "hers",
+    "D": "yours"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q035",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Let’s buy _____ flowers for Mum.",
+   "options": {
+    "A": "any",
+    "B": "a",
+    "C": "an",
+    "D": "some"
+   },
+   "correct": "D",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q036",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Is _____ your brother in front of the post office?",
+   "options": {
+    "A": "that",
+    "B": "this",
+    "C": "these",
+    "D": "those"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q037",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "I’m standing _____ Jack in the photo, so you can’t see me.",
+   "options": {
+    "A": "between",
+    "B": "under",
+    "C": "behind",
+    "D": "opposite"
+   },
+   "correct": "C",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q038",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "We live quite close to the school and we always go _____ foot.",
+   "options": {
+    "A": "on",
+    "B": "by",
+    "C": "in",
+    "D": "at"
+   },
+   "correct": "A",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q039",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "Our teacher says that _____ Nile is a very long river.",
+   "options": {
+    "A": "a",
+    "B": "the",
+    "C": "–",
+    "D": "an"
+   },
+   "correct": "B",
+   "needs_review": false
+  },
+  {
+   "id": "ibs-q040",
+   "fan": "Ingliz tili",
+   "type": "mcq",
+   "text": "I usually get up _____ 7 o’clock in the morning.",
+   "options": {
+    "A": "at",
+    "B": "in",
+    "C": "from",
+    "D": "on"
+   },
+   "correct": "A",
+   "needs_review": false
+  }
+ ],
+ "updated": "2026-06-19",
+ "note": "Ibn Sino (5-6 sinf): 20 Biologiya + 20 Ingliz tili. Manba DOCX verbatim ko'chirildi, javob kaliti AI yechdi (2026-06-19)."
+}
