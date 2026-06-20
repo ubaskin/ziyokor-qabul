@@ -124,7 +124,7 @@ h3 .ic{color:var(--emer);vertical-align:-3px;margin-right:6px}
 body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 @keyframes auroraFloat{0%{transform:scale(1.06) translateY(0)}100%{transform:scale(1.13) translateY(-16px)}}
 </style></head><body>
-<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa o'shani ishlat */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>5&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa o'shani ishlat */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>6&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div id="login" class="lwrap">
  <div class="login-card">
   <div class="login-lock"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/><path d="M12 15v2"/></svg></div>
@@ -170,7 +170,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M12 5v14"/><path d="M5 12h14"/></svg>talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
 <div id="umodal" class="tmodal hidden"><div class="card" style="max-width:430px"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Dastur yangilanishi</h3><div id="ubody"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=5; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=6; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -361,7 +361,7 @@ function fanBreakdown(s){var byFan={};
 }
 function esc(x){return (x==null?'':String(x)).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 function phoneDigits(p){return (p||'').replace(/\D/g,'');}
-var FSTATUS='all',FSEARCH='';
+var FSTATUS='all',FSEARCH='';var FDATE={from:'',to:''};
 var STATUSES=['yangi',"bog'lanildi",'yozildi','rad etdi'];
 function statusOf(s){return s.status||'yangi';}
 function allRows(){return Object.keys(SESS||{}).map(function(k){var v=SESS[k]||{};v._key=k;return v;}).filter(inBranch)
@@ -380,17 +380,23 @@ function renderRes(){
  h+='<div class="card" style="padding:12px;margin:8px 0"><div class="row">'
    +'<div class="fsrch">'+IC.search+'<input id="fsearch" placeholder="Ism / telefon / yo‘nalish" value="'+FSEARCH.replace(/"/g,'&quot;')+'"></div>'
    +'<select id="fstatus"><option value="all">Barcha holat</option>'+STATUSES.map(function(s){return '<option '+(FSTATUS===s?'selected':'')+'>'+s+'</option>';}).join('')+'</select>'
-   +'<button class="btn sec" style="flex:0 0 auto" onclick="exportCsv()">'+IC.dl+'Excel</button>'
+   +'<input type="date" id="f_from" title="Sana: dan" style="flex:0 0 auto;width:auto" value="'+(FDATE.from||'')+'">'
+   +'<input type="date" id="f_to" title="Sana: gacha" style="flex:0 0 auto;width:auto" value="'+(FDATE.to||'')+'">'
+   +'<button class="btn sec" style="flex:0 0 auto" onclick="exportXls()">'+IC.dl+'Excel</button>'
    +'</div></div><div id="cardwrap"></div><div id="anal"></div>';
  el.innerHTML=h;
  var fs=document.getElementById('fsearch');fs.oninput=function(){FSEARCH=this.value;renderCards();};
  document.getElementById('fstatus').onchange=function(){FSTATUS=this.value;renderCards();};
+ var ff=document.getElementById('f_from'),ft=document.getElementById('f_to');
+ if(ff)ff.onchange=function(){FDATE.from=this.value;renderCards();};
+ if(ft)ft.onchange=function(){FDATE.to=this.value;renderCards();};
  renderCards();
 }
 function renderCards(){
  var wrap=document.getElementById('cardwrap');if(!wrap)return;
  var rows=allRows().filter(function(s){
    if(FSTATUS!=='all'&&statusOf(s)!==FSTATUS)return false;
+   if(!inDate(s))return false;
    if(FSEARCH){var inf=s.info||{};var blob=((inf.name||'')+' '+(inf.tel||'')+' '+(inf.yon_name||'')).toLowerCase();if(blob.indexOf(FSEARCH.toLowerCase())<0)return false;}
    return true;});
  window._rows=rows;
@@ -428,13 +434,47 @@ function setStatus(key,val){if(RO())return;if(SESS[key])SESS[key].status=val;dbW
 function saveNote(key,val){if(RO())return;if(SESS[key])SESS[key].note=val;dbWrite('/sessions/'+key+'/note.json','PUT',JSON.stringify(val));}
 function delLead(key){if(RO())return;if(!confirm('Bu natijani o‘chirasizmi? (qaytarib bo‘lmaydi)'))return;
  dbWrite('/sessions/'+key+'.json','DELETE');delete SESS[key];renderRes();}
-function exportCsv(){
- var rows=window._rows||[];var lines=['Ism,Yo‘nalish,Sinf,Telefon,Viloyat,Tuman,Manba,Ball,Foiz,Holat,Izoh,Sana'];
- rows.forEach(function(s){var inf=s.info||{};var pct=s.graded?Math.round(s.correct/s.graded*100):'';
-   function c(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"';}
-   lines.push([c(inf.name),c(inf.yon_name),c(inf.sinf),c(inf.tel),c(inf.viloyat),c(inf.tuman),c(inf.source),c(s.graded?s.correct+'/'+s.graded:''),c(pct),c(statusOf(s)),c(s.note||''),c((s.finished||'').slice(0,16).replace('T',' '))].join(','));});
- var blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
- var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='qabul_natijalar_'+branch()+'.csv';a.click();
+// Sana oralig'i filtri (dan–gacha, kiritilmasa cheksiz)
+function inDate(s){var d=(s.finished||'').slice(0,10);if(!d)return true;if(FDATE.from&&d<FDATE.from)return false;if(FDATE.to&&d>FDATE.to)return false;return true;}
+// Excel (SpreadsheetML .xls) — yo'nalish bo'yicha alohida bo'limlarga ajratilgan, toza ustunlar
+function exportXls(){
+ var rows=(window._rows||[]).slice();
+ if(!rows.length){alert('Tanlangan oraliqda natija yo‘q.');return;}
+ var COLS=['Ism familiya','Yo‘nalish','Sinf','Telefon','Viloyat','Tuman','Manba','To‘g‘ri/Jami','Foiz','Holat','Izoh','Sana'];
+ function xe(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+ function cell(v,style,num){return '<Cell'+(style?' ss:StyleID="'+style+'"':'')+'><Data ss:Type="'+(num?'Number':'String')+'">'+xe(v)+'</Data></Cell>';}
+ function hrow(){return '<Row>'+COLS.map(function(c){return cell(c,'hdr');}).join('')+'</Row>';}
+ // yo'nalish bo'yicha guruhlash
+ var groups={},order=[];
+ rows.forEach(function(s){var y=(s.info||{}).yon_name||'(yo‘nalishsiz)';if(!groups[y]){groups[y]=[];order.push(y);}groups[y].push(s);});
+ order.sort();
+ var body='';
+ order.forEach(function(y){
+   var g=groups[y];
+   body+='<Row><Cell ss:StyleID="sec" ss:MergeAcross="'+(COLS.length-1)+'"><Data ss:Type="String">'+xe(y+'  —  '+g.length+' nafar')+'</Data></Cell></Row>';
+   body+=hrow();
+   g.forEach(function(s){var inf=s.info||{};var pct=s.graded?Math.round(s.correct/s.graded*100):'';
+     body+='<Row>'
+       +cell(inf.name)+cell(inf.yon_name)+cell(inf.sinf)+cell(inf.tel)+cell(inf.viloyat)+cell(inf.tuman)+cell(inf.source)
+       +cell(s.graded?s.correct+'/'+s.graded:'')+(pct===''?cell(''):cell(pct,'',true))+cell(statusOf(s))+cell(s.note||'')
+       +cell((s.finished||'').slice(0,16).replace('T',' '))+'</Row>';
+   });
+   body+='<Row></Row>'; // bo'limlar orasida bo'sh qator
+ });
+ var title='Qabul natijalari — '+branch()+(FDATE.from||FDATE.to?(' ('+(FDATE.from||'…')+' — '+(FDATE.to||'…')+')'):'')+' · jami '+rows.length;
+ var xml='<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n'
+  +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+  +'<Styles>'
+  +'<Style ss:ID="hdr"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1F4E79" ss:Pattern="Solid"/><Alignment ss:Vertical="Center"/></Style>'
+  +'<Style ss:ID="sec"><Font ss:Bold="1" ss:Size="12" ss:Color="#1F4E79"/><Interior ss:Color="#FCE8B6" ss:Pattern="Solid"/></Style>'
+  +'</Styles>'
+  +'<Worksheet ss:Name="Natijalar"><Table>'
+  +'<Row><Cell ss:StyleID="sec" ss:MergeAcross="'+(COLS.length-1)+'"><Data ss:Type="String">'+xe(title)+'</Data></Cell></Row><Row></Row>'
+  +body
+  +'</Table></Worksheet></Workbook>';
+ var blob=new Blob(['﻿'+xml],{type:'application/vnd.ms-excel'});
+ var fn='qabul_natijalar_'+branch()+(FDATE.from?('_'+FDATE.from):'')+(FDATE.to?('_'+FDATE.to):'')+'.xls';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click();
 }
 function analyze(i){
  var s=window._rows[i],inf=s.info||{};
