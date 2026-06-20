@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="uz"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,interactive-widget=resizes-content">
 <title>ZIYOKOR Qabul</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@ mjx-container{color:var(--ink)}
 }
 </style></head>
 <body>
-<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>3&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>4&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
  <span class="timer hidden" id="timer"></span>
@@ -110,7 +110,7 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write — ma'lumot yo'qolmasin)
 var EXIT_PIN="2024";
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=3; // build versiyasi — version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=4; // build versiyasi — version.json bilan sinxron
 var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
 var app=document.getElementById('app');
 var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};
@@ -121,23 +121,40 @@ document.getElementById('gear').addEventListener('click',managerMenu);
 function managerMenu(){
  var pin=prompt('Menejer PIN:');if(pin!==EXIT_PIN)return;
  var isApk=!!(window.AndroidKiosk&&AndroidKiosk.exitApp);
- var msg='1 - Abituriyent filiali\n2 - Prezident maktabi filiali\n4 - 🔄 Yangilanishni yuklash'+(window._updAvail?' (YANGI BOR!)':'');
+ var head='ZIYOKOR Qabul — v'+curVer()+'\n────────────\n';
+ var msg=head+'1 - Abituriyent filiali\n2 - Prezident maktabi filiali\n4 - 🔄 Yangilanish ma‘lumoti'+(window._updAvail?' (v'+window._updAvail+' BOR!)':'');
  if(isApk)msg+='\n3 - Ilovadan chiqish (kiosk qulfini yechish)';
  var b=prompt(msg+'\n(bekor: yopish)');
  if(b==='1'){localStorage.setItem('zq_branch','abituriyent');location.reload();}
  if(b==='2'){localStorage.setItem('zq_branch','prezident');location.reload();}
  if(b==='3'&&isApk){AndroidKiosk.exitApp();}
- if(b==='4'){doUpdate();}
+ if(b==='4'){updateInfo();}
 }
-// ===== OTA: webdan yangilanishni tortib olish (oflayn ham ishlaydi) =====
+// ===== OTA: versiyani bilish + tanlab yangilash =====
+var SRV={ver:0,date:'',note:''};
 function curVer(){return Math.max(APP_VER,parseInt(localStorage.getItem('zq_ota_ver')||'0',10));}
 // keshdagi (yuklangan) bankni afzal ko'r, bo'lmasa ichidagi (bundled) fayl
 function loadJSON(name){var ov=localStorage.getItem('zq_ota_'+name);if(ov){try{return Promise.resolve(JSON.parse(ov));}catch(e){}}return fetch('./'+name+'?v='+Date.now()).then(function(r){return r.json();});}
-function checkUpdate(){ if(!navigator.onLine)return;
- fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
-   var rv=parseInt(d.version,10)||0;
-   if(rv>curVer()){window._updAvail=rv;var g=document.getElementById('gear');if(g){g.style.boxShadow='0 0 0 2px #ef4444';g.title='Yangilanish bor — ⚙️ → 4';}}
- }).catch(function(){});
+function checkUpdate(){ if(!navigator.onLine)return Promise.resolve(false);
+ return fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
+   SRV={ver:parseInt(d.version,10)||0,date:d.date||'',note:d.note||''};
+   var avail=SRV.ver>curVer();window._updAvail=avail?SRV.ver:0;
+   var g=document.getElementById('gear');if(g){if(avail){g.style.boxShadow='0 0 0 2px #ef4444';g.title='Yangilanish bor (v'+SRV.ver+') — ⚙️ → 4';}else{g.style.boxShadow='';g.title='Menejer (filial almashtirish)';}}
+   return avail;
+ }).catch(function(){return false;});
+}
+// Yangilanish ma'lumoti — versiya, manzil va tasdiqlab yuklash
+function updateInfo(){
+ if(!navigator.onLine){alert('📴 Internet yo‘q.\nO‘rnatilgan versiya: v'+curVer()+'\nServerni tekshirish uchun internet kerak.');return;}
+ checkUpdate().then(function(avail){
+   var info='ℹ️ Dastur yangilanishi\n────────────\n'
+     +'O‘rnatilgan: v'+curVer()+'\n'
+     +'Serverda:  '+(SRV.ver?('v'+SRV.ver+(SRV.date?(' ('+SRV.date+')'):'')):'—')+'\n'
+     +'Manzil: '+OTA_BASE+'\n'
+     +(SRV.note?('\nO‘zgarishlar: '+SRV.note+'\n'):'');
+   if(avail){ if(confirm(info+'\n🔴 Yangi versiya bor. Hozir tortib olasizmi?')) doUpdate(); }
+   else { alert(info+'\n✅ Eng so‘nggi versiya o‘rnatilgan.'); }
+ });
 }
 function doUpdate(){
  if(!navigator.onLine){alert('Internet yo‘q — yangilash uchun ulanish kerak.');return;}
@@ -218,6 +235,8 @@ window.gotoQ=function(i){saveTxt();state.idx=i;renderQ();};
 var DATA=null,OV={};
 function applyOver(q){var o=OV[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 checkUpdate(); // ochilganda jim yangilanish bor-yo'qligini tekshir
+// Klaviatura chiqqanda fokuslangan maydon klaviatura tagida qolmasligi uchun
+document.addEventListener('focusin',function(e){var t=e.target;if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)){setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'});}catch(_){t.scrollIntoView();}},280);}});
 Promise.all([
   loadJSON('qabul_questions.json'),
   fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null}),
