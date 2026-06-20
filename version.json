@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "date": "2026-06-20",
-  "note": "Klaviatura kiritish maydonini berkitmaydigan qildik (fokuslangan maydon avto ko'rinadi), yangilanish endi versiya + manba manzilni ko'rsatadi va tortib olishni o'zingiz tanlaysiz, dastur o'z versiyasini ko'rsatadi"
+  "note": "Menejer ilovasi endi kiosk qulfida emas — erkin chiqib ketish mumkin (Ilovadan chiqish tugmasi); klaviatura va tanlanadigan yangilanish v4 dan saqlandi"
 }

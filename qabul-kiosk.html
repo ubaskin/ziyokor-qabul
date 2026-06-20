@@ -97,7 +97,7 @@ mjx-container{color:var(--ink)}
 }
 </style></head>
 <body>
-<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>4&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>5&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
  <span class="timer hidden" id="timer"></span>
@@ -110,7 +110,7 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write — ma'lumot yo'qolmasin)
 var EXIT_PIN="2024";
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=4; // build versiyasi — version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=5; // build versiyasi — version.json bilan sinxron
 var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
 var app=document.getElementById('app');
 var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};

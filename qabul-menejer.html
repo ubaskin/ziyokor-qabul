@@ -124,7 +124,7 @@ h3 .ic{color:var(--emer);vertical-align:-3px;margin-right:6px}
 body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 @keyframes auroraFloat{0%{transform:scale(1.06) translateY(0)}100%{transform:scale(1.13) translateY(-16px)}}
 </style></head><body>
-<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa o'shani ishlat */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>4&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa o'shani ishlat */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>5&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div id="login" class="lwrap">
  <div class="login-card">
   <div class="login-lock"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/><path d="M12 15v2"/></svg></div>
@@ -150,6 +150,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
     <div class="pf-who">Tizimda: <b id="mgrname2"></b><div class="mut" id="mgrrole2" style="font-size:11px"></div><div class="mut" id="pf-ver" style="font-size:11px;margin-top:3px"></div></div>
     <div class="pf-mi" id="pf-upd" onclick="openUpdate()"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Yangilash</div>
     <div class="pf-mi" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Profildan chiqish</div>
+    <div class="pf-mi hidden" id="pf-exit" onclick="exitApp()"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>Ilovadan chiqish</div>
    </div>
   </div>
  </div>
@@ -169,7 +170,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M12 5v14"/><path d="M5 12h14"/></svg>talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
 <div id="umodal" class="tmodal hidden"><div class="card" style="max-width:430px"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Dastur yangilanishi</h3><div id="ubody"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=4; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=5; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -307,6 +308,15 @@ function doUpdate(){
 checkUpdate();
 // Klaviatura chiqqanda fokuslangan maydon ko'rinib turishi uchun
 document.addEventListener('focusin',function(e){var t=e.target;if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)){setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'});}catch(_){t.scrollIntoView();}},280);}});
+// ===== Menejer ilovasi KIOSK QULFIDA bo'lmasligi kerak — qulfni yechib, erkin chiqishga ruxsat =====
+function isApk(){return !!(window.AndroidKiosk&&(AndroidKiosk.exitApp||AndroidKiosk.stopLockTask));}
+function unlockKiosk(){try{if(window.AndroidKiosk&&AndroidKiosk.stopLockTask)AndroidKiosk.stopLockTask();}catch(e){}}
+function exitApp(){try{if(window.AndroidKiosk){if(AndroidKiosk.stopLockTask)AndroidKiosk.stopLockTask();if(AndroidKiosk.exitApp)AndroidKiosk.exitApp();}}catch(e){}}
+// Native onResume qulfni qaytadan yoqishi mumkin — bir necha marta yechamiz
+unlockKiosk();setTimeout(unlockKiosk,400);setTimeout(unlockKiosk,1200);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)unlockKiosk();});
+window.addEventListener('focus',unlockKiosk);
+if(isApk()){var _pe=document.getElementById('pf-exit');if(_pe)_pe.classList.remove('hidden');}
 function branch(){return document.getElementById('branch').value;}
 function secObj(){return SECTIONS[branch()]||SECTIONS.abituriyent;}
 function sinfNum(s){var v=parseInt((s.info||{}).sinf,10);return isNaN(v)?null:v;}
