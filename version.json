@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "date": "2026-06-20",
-  "note": "Natijalar Excel: sana oralig'i (dan-gacha) filtri + yo'nalish bo'yicha alohida bo'limlarga ajratilgan toza ustunli .xls eksport"
+  "note": "Kiosk: ilova uslubidagi maxsus dropdown (Android-native emas), yangilanish foiz/progress ko'rsatkichi, OTA takror bar tozalandi. Menejer: yangilanish progress + takror tozalash"
 }

@@ -95,9 +95,19 @@ mjx-container{color:var(--ink)}
   .qbody img{margin-top:0}
   .qopts{position:sticky;top:84px}                  /* variantlar ko'rinib tursin */
 }
+/* Ilova uslubidagi maxsus dropdown (Android-native o'rniga) */
+.csel{position:relative}
+.csel-btn{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:var(--surf2);color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:.15s}
+.csel-btn::after{content:"▾";color:var(--mut);font-size:13px;flex:0 0 auto}
+.csel-btn.ph{color:#5d6e8c}
+.csel-btn.dis{opacity:.5;cursor:default}
+.csel-btn:not(.dis):hover{border-color:rgba(39,194,133,.45)}
+.csel-list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:40;max-height:46vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.55);padding:6px;-webkit-overflow-scrolling:touch}
+.csel-it{padding:12px 14px;border-radius:9px;font-size:15.5px;cursor:pointer;color:var(--ink)}
+.csel-it.on,.csel-it:active{background:rgba(39,194,133,.16);color:#7fe3b6}
 </style></head>
 <body>
-<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>6&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
+<script>/* OTA bootstrap: webdan yuklangan yangi nusxa bo'lsa — o'shani ishlat (oflayn ham) */(function(){try{var V=parseInt(localStorage.getItem('zq_ota_ver')||'0',10),H=localStorage.getItem('zq_ota_html');if(H&&V>7&&!window.__ZQ_BOOTED){window.__ZQ_BOOTED=1;document.open();document.write(H);document.close();}}catch(e){}})();</script>
 <div class="bar">
  <span class="logo">ZIYOKOR</span><span style="font-weight:700">Qabul</span>
  <span class="timer hidden" id="timer"></span>
@@ -110,7 +120,7 @@ mjx-container{color:var(--ink)}
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write — ma'lumot yo'qolmasin)
 var EXIT_PIN="2024";
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=6; // build versiyasi — version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=7; // build versiyasi — version.json bilan sinxron
 var BRANCHES={abituriyent:"Abituriyent",prezident:"Prezident maktabi"};
 var app=document.getElementById('app');
 var state={branch:localStorage.getItem('zq_branch')||'abituriyent',yon:null,info:{},qs:[],idx:0,ans:{}};
@@ -158,20 +168,19 @@ function updateInfo(){
 }
 function doUpdate(){
  if(!navigator.onLine){alert('Internet yo‘q — yangilash uchun ulanish kerak.');return;}
- alert('⏳ Yangilanish yuklanmoqda...');
  var files=['qabul-kiosk.html','qabul_questions.json','prezident_math30.json','olimpus_questions.json','prezident_ibnsino.json'];
- Promise.all(files.map(function(f){return fetch(OTA_BASE+'/'+f+'?t='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.text();});}))
-  .then(function(t){
-    localStorage.setItem('zq_ota_html',t[0]);
-    localStorage.setItem('zq_ota_qabul_questions.json',t[1]);
-    localStorage.setItem('zq_ota_prezident_math30.json',t[2]);
-    localStorage.setItem('zq_ota_olimpus_questions.json',t[3]);
-    localStorage.setItem('zq_ota_prezident_ibnsino.json',t[4]);
-    return fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();});
-  }).then(function(d){
-    localStorage.setItem('zq_ota_ver',String(parseInt(d.version,10)||0));
-    alert('✅ Yangilandi! Ilova qayta ochiladi.');location.reload();
-  }).catch(function(){alert('❌ Yangilashda xato — internetni tekshiring.');});
+ var keys=['zq_ota_html','zq_ota_qabul_questions.json','zq_ota_prezident_math30.json','zq_ota_olimpus_questions.json','zq_ota_prezident_ibnsino.json'];
+ var ov=document.createElement('div');ov.id='updov';
+ ov.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(7,13,28,.93);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:#eef3fc;font-family:Manrope,sans-serif;padding:24px;text-align:center';
+ ov.innerHTML='<div style="font-weight:800;font-size:18px">⏳ Yangilanish yuklanmoqda…</div>'
+  +'<div style="width:260px;max-width:80vw;height:12px;background:rgba(255,255,255,.12);border-radius:8px;overflow:hidden"><i id="updbar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,#27c285,#e0bb63);transition:.25s"></i></div>'
+  +'<div id="updtxt" style="color:#92a3c4;font-size:14px;font-weight:700">0 / '+files.length+' fayl — 0%</div>';
+ document.body.appendChild(ov);
+ var done=0;function bar(){var p=Math.round(done/files.length*100);var b=document.getElementById('updbar'),x=document.getElementById('updtxt');if(b)b.style.width=p+'%';if(x)x.textContent=done+' / '+files.length+' fayl — '+p+'%';}
+ Promise.all(files.map(function(f,i){return fetch(OTA_BASE+'/'+f+'?t='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(txt){localStorage.setItem(keys[i],txt);done++;bar();return txt;});}))
+  .then(function(){return fetch(OTA_BASE+'/version.json?t='+Date.now()).then(function(r){return r.json();});})
+  .then(function(d){localStorage.setItem('zq_ota_ver',String(parseInt(d.version,10)||0));var x=document.getElementById('updtxt');if(x)x.textContent='✅ Tayyor — ilova qayta ochilmoqda…';setTimeout(function(){location.reload();},800);})
+  .catch(function(){var x=document.getElementById('updtxt');if(x){x.textContent='❌ Xato — internetni tekshiring.';x.style.color='#ff9b9b';}setTimeout(function(){var o=document.getElementById('updov');if(o)o.remove();},2600);});
 }
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 // "Bizni qayerdan eshitdingiz" maydoni (har ikkala intake'da)
@@ -208,8 +217,8 @@ function tumanField(){
 }
 window.onViloyat=function(){
  var v=document.getElementById('i_viloyat').value;var t=document.getElementById('i_tuman');
- if(!v||!UZB[v]){t.innerHTML='<option value="">Avval viloyatni tanlang</option>';t.disabled=true;return;}
- t.innerHTML='<option value="">Tanlang</option>'+UZB[v].map(function(d){return '<option>'+d+'</option>';}).join('');t.disabled=false;
+ if(!v||!UZB[v]){t.innerHTML='<option value="">Avval viloyatni tanlang</option>';t.disabled=true;if(t.__crender)t.__crender();return;}
+ t.innerHTML='<option value="">Tanlang</option>'+UZB[v].map(function(d){return '<option>'+d+'</option>';}).join('');t.disabled=false;if(t.__crender)t.__crender();
 };
 // Umumiy vaqt taymeri (savol soni × admin belgilagan daqiqa)
 var CLOCK='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
@@ -237,6 +246,30 @@ function applyOver(q){var o=OV[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 checkUpdate(); // ochilganda jim yangilanish bor-yo'qligini tekshir
 // Klaviatura chiqqanda fokuslangan maydon klaviatura tagida qolmasligi uchun
 document.addEventListener('focusin',function(e){var t=e.target;if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)){setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'});}catch(_){t.scrollIntoView();}},280);}});
+// OTA document.write qoldig'i — ortiqcha takror bar/footer'ni olib tashlash
+window.addEventListener('load',function(){var b=document.querySelectorAll('body > .bar');for(var i=1;i<b.length;i++)b[i].remove();var w=document.querySelectorAll('body > .wrap');for(var j=1;j<w.length;j++)w[j].remove();});
+// Android-native dropdown o'rniga ilova uslubidagi maxsus dropdown
+function styleSelect(sel){
+ if(!sel||sel.__styled)return;sel.__styled=1;sel.style.display='none';
+ var box=document.createElement('div');box.className='csel';
+ var btn=document.createElement('div');btn.className='csel-btn';box.appendChild(btn);
+ var list=document.createElement('div');list.className='csel-list hidden';box.appendChild(list);
+ function render(){
+   var o=sel.options[sel.selectedIndex];btn.textContent=o?o.text:'';
+   btn.classList.toggle('ph',!sel.value);btn.classList.toggle('dis',!!sel.disabled);
+   list.innerHTML='';
+   Array.prototype.forEach.call(sel.options,function(op){
+     if(op.disabled&&op.value==='')return;
+     var it=document.createElement('div');it.className='csel-it'+(op.value===sel.value?' on':'');it.textContent=op.text;
+     it.onclick=function(ev){ev.stopPropagation();sel.value=op.value;list.classList.add('hidden');render();sel.dispatchEvent(new Event('change',{bubbles:true}));};
+     list.appendChild(it);
+   });
+ }
+ btn.onclick=function(e){e.stopPropagation();if(sel.disabled)return;var open=!list.classList.contains('hidden');document.querySelectorAll('.csel-list').forEach(function(l){l.classList.add('hidden');});if(!open)list.classList.remove('hidden');};
+ sel.parentNode.insertBefore(box,sel.nextSibling);sel.__crender=render;render();
+}
+function enhanceSelects(){['i_sinf','i_viloyat','i_tuman','i_source'].forEach(function(id){var s=document.getElementById(id);if(s)styleSelect(s);});}
+document.addEventListener('click',function(){document.querySelectorAll('.csel-list').forEach(function(l){l.classList.add('hidden');});});
 Promise.all([
   loadJSON('qabul_questions.json'),
   fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null}),
@@ -265,6 +298,7 @@ function screenPrezInfo(){
  +sourceField()
  +'</div>'
  +'<button class="btn" id="prezstart" onclick="startPrez()" disabled>Testni boshlash →</button>';
+ enhanceSelects();
 }
 var prezSel={sinf:null,school:null};
 window.pickSinf=function(s){prezSel.sinf=s;prezSel.school=null;
@@ -329,6 +363,7 @@ function screenInfo(){
  +sourceField()
  +'</div>'
  +'<button class="btn" onclick="startTest()">Boshlash →</button>';
+ enhanceSelects();
 }
 window.startTest=function(){
  var nm=document.getElementById('i_name').value.trim();
