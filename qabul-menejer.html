@@ -569,6 +569,11 @@ function tStep(){
  });
 }
 function pad4(n){return ('0000'+n).slice(-4);}
+// talim+ sana formatlari (desktop/ilova shu shaklda o'qiydi)
+function tDMY(d){d=d||new Date();return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();}
+function tDMYHM(d){d=d||new Date();return tDMY(d)+' | '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}
+// "11", "11-sinf", "Bitiruvchi" → talim+ "class" maydoni ("11 sinf")
+function tClass(s){s=String(s||'').trim();if(!s)return '';if(/[a-zA-Zа-яёА-ЯЁ']/.test(s.replace(/sinf/i,'')))return s;var n=s.replace(/[^0-9]/g,'');return n?(n+' sinf'):s;}
 function doEnroll(){
  var inf=(SESS[TKEY]||{}).info||{};var fil=TSEL.filial,gid=TSEL.group;
  var D=TCACHE[fil]||{teachers:{},groups:{}};
@@ -578,16 +583,34 @@ function doEnroll(){
  if(dup&&!confirm('⚠️ Bu telefon bilan allaqachon talim+ ga qo‘shilgan. Baribir davom etamizmi?'))return;
  if(!confirm('“'+(inf.name||'')+'” ni REAL talim+ bazasiga qo‘shamizmi?\n'+fil.toUpperCase()+' / '+tname+' / '+gname))return;
  var msg=document.getElementById('tmsg');msg.textContent='⏳ ID olinmoqda...';
- fetch(TDB+'/'+fil+'/talabalar/all.json?shallow=true').then(function(r){return r.json()}).then(function(all){
-  var mx=0;for(var k in (all||{})){var n=parseInt(k,10);if(!isNaN(n)&&n>mx)mx=n;}
-  var id=pad4(mx+1);var today=new Date().toISOString().slice(0,10);
-  var stud={name:inf.name||'',tel:inf.tel||'',sinf:inf.sinf||'',aktiv:true,address:'',source:'qabul',qabulYon:inf.yon_name||'',created:today};
-  var mem={active:true,joinedDate:today,startDate:today};
-  var patch={};patch[fil+'/talabalar/all/'+id]=stud;patch[fil+'/members/'+gid+'/'+id]=mem;patch[fil+'/studentGroups/'+id+'/'+gid]=mem;
-  var audit={studentId:id,filial:fil,group:gid,groupName:gname,teacher:tname,student:inf.name||'',sessionKey:TKEY,by:(CURMGR&&CURMGR.name)||'',at:new Date().toISOString()};
+ // ID to'qnashuvini oldini olish: talabalar/all VA studentGroups bo'yicha max id
+ Promise.all([
+   fetch(TDB+'/'+fil+'/talabalar/all.json?shallow=true').then(function(r){return r.json()}),
+   fetch(TDB+'/'+fil+'/studentGroups.json?shallow=true').then(function(r){return r.json()})
+ ]).then(function(a){
+  var mx=0;[a[0],a[1]].forEach(function(o){for(var k in (o||{})){var n=parseInt(k,10);if(!isNaN(n)&&n>mx)mx=n;}});
+  var id=pad4(mx+1);var now=new Date();var day=tDMY(now);var dayhm=tDMYHM(now);
+  var phone=inf.tel||'';
+  // talim+ talabalar/all sxemasi (desktop bu maydonlarni o'qiydi)
+  var stud={id:id,name:(inf.name||'').trim(),address:'',aktiv:true,payed:false,
+            "class":tClass(inf.sinf),spec:(fil==='pm'?'Pm':''),
+            tel1:phone,tel2:phone,tel3:'',addedDate:day,
+            source:'qabul',qabulYon:inf.yon_name||''};
+  // a'zolik (guruh → o'quvchi)
+  var memMembers={active:true,endDate:'Null',joinedDate:day,startDate:day};
+  // teskari indeks (o'quvchi → guruh) — boshqa shakl: addedDate vaqt bilan, endDate:"null"
+  var memSG={active:true,addedDate:dayhm,endDate:'null',startDate:day};
+  var newCount=(parseInt((D.groups[gid]||{}).studentCount,10)||0)+1;
+  var patch={};
+  patch[fil+'/talabalar/all/'+id]=stud;
+  patch[fil+'/members/'+gid+'/'+id]=memMembers;
+  patch[fil+'/studentGroups/'+id+'/'+gid]=memSG;
+  patch[fil+'/guruxlar/'+gid+'/studentCount']=newCount;
+  var audit={studentId:id,filial:fil,group:gid,groupName:gname,teacher:tname,student:inf.name||'',sessionKey:TKEY,by:(CURMGR&&CURMGR.name)||'',at:now.toISOString()};
   msg.textContent='⏳ Qo‘shilmoqda...';
   fetch(TDB+'/.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(patch)}).then(function(r){
     if(!r.ok)throw 0;
+    if(D.groups[gid])D.groups[gid].studentCount=newCount;
     dbWrite('/talim_audit.json','POST',JSON.stringify(audit));
     var tinfo={filial:fil,id:id,group:gname,groupId:gid,at:audit.at};
     if(SESS[TKEY]){SESS[TKEY].talim=tinfo;SESS[TKEY].status='yozildi';}

@@ -1,5 +1,5 @@
 {
-  "version": 7,
-  "date": "2026-06-20",
-  "note": "Kiosk: ilova uslubidagi maxsus dropdown (Android-native emas), yangilanish foiz/progress ko'rsatkichi, OTA takror bar tozalandi. Menejer: yangilanish progress + takror tozalash"
+  "version": 8,
+  "date": "2026-06-22",
+  "note": "talim+ ga qo'shish to'liq sxemaga moslandi: talabalar/all (tel1-3, class, addedDate, id, spec, payed), members (endDate), studentGroups (addedDate vaqt bilan), studentCount +1, ID to'qnashuv himoyasi → o'quvchi desktop/ilova/jurnalda to'g'ri ko'rinadi"
 }
