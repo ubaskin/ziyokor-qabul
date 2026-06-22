@@ -1,5 +1,5 @@
 {
-  "version": 8,
+  "version": 9,
   "date": "2026-06-22",
-  "note": "talim+ ga qo'shish to'liq sxemaga moslandi: talabalar/all (tel1-3, class, addedDate, id, spec, payed), members (endDate), studentGroups (addedDate vaqt bilan), studentCount +1, ID to'qnashuv himoyasi → o'quvchi desktop/ilova/jurnalda to'g'ri ko'rinadi"
+  "note": "talim+ ga qo'shish KO'P FANLI bo'ldi: bitta o'quvchi yo'nalishdagi 2 fan + (abit) majburiy fanlar guruhlariga bir vaqtda qo'shiladi. Fanlar avtomatik chiqadi, har fan uchun o'qituvchi+guruh tanlanadi, '+ Yana fan' bilan qo'shiladi. O'zbek tili→Ona tili moslandi."
 }
