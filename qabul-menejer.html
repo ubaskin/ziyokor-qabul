@@ -53,6 +53,14 @@ textarea{min-height:120px}
 .ok{color:#7fe3b6;font-weight:700}
 [style*="c0392b"]{color:#ff7a7a!important}
 mjx-container{color:var(--ink)}
+/* === Sozlamalar — toggle switch === */
+.setrow{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+.setrow:last-child{border-bottom:none}
+.setlab{flex:1}.setlab b{display:block;font-size:14.5px}.setlab span{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.sw{flex:0 0 auto;width:48px;height:27px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.06);position:relative;cursor:pointer;transition:background .15s,border-color .15s;padding:0}
+.sw .knob{position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#8fa0bf;transition:left .15s,background .15s}
+.sw.on{background:rgba(39,194,133,.28);border-color:rgba(39,194,133,.5)}
+.sw.on .knob{left:23px;background:var(--emer)}
 .daterow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
 .daterow input[type=date]{flex:0 0 auto;width:auto;padding:8px 10px}
 .daterow .dlbl{flex:0 0 auto;color:var(--mut);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
@@ -199,12 +207,14 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
   <div class="tab" id="tab_qs" data-t="qs" onclick="tab('qs')"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>Savollar</div>
   <div class="tab" id="tab_imp" data-t="imp" onclick="tab('imp')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>Word→AI import</div>
   <div class="tab hidden" id="tab_mgr" data-t="mgr" onclick="tab('mgr')"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Menejerlar</div>
+  <div class="tab hidden" id="tab_set" data-t="set" onclick="tab('set')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Sozlamalar</div>
  </div>
  <div class="wrap">
   <div id="res"></div>
   <div id="qs" class="hidden"></div>
   <div id="imp" class="hidden"></div>
   <div id="mgr" class="hidden"></div>
+  <div id="set" class="hidden"></div>
  </div>
 </div>
 <div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M12 5v14"/><path d="M5 12h14"/></svg>talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
@@ -212,11 +222,11 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="emodal" class="tmodal hidden"><div class="card" style="max-width:460px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 style="margin:0;flex:1">O‘quvchi ma‘lumoti</h3><button class="aanal" onclick="closeEdit()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="emodal_b"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=14; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=15; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
-var DATA=null,PREZ=null,OLIMP=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null,SETTINGS={};
+var DATA=null,PREZ=null,OLIMP=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null,SETTINGS={},CONFIG={};
 // Bo'limlar: qabul bo'limi + sinf → talim+ filial
 var SECTIONS={
  abituriyent:{name:'Abituriyent',fil:'abit',test:'abituriyent'},
@@ -237,7 +247,8 @@ var IC={
  search:'<svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>',
  check:'<svg class="ic" viewBox="0 0 24 24" style="color:var(--emer)"><path d="M20 6L9 17l-5-5"/></svg>',
  list:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4 6h.01"/><path d="M4 12h.01"/><path d="M4 18h.01"/></svg>',
- edit:'<svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>'
+ edit:'<svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+ gear:'<svg class="ic" viewBox="0 0 24 24" style="color:var(--emer)"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'
 };
 // dual-write: yozuvni ikkala bazaga ham yuboradi (asosiy javobni qaytaradi)
 function dbWrite(sub,method,body){
@@ -272,6 +283,7 @@ function doLogin(){
   document.getElementById('pfav').textContent=((nm.trim()[0])||'?').toUpperCase();
   var pv=document.getElementById('pf-ver');if(pv)pv.textContent='Dastur versiyasi: v'+curVer();
   document.getElementById('tab_mgr').classList.toggle('hidden',!found.admin);
+  document.getElementById('tab_set').classList.toggle('hidden',!found.admin);
   // Qabulxona roli — faqat o'qish: Savollar/Import tablari yashirin
   document.getElementById('tab_qs').classList.toggle('hidden',ro);
   document.getElementById('tab_imp').classList.toggle('hidden',ro);
@@ -299,9 +311,10 @@ function logout(){CURMGR=null;
  document.getElementById('main').classList.add('hidden');document.getElementById('login').classList.remove('hidden');
  document.getElementById('pin').value='';var ml=document.getElementById('mlogin');if(ml)ml.value='';
  document.getElementById('loginerr').textContent='';}
-function tab(t){['res','qs','imp','mgr'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
+function tab(t){['res','qs','imp','mgr','set'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==t);});
  document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.dataset.t===t);});
- if(t==='mgr')renderMgr();}
+ if(t==='mgr')renderMgr();
+ if(t==='set')renderSettings();}
 function typeset(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();}
 function RO(){return !!(CURMGR&&CURMGR.role==='qabulxona');}  // Qabulxona = faqat o'qish
 // ===== OTA: versiyani bilish + yangilanishni tanlab tortib olish =====
@@ -380,8 +393,59 @@ function loadAll(){
    fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return{}}),
    fetch(DB+'/sessions.json').then(function(r){return r.json()}).catch(function(){return{}}),
    loadJSON('olimpus_questions.json').catch(function(){return null}),
-   fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return{}})
- ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};OLIMP=a[4];SETTINGS=a[5]||{};renderRes();renderQs();renderImp();});
+   fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return{}}),
+   fetch(DB+'/config.json').then(function(r){return r.json()}).catch(function(){return{}})
+ ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};OLIMP=a[4];SETTINGS=a[5]||{};CONFIG=a[6]||{};applyTabVis();renderRes();renderQs();renderImp();});
+}
+// ===== Bo'lim sozlamalari (xususiyatlarni yoqib-o'chirish) =====
+var FEATURES=[
+ {k:'review',  lab:'«Qaysi savolda xato» tahlili', d:'O‘quvchi har savolda nima javob bergani — to‘g‘ri/xato'},
+ {k:'ai',      lab:'AI tahlil', d:'Fan bo‘yicha kuchli/zaif tomonlar xulosasi'},
+ {k:'bars',    lab:'Fan bo‘yicha foiz chiziqlari', d:'Kartada har fan uchun foiz progress'},
+ {k:'level',   lab:'Daraja va tavsiya', d:'1–5 daraja nishoni + guruhga taklif maslahati'},
+ {k:'ozet',    lab:'Ota-ona xulosa sahifasi', d:'«Xulosa» tugmasi — brendli natija sahifasi'},
+ {k:'talim',   lab:'talim+ ga qo‘shish', d:'O‘quvchini talim+ guruhlariga yozish tugmasi'},
+ {k:'editstd', lab:'O‘quvchi ma‘lumotini tahrirlash', d:'Ism/telefon/sinf… tahrir qalami'},
+ {k:'tab_qs',  lab:'«Savollar» bo‘limi', d:'Savol bankini ko‘rish va tahrirlash tabi'},
+ {k:'tab_imp', lab:'«Word→AI import» bo‘limi', d:'Word matnidan AI bilan savol qo‘shish tabi'}
+];
+// bo'lim sozlamasi (default: hammasi yoniq)
+function cfgOf(section,key){var c=(CONFIG&&CONFIG[section])||{};return c[key]!==false;}
+function cfg(key){return cfgOf(branch(),key);}
+function setCfg(section,key,val){
+ if(!CONFIG[section])CONFIG[section]={};CONFIG[section][key]=val;
+ dbWrite('/config/'+section+'/'+key+'.json','PUT',JSON.stringify(val));
+ if(section===branch()){applyTabVis();renderRes();}
+ renderSettings();
+}
+// tablar ko'rinishini bo'lim sozlamasiga moslaydi
+function applyTabVis(){
+ var ro=RO();
+ var tq=document.getElementById('tab_qs');if(tq)tq.classList.toggle('hidden',ro||!cfg('tab_qs'));
+ var ti=document.getElementById('tab_imp');if(ti)ti.classList.toggle('hidden',ro||!cfg('tab_imp'));
+ // agar yashirin tab ochiq bo'lsa — Natijalarga qaytar
+ var active=document.querySelector('.tab.on');
+ if(active){var t=active.dataset.t;if((t==='qs'&&!cfg('tab_qs'))||(t==='imp'&&!cfg('tab_imp')))tab('res');}
+}
+function renderSettings(){
+ var el=document.getElementById('set');if(!el)return;
+ if(!(CURMGR&&CURMGR.admin)){el.innerHTML='<div class="card mut">Sozlamalar faqat administrator uchun.</div>';return;}
+ var secs=SECKEYS;
+ var h='<div class="card" style="margin-bottom:6px"><h3 style="margin-top:0">'+IC.gear+'Bo‘lim sozlamalari</h3>'
+  +'<div class="mut">Har bo‘lim (abituriyent / prezident maktabi / olimpus) uchun xususiyatlarni alohida yoqib-o‘chiring. O‘zgarish darrov saqlanadi va menejer panelida qo‘llanadi.</div></div>';
+ secs.forEach(function(sec){
+  var nm=(SECTIONS[sec]||{}).name||sec;
+  h+='<div class="card"><h3 style="margin-top:0;display:flex;align-items:center;gap:8px">'+esc(nm)+'</h3>';
+  FEATURES.forEach(function(f){
+   var on=cfgOf(sec,f.k);
+   h+='<div class="setrow">'
+     +'<div class="setlab"><b>'+esc(f.lab)+'</b><span>'+esc(f.d)+'</span></div>'
+     +'<button class="sw'+(on?' on':'')+'" onclick="setCfg(\''+sec+'\',\''+f.k+'\','+(!on)+')" title="'+(on?'Yoniq':'O‘chiq')+'"><span class="knob"></span></button>'
+     +'</div>';
+  });
+  h+='</div>';
+ });
+ el.innerHTML=h;
 }
 function applyOver(q){var o=OVER[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 // Joriy filialning yo'nalishlari (savol banki). Prezident — 30 savol bitta "yo'nalish" sifatida.
@@ -474,26 +538,26 @@ function renderCards(){
   var talGr=s.talim?(s.talim.groups&&s.talim.groups.length?s.talim.groups.join(', '):(s.talim.group||'')):'';
   var hook=s.talim?('✅ talim+ ga yozilgan: <b>#'+esc(s.talim.id)+'</b> — '+esc(talGr)):(weak?('Eng zaif: <b>'+esc(weak)+'</b> ('+Math.round(wp)+'%). Shu fan guruhiga taklif qiling.'):('Daraja <b>'+LEVEL_LABEL[L]+'</b>. Mos guruhga taklif qiling.'));
   var tel=phoneDigits(inf.tel);var st=statusOf(s);
+  var row1='';
+  if(cfg('review'))row1+='<button class="aanal" onclick="reviewQ('+i+')" style="color:#8fcaf6;border-color:rgba(63,164,240,.42)!important;font-weight:800">'+IC.list+'Qaysi savolda xato</button>';
+  if(cfg('ai'))row1+='<button class="aanal" onclick="analyze('+i+')">'+IC.ai+'AI tahlil</button>';
+  var row2=(tel?'<a class="acall" href="tel:'+tel+'" title="Qo‘ng‘iroq">'+IC.phone+'</a>':'');
+  if(cfg('ozet'))row2+='<a class="aanal" href="ozet.html?id='+encodeURIComponent(key)+'" target="_blank">'+IC.doc+'Xulosa</a>';
+  if(!ro&&cfg('talim'))row2+='<button class="aanal" style="color:#7fe3b6;border-color:rgba(39,194,133,.4)!important" onclick="openTalim(\''+key+'\')">'+IC.plus+'talim+</button>';
+  if(!ro)row2+='<button class="aanal" style="color:#ff7a7a" title="O‘chirish" onclick="delLead(\''+key+'\')">'+IC.trash+'</button>';
   h+='<div class="lead l'+L+'">'
-   +'<div class="lead-top"><div style="flex:1"><div class="lead-name">'+esc(inf.name||'—')+(ro?'':'<button class="ledit" title="Ma‘lumotni tahrirlash" onclick="editLead(\''+key+'\')">'+IC.edit+'</button>')+'</div>'
+   +'<div class="lead-top"><div style="flex:1"><div class="lead-name">'+esc(inf.name||'—')+((ro||!cfg('editstd'))?'':'<button class="ledit" title="Ma‘lumotni tahrirlash" onclick="editLead(\''+key+'\')">'+IC.edit+'</button>')+'</div>'
      +'<div class="lead-meta">'+esc(inf.yon_name||'—')+'<br>'+esc(inf.sinf||'—')+'-sinf'+(inf.tel?' · '+esc(inf.tel):'')+((inf.viloyat||inf.tuman)?' · '+esc([inf.viloyat,inf.tuman].filter(Boolean).join(', ')):'')+' · '+((s.finished||'').slice(0,16).replace('T',' '))+(inf.source?'<br><span style="color:#8fcaf6">Manba: '+esc(inf.source)+'</span>':'')+'</div></div>'
-     +'<div class="level-badge lv'+L+'">'+(L?'Daraja '+L:'—')+'</div></div>'
+     +(cfg('level')?'<div class="level-badge lv'+L+'">'+(L?'Daraja '+L:'—')+'</div>':'')+'</div>'
    +'<div class="score">Natija: '+(s.graded?('<b class=ok>'+s.correct+'/'+s.graded+'</b> ('+pct+'%)'):'<span class="mut">baholanmagan</span>')+' · javob '+(s.answered||0)+'/'+(s.total||0)+'</div>'
-   +(bars?'<div class="bars">'+bars+'</div>':'')
-   +'<div class="hook">'+IC.bulb+hook+'</div>'
+   +((cfg('bars')&&bars)?'<div class="bars">'+bars+'</div>':'')
+   +(cfg('level')?'<div class="hook">'+IC.bulb+hook+'</div>':'')
    +'<div class="row" style="margin-top:10px;gap:8px">'
      +'<select onchange="setStatus(\''+key+'\',this.value)" style="flex:1"'+(ro?' disabled':'')+'>'+STATUSES.map(function(x){return '<option '+(st===x?'selected':'')+'>'+x+'</option>';}).join('')+'</select>'
      +'<input placeholder="izoh..." value="'+(s.note||'').replace(/"/g,'&quot;')+'" onchange="saveNote(\''+key+'\',this.value)" style="flex:1.4"'+(ro?' disabled':'')+'>'
    +'</div>'
-   +'<div class="lactions" style="margin-bottom:8px">'
-     +'<button class="aanal" onclick="reviewQ('+i+')" style="color:#8fcaf6;border-color:rgba(63,164,240,.42)!important;font-weight:800">'+IC.list+'Qaysi savolda xato</button>'
-     +'<button class="aanal" onclick="analyze('+i+')">'+IC.ai+'AI tahlil</button>'
-   +'</div>'
-   +'<div class="lactions">'+(tel?'<a class="acall" href="tel:'+tel+'" title="Qo‘ng‘iroq">'+IC.phone+'</a>':'')
-     +'<a class="aanal" href="ozet.html?id='+encodeURIComponent(key)+'" target="_blank">'+IC.doc+'Xulosa</a>'
-     +(ro?'':'<button class="aanal" style="color:#7fe3b6;border-color:rgba(39,194,133,.4)!important" onclick="openTalim(\''+key+'\')">'+IC.plus+'talim+</button>')
-     +(ro?'':'<button class="aanal" style="color:#ff7a7a" title="O‘chirish" onclick="delLead(\''+key+'\')">'+IC.trash+'</button>')
-   +'</div></div>';
+   +(row1?'<div class="lactions" style="margin-bottom:8px">'+row1+'</div>':'')
+   +'<div class="lactions">'+row2+'</div></div>';
  });
  wrap.innerHTML=h+'</div>';
 }

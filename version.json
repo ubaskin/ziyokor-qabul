@@ -1,5 +1,5 @@
 {
-  "version": 14,
+  "version": 15,
   "date": "2026-06-28",
-  "note": "Natijalarda «Barcha yo'nalish» filtri — holat yonida; tanlangan yo'nalish bo'yicha natijalarni ko'rsatadi. Excelga yuklab olish ham shu filtr (yo'nalish + holat + sana oralig'i)ni oladi."
+  "note": "YANGI «Sozlamalar» tabi (admin) — har bo'lim (Abituriyent / Prezident maktabi / Olimpus) uchun xususiyatlarni alohida YOQIB-O'CHIRISH: «Qaysi savolda xato», AI tahlil, fan foizlari, daraja, ota-ona xulosa, talim+, o'quvchi ma'lumotini tahrirlash, Savollar va Word import bo'limlari. O'zgarish darrov saqlanadi (Firebase /config) va menejer panelida qo'llanadi. Bitta dastur — ikkala rejim (abit/PM) har xil sozlanadi."
 }
