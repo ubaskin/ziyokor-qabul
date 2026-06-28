@@ -1,0 +1,19 @@
+{
+  "name": "ZIYOKOR — Qabul menejer",
+  "short_name": "ZIYOKOR Menejer",
+  "description": "Qabul natijalari, savol banki, talim+ ga qo'shish — menejer paneli",
+  "id": "ziyokor-qabul-menejer",
+  "start_url": "./qabul-menejer.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#070d1c",
+  "theme_color": "#070d1c",
+  "lang": "uz",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "./qabul-assets/menejer-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./qabul-assets/menejer-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./qabul-assets/menejer-icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

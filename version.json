@@ -1,5 +1,5 @@
 {
-  "version": 11,
+  "version": 12,
   "date": "2026-06-28",
-  "note": "Savollar tabida endi «Fan bo'yicha» rejim — barcha yo'nalishlar kesimida bitta fan (mas. Matematika) savollarini bir joyda ko'rib/tahrirlash; har savol qaysi yo'nalishdanligi belgilanadi. Excel yuklab olish toolbar'dan profil menyusiga ko'chdi (doim ko'rinib turmaydi). Oldingi: «Qaysi savolda xato» tahlili."
+  "note": "Menejer endi KOMPYUTERGA O'RNATILADIGAN DASTUR (PWA): Windows'da Edge/Chrome «O'rnatish» taklif qiladi — ish stolida ikonka + alohida oyna (brauzer paneli yo'q). Profil menyusida «Kompyuterga o'rnatish». Oldingilar: fan kesimi rejimi, Excel menyuga ko'chdi, «Qaysi savolda xato» tahlili."
 }
