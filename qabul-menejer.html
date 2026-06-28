@@ -171,6 +171,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
    <span class="pf-caret">▾</span>
    <div class="pf-menu hidden" id="pfmenu">
     <div class="pf-who">Tizimda: <b id="mgrname2"></b><div class="mut" id="mgrrole2" style="font-size:11px"></div><div class="mut" id="pf-ver" style="font-size:11px;margin-top:3px"></div></div>
+    <div class="pf-mi" id="pf-xls" style="color:#7fe3b6" onclick="exportXls()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Excelga yuklab olish</div>
     <div class="pf-mi" id="pf-upd" onclick="openUpdate()"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Yangilash</div>
     <div class="pf-mi" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Profildan chiqish</div>
     <div class="pf-mi hidden" id="pf-exit" onclick="exitApp()"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>Ilovadan chiqish</div>
@@ -194,7 +195,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="umodal" class="tmodal hidden"><div class="card" style="max-width:430px"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Dastur yangilanishi</h3><div id="ubody"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=10; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=11; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -406,7 +407,6 @@ function renderRes(){
    +'<select id="fstatus"><option value="all">Barcha holat</option>'+STATUSES.map(function(s){return '<option '+(FSTATUS===s?'selected':'')+'>'+s+'</option>';}).join('')+'</select>'
    +'<input type="date" id="f_from" title="Sana: dan" style="flex:0 0 auto;width:auto" value="'+(FDATE.from||'')+'">'
    +'<input type="date" id="f_to" title="Sana: gacha" style="flex:0 0 auto;width:auto" value="'+(FDATE.to||'')+'">'
-   +'<button class="btn sec" style="flex:0 0 auto" onclick="exportXls()">'+IC.dl+'Excel</button>'
    +'</div></div><div id="cardwrap"></div><div id="anal"></div>';
  el.innerHTML=h;
  var fs=document.getElementById('fsearch');fs.oninput=function(){FSEARCH=this.value;renderCards();};
@@ -582,31 +582,60 @@ function renderReview(){
 }
 
 var curYon=null,curQ=null;
+var QMODE='yon';   // 'yon' = yo'nalish bo'yicha, 'fan' = fan bo'yicha (kesim)
+var curList=[];    // hozir ko'rsatilayotgan savollar: [{q, yon}]
+function setQMode(m){QMODE=m;renderQs();}
+// joriy filialdagi barcha fanlar + har birida nechta savol
+function allFans(){
+ var set={};branchYon().forEach(function(y){(y.questions||[]).forEach(function(q){var qq=applyOver(Object.assign({},q));if(qq.fan)set[qq.fan]=(set[qq.fan]||0)+1;});});
+ return Object.keys(set).sort().map(function(f){return {fan:f,count:set[f]};});
+}
 function renderQs(){
  var el=document.getElementById('qs');
  var ys=branchYon();
  if(!ys.length){el.innerHTML='<div class="card mut">Bu filial uchun savol banki topilmadi.</div>';return;}
- var opts=ys.map(function(y){var rev=y.questions.filter(function(q){var qq=applyOver(Object.assign({},q));return qq.needs_review||!qq.correct;}).length;
-   return '<option value="'+y.id+'">'+y.name+' — '+y.count+' savol ('+rev+' tekshirilmagan)</option>';}).join('');
- el.innerHTML='<div class="card"><label>Yo‘nalish</label><select id="ysel" onchange="showQList()">'+opts+'</select>'
+ var seg='<div class="rfilter" style="margin-bottom:12px">'
+   +'<button class="'+(QMODE==='yon'?'on':'')+'" onclick="setQMode(\'yon\')">Yo‘nalish bo‘yicha</button>'
+   +'<button class="'+(QMODE==='fan'?'on':'')+'" onclick="setQMode(\'fan\')">Fan bo‘yicha</button></div>';
+ var sel;
+ if(QMODE==='yon'){
+  var opts=ys.map(function(y){var rev=y.questions.filter(function(q){var qq=applyOver(Object.assign({},q));return qq.needs_review||!qq.correct;}).length;
+    return '<option value="'+y.id+'">'+esc(y.name)+' — '+y.count+' savol'+(rev?(' ('+rev+' tekshirilmagan)'):'')+'</option>';}).join('');
+  sel='<label>Yo‘nalish</label><select id="ysel" onchange="showQList()">'+opts+'</select>';
+ }else{
+  var fopts=allFans().map(function(f){return '<option value="'+esc(f.fan)+'">'+esc(f.fan)+' — '+f.count+' savol</option>';}).join('');
+  sel='<label>Fan (barcha yo‘nalishlar kesimida)</label><select id="fsel" onchange="showQList()">'+fopts+'</select>';
+ }
+ el.innerHTML='<div class="card">'+seg+sel
    +'<label style="text-transform:none;margin-top:10px;display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="qrev" style="width:auto" onchange="showQList()"> Faqat tekshirilmaganlar</label></div>'
    +'<div id="qlist"></div><div id="qedit"></div>';
  showQList();
 }
 function showQList(){
- curYon=branchYon().find(function(y){return y.id===document.getElementById('ysel').value;});
  var onlyRev=document.getElementById('qrev')&&document.getElementById('qrev').checked;
- var h='<div class="card"><h3>'+curYon.name+'</h3>';
- curYon.questions.forEach(function(q,i){var qq=applyOver(Object.assign({},q));
+ curList=[];var title='';
+ if(QMODE==='yon'){
+  var y=branchYon().find(function(x){return x.id===document.getElementById('ysel').value;});
+  curYon=y;title=y?y.name:'';
+  (y?(y.questions||[]):[]).forEach(function(q){curList.push({q:q,yon:y.name});});
+ }else{
+  var fan=(document.getElementById('fsel')||{}).value||'';title='Fan: '+fan;
+  branchYon().forEach(function(y){(y.questions||[]).forEach(function(q){var qq=applyOver(Object.assign({},q));if((qq.fan||'')===fan)curList.push({q:q,yon:y.name});});});
+ }
+ var h='<div class="card"><h3>'+esc(title)+' <span class="mut" style="font-weight:400;font-size:13px">— '+curList.length+' savol</span></h3>';
+ var shown=0;
+ curList.forEach(function(it,i){var qq=applyOver(Object.assign({},it.q));
   var bad=qq.needs_review||!qq.correct;
-  if(onlyRev&&!bad)return;
+  if(onlyRev&&!bad)return;shown++;
   var preview=qq.img?'<img src="'+qq.img+'" style="height:38px;border-radius:6px">':(qq.text||'').slice(0,80)+'…';
-  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span><span class="pill">'+(qq.fan||'')+'</span><span style="flex:1">'+preview+'</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
+  var yonPill=(QMODE==='fan')?'<span class="pill" style="background:rgba(224,187,99,.14);color:#e7c878;border-color:rgba(224,187,99,.3)">'+esc(it.yon)+'</span>':'<span class="pill">'+(qq.fan||'')+'</span>';
+  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span>'+yonPill+'<span style="flex:1">'+preview+'</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
  });
+ if(!shown)h+='<div class="mut">Savol yo‘q.</div>';
  h+='</div>';document.getElementById('qlist').innerHTML=h;document.getElementById('qedit').innerHTML='';typeset();
 }
 function editQ(i){
- var q=applyOver(Object.assign({},curYon.questions[i]));curQ=q;
+ var q=applyOver(Object.assign({},curList[i].q));curQ=q;
  var o=q.options||{};
  var srcImg=(secObj().test==='prezident'&&/^pm-q/.test(q.id))?('./prezident-imgs/'+q.id.replace('pm-','')+'.png'):null;
  var h='<div class="card"><h3>Savolni tahrirlash</h3><div class="mut">'+q.id+'</div>'

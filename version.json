@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "date": "2026-06-28",
-  "note": "YANGI: «Qaysi savolda xato» tahlili — har o'quvchi kartasida endi qaysi aniq savolda xato qilgani ko'rinadi. Bola tanlagani (qizil) va to'g'ri javob (yashil) MathJax formulalar bilan. Filtrlar: Hammasi / Faqat xato / Javobsiz. Yuqorida xulosa: to'g'ri/xato/javobsiz/foiz."
+  "note": "Savollar tabida endi «Fan bo'yicha» rejim — barcha yo'nalishlar kesimida bitta fan (mas. Matematika) savollarini bir joyda ko'rib/tahrirlash; har savol qaysi yo'nalishdanligi belgilanadi. Excel yuklab olish toolbar'dan profil menyusiga ko'chdi (doim ko'rinib turmaydi). Oldingi: «Qaysi savolda xato» tahlili."
 }
