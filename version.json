@@ -1,5 +1,5 @@
 {
-  "version": 12,
+  "version": 13,
   "date": "2026-06-28",
-  "note": "Menejer endi KOMPYUTERGA O'RNATILADIGAN DASTUR (PWA): Windows'da Edge/Chrome «O'rnatish» taklif qiladi — ish stolida ikonka + alohida oyna (brauzer paneli yo'q). Profil menyusida «Kompyuterga o'rnatish». Oldingilar: fan kesimi rejimi, Excel menyuga ko'chdi, «Qaysi savolda xato» tahlili."
+  "note": "Tuzatishlar: profil menyusi endi tablar ostida qolmaydi (to'liq ko'rinadi). Sana oralig'i yaqqol — «dan → gacha» ko'rsatiladi, Tozalash tugmasi, Excelga yuklab olish ham shu oraliqni oladi. O'quvchi ma'lumotini tahrirlash (ism/sinf/telefon/viloyat/tuman/manba) — karta yonidagi qalam tugmasi. Fan kesimida ham savol tahrirlash ishlaydi."
 }
