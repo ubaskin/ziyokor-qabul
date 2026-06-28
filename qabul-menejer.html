@@ -69,6 +69,29 @@ mjx-container{color:var(--ink)}
 .lactions a,.lactions button{flex:1;text-align:center;text-decoration:none;border-radius:10px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;border:none}
 .acall{background:var(--emer);color:#04130c}
 .aanal{background:transparent;color:var(--ink);border:1px solid var(--line)!important}
+/* === Savollar tahlili (per-question review) === */
+.rsum{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.rsum .s{flex:1;min-width:80px;text-align:center;border-radius:11px;padding:9px 6px;font-size:11.5px;font-weight:700;border:1px solid var(--line)}
+.rsum .s b{display:block;font-size:21px;font-family:'Sora',sans-serif;margin-bottom:1px}
+.rsum .s.ko{background:rgba(39,194,133,.10);color:#7fe3b6;border-color:rgba(39,194,133,.28)}
+.rsum .s.xa{background:rgba(239,68,68,.10);color:#fca5a5;border-color:rgba(239,68,68,.30)}
+.rsum .s.bo{background:rgba(255,255,255,.04);color:var(--mut)}
+.qrev{border:1px solid var(--line);border-left:4px solid #2e3a5a;border-radius:12px;padding:13px 14px;margin:10px 0;background:var(--surf2)}
+.qrev.ok{border-left-color:#27c285}.qrev.bad{border-left-color:#ef4444}.qrev.skip{border-left-color:#5d6e8c}
+.qrev-h{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);margin-bottom:6px;flex-wrap:wrap}
+.qrev-h .num{font-weight:800;color:var(--ink);font-family:'Sora',sans-serif}
+.qrev-h .res{margin-left:auto;font-weight:800;font-size:12px;padding:2px 10px;border-radius:20px}
+.qrev-h .res.ok{background:rgba(39,194,133,.16);color:#7fe3b6}.qrev-h .res.bad{background:rgba(239,68,68,.16);color:#fca5a5}.qrev-h .res.skip{background:rgba(255,255,255,.06);color:var(--mut)}
+.qrev-t{font-size:14.5px;line-height:1.5;margin-bottom:9px;color:var(--ink)}
+.qrev-o{display:flex;gap:8px;align-items:flex-start;padding:7px 11px;border:1px solid var(--line);border-radius:9px;margin:5px 0;font-size:13.5px;background:rgba(255,255,255,.02)}
+.qrev-o .k{font-weight:800;flex:0 0 auto;width:20px}
+.qrev-o.correct{background:rgba(39,194,133,.12);border-color:rgba(39,194,133,.4);color:#bff0d8}
+.qrev-o.chosen-bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.42);color:#fbcaca}
+.qrev-o .tag{margin-left:auto;font-size:11px;font-weight:800;flex:0 0 auto}
+.qrev-ai{margin-top:9px;font-size:12.5px;line-height:1.55;color:#d9c79a;background:rgba(224,187,99,.08);border:1px solid rgba(224,187,99,.22);border-radius:9px;padding:9px 11px}
+.rfilter{display:flex;gap:7px;margin:2px 0 8px;flex-wrap:wrap}
+.rfilter button{background:var(--surf2);border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:6px 13px;font-size:12.5px;font-weight:700;cursor:pointer}
+.rfilter button.on{background:rgba(39,194,133,.13);color:#7fe3b6;border-color:rgba(39,194,133,.32)}
 .tmodal{position:fixed;inset:0;z-index:50;background:rgba(3,7,16,.74);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 14px}
 .tmodal.hidden{display:none}
 .tmodal .card{max-width:470px;width:100%}
@@ -169,8 +192,9 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 </div>
 <div id="tmodal" class="tmodal hidden"><div class="card"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M12 5v14"/><path d="M5 12h14"/></svg>talim+ ga qo‘shish</h3><div id="tbody"></div></div></div>
 <div id="umodal" class="tmodal hidden"><div class="card" style="max-width:430px"><h3 style="margin-top:0"><svg class="ic" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px;color:var(--emer)"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Dastur yangilanishi</h3><div id="ubody"></div></div></div>
+<div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=9; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=10; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -193,7 +217,8 @@ var IC={
  dl:'<svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>',
  save:'<svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>',
  search:'<svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>',
- check:'<svg class="ic" viewBox="0 0 24 24" style="color:var(--emer)"><path d="M20 6L9 17l-5-5"/></svg>'
+ check:'<svg class="ic" viewBox="0 0 24 24" style="color:var(--emer)"><path d="M20 6L9 17l-5-5"/></svg>',
+ list:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4 6h.01"/><path d="M4 12h.01"/><path d="M4 18h.01"/></svg>'
 };
 // dual-write: yozuvni ikkala bazaga ham yuboradi (asosiy javobni qaytaradi)
 function dbWrite(sub,method,body){
@@ -421,8 +446,11 @@ function renderCards(){
      +'<select onchange="setStatus(\''+key+'\',this.value)" style="flex:1"'+(ro?' disabled':'')+'>'+STATUSES.map(function(x){return '<option '+(st===x?'selected':'')+'>'+x+'</option>';}).join('')+'</select>'
      +'<input placeholder="izoh..." value="'+(s.note||'').replace(/"/g,'&quot;')+'" onchange="saveNote(\''+key+'\',this.value)" style="flex:1.4"'+(ro?' disabled':'')+'>'
    +'</div>'
+   +'<div class="lactions" style="margin-bottom:8px">'
+     +'<button class="aanal" onclick="reviewQ('+i+')" style="color:#8fcaf6;border-color:rgba(63,164,240,.42)!important;font-weight:800">'+IC.list+'Qaysi savolda xato</button>'
+     +'<button class="aanal" onclick="analyze('+i+')">'+IC.ai+'AI tahlil</button>'
+   +'</div>'
    +'<div class="lactions">'+(tel?'<a class="acall" href="tel:'+tel+'" title="Qo‘ng‘iroq">'+IC.phone+'</a>':'')
-     +'<button class="aanal" onclick="analyze('+i+')">'+IC.ai+'Tahlil</button>'
      +'<a class="aanal" href="ozet.html?id='+encodeURIComponent(key)+'" target="_blank">'+IC.doc+'Xulosa</a>'
      +(ro?'':'<button class="aanal" style="color:#7fe3b6;border-color:rgba(39,194,133,.4)!important" onclick="openTalim(\''+key+'\')">'+IC.plus+'talim+</button>')
      +(ro?'':'<button class="aanal" style="color:#ff7a7a" title="O‘chirish" onclick="delLead(\''+key+'\')">'+IC.trash+'</button>')
@@ -488,6 +516,69 @@ function analyze(i){
    h+='<div style="margin:8px 0"><b>'+f+':</b> '+d.c+'/'+d.t+' ('+p+'%) — '+(p>=70?'<span class=ok>kuchli</span>':p>=40?'o‘rtacha':'<span style="color:#c0392b">zaif, takrorlash kerak</span>')+'</div>';});
    h+='<div class="mut" style="margin-top:8px">Tavsiya: eng past foizli fan bo‘yicha qo‘shimcha tayyorgarlik.</div>';}
  h+='</div>';var an=document.getElementById('anal');an.innerHTML=h;an.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== Savollar tahlili — qaysi aniq savolda xato =====
+var REV_I=-1,REV_FILTER='all';
+function reviewQ(i){REV_I=i;REV_FILTER='all';renderReview();document.getElementById('qmodal').classList.remove('hidden');}
+function closeReview(){document.getElementById('qmodal').classList.add('hidden');}
+function setRevFilter(f){REV_FILTER=f;renderReview();}
+// bola test topshirgan yo'nalishning to'liq savollari (skip qilganlari ham ko'rinsin)
+function studentYon(s){
+ var yid=s.info&&s.info.yon;var ys=branchYon();
+ var y=ys.find(function(x){return x.id===yid;});
+ if(y&&y.questions&&y.questions.length)return y.questions;
+ return Object.keys(s.answers||{}).map(findQ).filter(Boolean); // zaxira
+}
+function srcImgFor(q){return (secObj().test==='prezident'&&/^pm-q/.test(q.id))?('./prezident-imgs/'+q.id.replace('pm-','')+'.png'):null;}
+function renderReview(){
+ var s=window._rows[REV_I];if(!s)return;var inf=s.info||{};
+ var qs=studentYon(s),ans=s.answers||{};
+ var ko=0,xa=0,bo=0,items=[];
+ qs.forEach(function(raw,idx){
+  var q=applyOver(Object.assign({},raw));var chosen=ans[q.id];
+  var graded=q.correct&&q.options&&q.options[q.correct]!==undefined;
+  var st;
+  if(chosen==null||chosen===''){st='skip';bo++;}
+  else if(!graded){st='ungraded';}
+  else if(chosen===q.correct){st='ok';ko++;}
+  else{st='bad';xa++;}
+  items.push({q:q,chosen:chosen,st:st,n:idx+1});
+ });
+ var pct=(ko+xa)?Math.round(ko/(ko+xa)*100):0;
+ var sum='<div class="rsum">'
+  +'<div class="s ko"><b>'+ko+'</b>To‘g‘ri</div>'
+  +'<div class="s xa"><b>'+xa+'</b>Xato</div>'
+  +'<div class="s bo"><b>'+bo+'</b>Javobsiz</div>'
+  +'<div class="s"><b>'+pct+'%</b>Natija</div></div>';
+ var filt='<div class="rfilter">'
+  +'<button class="'+(REV_FILTER==='all'?'on':'')+'" onclick="setRevFilter(\'all\')">Hammasi ('+items.length+')</button>'
+  +'<button class="'+(REV_FILTER==='bad'?'on':'')+'" onclick="setRevFilter(\'bad\')">Faqat xato ('+xa+')</button>'
+  +'<button class="'+(REV_FILTER==='skip'?'on':'')+'" onclick="setRevFilter(\'skip\')">Javobsiz ('+bo+')</button></div>';
+ var body='';
+ items.forEach(function(it){
+  if(REV_FILTER==='bad'&&it.st!=='bad')return;
+  if(REV_FILTER==='skip'&&it.st!=='skip')return;
+  var q=it.q,cls=(it.st==='bad'?'bad':it.st==='ok'?'ok':it.st==='skip'?'skip':'');
+  var res=it.st==='ok'?'<span class="res ok">✓ To‘g‘ri</span>':it.st==='bad'?'<span class="res bad">✗ Xato</span>':it.st==='skip'?'<span class="res skip">— Javobsiz</span>':'<span class="res skip">baholanmagan</span>';
+  var img=q.img?'<img src="'+q.img+'" style="max-width:100%;border-radius:9px;margin:4px 0;border:1px solid var(--line)">':'';
+  var src=srcImgFor(q);if(src)img+='<img src="'+src+'" style="max-width:100%;border-radius:9px;margin:4px 0;border:1px solid var(--line)" onerror="this.style.display=\'none\'">';
+  var oo=q.options||{},opts='';
+  ['A','B','C','D','E'].forEach(function(k){
+   if(oo[k]===undefined)return;var ocls='',tag='';
+   if(k===q.correct){ocls='correct';tag='to‘g‘ri';}
+   if(k===it.chosen&&k!==q.correct){ocls='chosen-bad';tag='bola tanladi';}
+   else if(k===it.chosen&&k===q.correct){tag='bola tanladi ✓';}
+   opts+='<div class="qrev-o '+ocls+'"><span class="k">'+k+'</span><span style="flex:1">'+(oo[k]||'')+'</span>'+(tag?'<span class="tag">'+tag+'</span>':'')+'</div>';
+  });
+  if(!Object.keys(oo).length)opts='<div class="mut" style="padding:6px 0">Bola javobi: <b style="color:var(--ink)">'+esc(it.chosen||'—')+'</b> · To‘g‘ri: <b style="color:#7fe3b6">'+esc(q.correct||'—')+'</b></div>';
+  body+='<div class="qrev '+cls+'">'
+   +'<div class="qrev-h"><span class="num">'+it.n+'-savol</span>'+(q.fan?'<span class="pill">'+esc(q.fan)+'</span>':'')+res+'</div>'
+   +(q.text?'<div class="qrev-t">'+q.text+'</div>':'')+img+opts+'</div>';
+ });
+ if(!body)body='<div class="mut" style="padding:14px">Bu filtrda savol yo‘q.</div>';
+ document.getElementById('qmodal_t').textContent='Savollar tahlili — '+(inf.name||'');
+ document.getElementById('qmodal_b').innerHTML=sum+filt+body;typeset();
 }
 
 var curYon=null,curQ=null;
