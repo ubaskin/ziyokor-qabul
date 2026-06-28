@@ -1,5 +1,5 @@
 {
-  "version": 15,
+  "version": 16,
   "date": "2026-06-28",
-  "note": "YANGI «Sozlamalar» tabi (admin) — har bo'lim (Abituriyent / Prezident maktabi / Olimpus) uchun xususiyatlarni alohida YOQIB-O'CHIRISH: «Qaysi savolda xato», AI tahlil, fan foizlari, daraja, ota-ona xulosa, talim+, o'quvchi ma'lumotini tahrirlash, Savollar va Word import bo'limlari. O'zgarish darrov saqlanadi (Firebase /config) va menejer panelida qo'llanadi. Bitta dastur — ikkala rejim (abit/PM) har xil sozlanadi."
+  "note": "YANGI: «Word→AI import» endi FAYL bilan ishlaydi — .docx tashlang, AI vision bilan o'qib savollarni topadi, javobini yechadi va tanlangan yo'nalish/FANga qo'shadi. Import navbati holati ko'rinadi. Qo'shilgan savollar bankка ish vaqtida birlashadi (kiosk+menejer), qayta deploy shart emas. Matn bilan ham ishlaydi."
 }

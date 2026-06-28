@@ -273,10 +273,14 @@ document.addEventListener('click',function(){document.querySelectorAll('.csel-li
 Promise.all([
   loadJSON('qabul_questions.json'),
   fetch(DB+'/overrides.json').then(function(r){return r.json()}).catch(function(){return null}),
-  fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return null})
+  fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return null}),
+  fetch(DB+'/added.json').then(function(r){return r.json()}).catch(function(){return null})
 ]).then(function(a){
   DATA=a[0];OV=a[1]||{};
   var st=a[2]||{};state.minPerQ=parseFloat(st.min_per_q)>0?parseFloat(st.min_per_q):2;  // har savolga daqiqa (admin sozlaydi, default 2)
+  // menejer import qilgan yangi savollarni bankka qo'sh (worker /added ga yozadi)
+  var added=a[3]||{};
+  DATA.yonalishlar.forEach(function(y){var add=added[y.id];if(!add)return;var have={};y.questions.forEach(function(q){have[q.id]=1;});Object.keys(add).forEach(function(k){var q=add[k];if(q&&q.id&&!have[q.id]){y.questions.push(q);have[q.id]=1;}});});
   // apply menejer overrides (tahrirlangan savol/javob jonli)
   DATA.yonalishlar.forEach(function(y){y.questions.forEach(applyOver);});
   route();

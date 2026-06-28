@@ -53,6 +53,9 @@ textarea{min-height:120px}
 .ok{color:#7fe3b6;font-weight:700}
 [style*="c0392b"]{color:#ff7a7a!important}
 mjx-container{color:var(--ink)}
+.impdrop{border:2px dashed var(--line);border-radius:12px;padding:22px 16px;text-align:center;color:var(--mut);cursor:pointer;background:var(--surf2);transition:border-color .15s,background .15s}
+.impdrop:hover{border-color:rgba(63,164,240,.45)}
+.impdrop.over{border-color:var(--emer);background:rgba(39,194,133,.08)}
 /* === Sozlamalar — toggle switch === */
 .setrow{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
 .setrow:last-child{border-bottom:none}
@@ -222,11 +225,11 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="emodal" class="tmodal hidden"><div class="card" style="max-width:460px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 style="margin:0;flex:1">O‘quvchi ma‘lumoti</h3><button class="aanal" onclick="closeEdit()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="emodal_b"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=15; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=16; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
-var DATA=null,PREZ=null,OLIMP=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null,SETTINGS={},CONFIG={};
+var DATA=null,PREZ=null,OLIMP=null,OVER={},SESS={},TCACHE={},MGRS={},CURMGR=null,SETTINGS={},CONFIG={},ADDED={};
 // Bo'limlar: qabul bo'limi + sinf → talim+ filial
 var SECTIONS={
  abituriyent:{name:'Abituriyent',fil:'abit',test:'abituriyent'},
@@ -394,8 +397,9 @@ function loadAll(){
    fetch(DB+'/sessions.json').then(function(r){return r.json()}).catch(function(){return{}}),
    loadJSON('olimpus_questions.json').catch(function(){return null}),
    fetch(DB+'/settings.json').then(function(r){return r.json()}).catch(function(){return{}}),
-   fetch(DB+'/config.json').then(function(r){return r.json()}).catch(function(){return{}})
- ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};OLIMP=a[4];SETTINGS=a[5]||{};CONFIG=a[6]||{};applyTabVis();renderRes();renderQs();renderImp();});
+   fetch(DB+'/config.json').then(function(r){return r.json()}).catch(function(){return{}}),
+   fetch(DB+'/added.json').then(function(r){return r.json()}).catch(function(){return{}})
+ ]).then(function(a){DATA=a[0];PREZ=a[1];OVER=a[2]||{};SESS=a[3]||{};OLIMP=a[4];SETTINGS=a[5]||{};CONFIG=a[6]||{};ADDED=a[7]||{};mergeAdded();applyTabVis();renderRes();renderQs();renderImp();});
 }
 // ===== Bo'lim sozlamalari (xususiyatlarni yoqib-o'chirish) =====
 var FEATURES=[
@@ -446,6 +450,16 @@ function renderSettings(){
   h+='</div>';
  });
  el.innerHTML=h;
+}
+// import qilingan (worker /added ga yozgan) yangi savollarni bankka birlashtiradi — qayta deploy shart emas
+function mergeAdded(){
+ if(!DATA||!DATA.yonalishlar||!ADDED)return;
+ DATA.yonalishlar.forEach(function(y){
+  var add=ADDED[y.id];if(!add)return;
+  var have={};y.questions.forEach(function(q){have[q.id]=1;});
+  Object.keys(add).forEach(function(k){var q=add[k];if(q&&q.id&&!have[q.id]){q._added=true;y.questions.push(q);have[q.id]=1;}});
+  if(y.count!=null)y.count=y.questions.length;
+ });
 }
 function applyOver(q){var o=OVER[q.id];if(o){for(var k in o)q[k]=o[k];}return q;}
 // Joriy filialning yo'nalishlari (savol banki). Prezident — 30 savol bitta "yo'nalish" sifatida.
@@ -947,25 +961,71 @@ function saveMgr(){
 function delMgr(key){if(key===(CURMGR&&CURMGR._key)){alert('O‘zingizni o‘chira olmaysiz');return;}
  if(!confirm('Menejerni o‘chirasizmi?'))return;
  dbWrite('/managers/'+key+'.json','DELETE');delete MGRS[key];renderMgr();}
+var IMP_FILE=null; // {name, b64}
 function renderImp(){
  var el=document.getElementById('imp');
- if(secObj().test==='prezident'){el.innerHTML='<div class="card mut">Prezident/Olimpus savollari alohida bankда. Bu yerda faqat Abituriyent uchun matnli import mavjud.</div>';return;}
- var opts=DATA.yonalishlar.map(function(y){return '<option value="'+y.id+'">'+y.name+'</option>';}).join('');
- el.innerHTML='<div class="card"><h3>Word uslubidagi misolni qo‘shish (AI)</h3>'
-  +'<div class="mut">Word/test matnini (savol + A) B) C) D) variantlar) shu yerga qo‘ying. AI uni tahlil qilib, javobini topib, tanlangan yo‘nalishga qo‘shadi.</div>'
-  +'<label>Yo‘nalish</label><select id="imp_yon">'+opts+'</select>'
-  +'<label>Savol matni</label><textarea id="imp_text" placeholder="1. Hisoblang: 2+2\nA) 3  B) 4  C) 5  D) 6"></textarea>'
-  +'<label>Fan (ixtiyoriy)</label><input id="imp_fan" placeholder="masalan Matematika">'
-  +'<button class="btn" style="margin-top:12px" onclick="queueImport()">'+IC.ai+'AI bilan qo‘shish</button>'
-  +'<div id="impmsg" class="ok" style="margin-top:10px"></div>'
-  +'<div class="mut" style="margin-top:6px">Eslatma: AI ishlovchi (worker) navbatdan olib qayta ishlaydi — bir necha daqiqada savol bankga qo‘shiladi.</div></div>';
+ if(secObj().test==='prezident'){el.innerHTML='<div class="card mut">Prezident/Olimpus savollari alohida bankда. Bu yerda hozircha import faqat Abituriyent uchun.</div>';return;}
+ var opts=DATA.yonalishlar.map(function(y){return '<option value="'+y.id+'">'+esc(y.name)+'</option>';}).join('');
+ el.innerHTML='<div class="card"><h3>'+IC.ai+'Fayl yoki matndan savol qo‘shish (AI)</h3>'
+  +'<div class="mut">Word (.docx) faylni tashlang — AI uni o‘qib, savollarni topib, javobini yechib, tanlangan yo‘nalish/fanga qo‘shadi. Yoki matnni qo‘lda joylang.</div>'
+  +'<label>Yo‘nalish</label><select id="imp_yon" onchange="impFans()">'+opts+'</select>'
+  +'<label>Qaysi fanga qo‘shilsin</label><select id="imp_fan"></select>'
+  +'<label style="margin-top:14px">📄 Word fayl (.docx)</label>'
+  +'<div id="impdrop" class="impdrop"><input type="file" id="imp_file" accept=".docx" style="display:none" onchange="pickFile(this)">'
+  +'<div id="impdroptxt">Faylni shu yerga tashlang yoki <b style="color:#8fcaf6">tanlash uchun bosing</b></div></div>'
+  +'<label style="margin-top:14px">…yoki matn (ixtiyoriy)</label><textarea id="imp_text" placeholder="1. Hisoblang: 2+2\nA) 3  B) 4  C) 5  D) 6"></textarea>'
+  +'<button class="btn" style="margin-top:14px" onclick="queueImport()">'+IC.ai+'AI bilan qo‘shish</button>'
+  +'<div id="impmsg" class="ok" style="margin-top:10px;min-height:16px"></div>'
+  +'<div class="mut" style="margin-top:6px">AI ishlovchi navbatdan oladi — bir necha daqiqada savollar bankga qo‘shiladi. Tayyor bo‘lganda Telegram’ga xabar keladi.</div></div>'
+  +'<div id="impq"></div>';
+ impFans();renderImpQueue();
+ var drop=document.getElementById('impdrop');
+ drop.onclick=function(){document.getElementById('imp_file').click();};
+ ['dragover','dragenter'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('over');});});
+ ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('over');});});
+ drop.addEventListener('drop',function(e){var f=e.dataTransfer.files[0];if(f)readDocx(f);});
 }
+function impFans(){
+ var y=DATA.yonalishlar.find(function(x){return x.id===document.getElementById('imp_yon').value;});
+ var set={};(y?y.questions:[]).forEach(function(q){var qq=applyOver(Object.assign({},q));if(qq.fan)set[qq.fan]=1;});
+ var fans=Object.keys(set).sort();
+ var sel=document.getElementById('imp_fan');
+ sel.innerHTML=(fans.length?fans:['(fan aniqlansin)']).map(function(f){return '<option>'+esc(f)+'</option>';}).join('')+'<option value="">— boshqa / aralash —</option>';
+}
+function pickFile(inp){var f=inp.files&&inp.files[0];if(f)readDocx(f);}
+function readDocx(f){
+ if(!/\.docx$/i.test(f.name)){alert('Faqat .docx fayl');return;}
+ if(f.size>8*1024*1024){alert('Fayl juda katta (8MB dan kichik bo‘lsin)');return;}
+ var r=new FileReader();
+ r.onload=function(){IMP_FILE={name:f.name,b64:String(r.result).split(',')[1]};
+   document.getElementById('impdroptxt').innerHTML='✅ <b>'+esc(f.name)+'</b> tanlandi ('+Math.round(f.size/1024)+' KB) — <span style="color:#ff7a7a;cursor:pointer" onclick="clearFile(event)">olib tashlash</span>';};
+ r.readAsDataURL(f);
+}
+function clearFile(e){if(e)e.stopPropagation();IMP_FILE=null;document.getElementById('impdroptxt').innerHTML='Faylni shu yerga tashlang yoki <b style="color:#8fcaf6">tanlash uchun bosing</b>';}
 function queueImport(){if(RO())return;
- var rec={yon:document.getElementById('imp_yon').value,fan:document.getElementById('imp_fan').value,
-   text:document.getElementById('imp_text').value,status:'queued',created:new Date().toISOString()};
- if(!rec.text.trim()){alert('Matn kiriting');return;}
+ var y=DATA.yonalishlar.find(function(x){return x.id===document.getElementById('imp_yon').value;});
+ var txt=document.getElementById('imp_text').value;
+ if(!IMP_FILE&&!txt.trim()){alert('Word fayl tashlang yoki matn kiriting');return;}
+ var rec={yon:document.getElementById('imp_yon').value,yon_name:(y?y.name:''),
+   fan:document.getElementById('imp_fan').value,status:'queued',created:new Date().toISOString()};
+ if(IMP_FILE){rec.file=IMP_FILE.b64;rec.filename=IMP_FILE.name;}
+ if(txt.trim())rec.text=txt;
+ var m=document.getElementById('impmsg');m.style.color='var(--mut)';m.textContent='Yuborilmoqda…';
  dbWrite('/import_queue.json','POST',JSON.stringify(rec))
-  .then(function(){document.getElementById('impmsg').textContent='✅ Navbatga qo‘shildi. AI tez orada qayta ishlaydi.';document.getElementById('imp_text').value='';})
-  .catch(function(){document.getElementById('impmsg').textContent='❌ Xato';});
+  .then(function(){m.style.color='var(--emer)';m.textContent='✅ Navbatga qo‘shildi. AI tez orada qayta ishlaydi.';document.getElementById('imp_text').value='';clearFile();setTimeout(renderImpQueue,1200);})
+  .catch(function(){m.style.color='#ff7a7a';m.textContent='❌ Yuborilmadi';});
+}
+function renderImpQueue(){
+ var box=document.getElementById('impq');if(!box)return;
+ fetch(DB+'/import_queue.json').then(function(r){return r.json();}).then(function(q){
+  q=q||{};var rows=Object.keys(q).map(function(k){var v=q[k]||{};v._k=k;return v;})
+    .sort(function(a,b){return (b.created||'').localeCompare(a.created||'');}).slice(0,8);
+  if(!rows.length){box.innerHTML='';return;}
+  var S={queued:'⏳ navbatda',processing:'⚙️ ishlanmoqda',done:'✅ tayyor',error:'❌ xato'};
+  box.innerHTML='<div class="card"><h3 style="margin-top:0">Import navbati</h3>'+rows.map(function(r){
+    var st=S[r.status]||r.status;var det=r.status==='done'?(' — '+(r.count||0)+' savol'):(r.status==='error'?(' — '+esc(r.error||'')):'');
+    return '<div class="setrow"><div class="setlab"><b>'+esc(r.yon_name||r.yon||'—')+(r.filename?(' · '+esc(r.filename)):' · matn')+'</b><span>'+(r.created||'').slice(0,16).replace('T',' ')+'</span></div><div style="font-size:13px;font-weight:700;white-space:nowrap">'+st+det+'</div></div>';
+  }).join('')+'</div>';
+ }).catch(function(){});
 }
 </script></body></html>
