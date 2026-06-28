@@ -225,7 +225,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="emodal" class="tmodal hidden"><div class="card" style="max-width:460px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 style="margin:0;flex:1">O‘quvchi ma‘lumoti</h3><button class="aanal" onclick="closeEdit()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="emodal_b"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=16; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=17; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -561,7 +561,7 @@ function renderCards(){
   if(!ro)row2+='<button class="aanal" style="color:#ff7a7a" title="O‘chirish" onclick="delLead(\''+key+'\')">'+IC.trash+'</button>';
   h+='<div class="lead l'+L+'">'
    +'<div class="lead-top"><div style="flex:1"><div class="lead-name">'+esc(inf.name||'—')+((ro||!cfg('editstd'))?'':'<button class="ledit" title="Ma‘lumotni tahrirlash" onclick="editLead(\''+key+'\')">'+IC.edit+'</button>')+'</div>'
-     +'<div class="lead-meta">'+esc(inf.yon_name||'—')+'<br>'+esc(inf.sinf||'—')+'-sinf'+(inf.tel?' · '+esc(inf.tel):'')+((inf.viloyat||inf.tuman)?' · '+esc([inf.viloyat,inf.tuman].filter(Boolean).join(', ')):'')+' · '+((s.finished||'').slice(0,16).replace('T',' '))+(inf.source?'<br><span style="color:#8fcaf6">Manba: '+esc(inf.source)+'</span>':'')+'</div></div>'
+     +'<div class="lead-meta">'+esc(inf.yon_name||'—')+(({oson:' · 🟢 Oson',orta:' · 🟡 O‘rta',qiyin:' · 🔴 Qiyin'})[inf.level]||'')+'<br>'+esc(inf.sinf||'—')+'-sinf'+(inf.tel?' · '+esc(inf.tel):'')+((inf.viloyat||inf.tuman)?' · '+esc([inf.viloyat,inf.tuman].filter(Boolean).join(', ')):'')+' · '+((s.finished||'').slice(0,16).replace('T',' '))+(inf.source?'<br><span style="color:#8fcaf6">Manba: '+esc(inf.source)+'</span>':'')+'</div></div>'
      +(cfg('level')?'<div class="level-badge lv'+L+'">'+(L?'Daraja '+L:'—')+'</div>':'')+'</div>'
    +'<div class="score">Natija: '+(s.graded?('<b class=ok>'+s.correct+'/'+s.graded+'</b> ('+pct+'%)'):'<span class="mut">baholanmagan</span>')+' · javob '+(s.answered||0)+'/'+(s.total||0)+'</div>'
    +((cfg('bars')&&bars)?'<div class="bars">'+bars+'</div>':'')
@@ -771,7 +771,8 @@ function showQList(){
   if(onlyRev&&!bad)return;shown++;
   var preview=qq.img?'<img src="'+qq.img+'" style="height:38px;border-radius:6px">':(qq.text||'').slice(0,80)+'…';
   var yonPill=(QMODE==='fan')?'<span class="pill" style="background:rgba(224,187,99,.14);color:#e7c878;border-color:rgba(224,187,99,.3)">'+esc(it.yon)+'</span>':'<span class="pill">'+(qq.fan||'')+'</span>';
-  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span>'+yonPill+'<span style="flex:1">'+preview+'</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
+  var LV={oson:['Oson','#34d399'],orta:["O‘rta",'#fbbf24'],qiyin:['Qiyin','#f87171']};var lp=LV[qq.level]?('<span class="pill" style="color:'+LV[qq.level][1]+';border-color:'+LV[qq.level][1]+'55">'+LV[qq.level][0]+'</span>'):'';
+  h+='<div class="qrow" onclick="editQ('+i+')"><span class="pill '+(bad?'rev':'')+'">'+(bad?'tekshirish':'OK')+'</span>'+yonPill+lp+'<span style="flex:1">'+preview+'</span>'+(qq.correct?'<b class=ok>'+qq.correct+'</b>':'')+'</div>';
  });
  if(!shown)h+='<div class="mut">Savol yo‘q.</div>';
  h+='</div>';document.getElementById('qlist').innerHTML=h;document.getElementById('qedit').innerHTML='';typeset();
@@ -786,7 +787,8 @@ function editQ(i){
   +'<label>Savol matni '+(q.img?'(rasmli savol — matn ixtiyoriy)':'(LaTeX: $...$)')+'</label><textarea id="e_text">'+(q.text||'').replace(/</g,'&lt;')+'</textarea>'
   +'<label>Fan</label><input id="e_fan" value="'+(q.fan||'')+'">'
   +'<div class="row">'+['A','B','C','D'].map(function(L){return '<div><label>Variant '+L+'</label><input id="e_'+L+'" value="'+((o[L]||'')+'').replace(/"/g,'&quot;')+'"></div>';}).join('')+'</div>'
-  +'<label>To‘g‘ri javob</label><select id="e_correct"><option value="">— tanlanmagan —</option>'+['A','B','C','D'].map(function(L){return '<option '+(q.correct===L?'selected':'')+'>'+L+'</option>';}).join('')+'</select>'
+  +'<div class="row"><div><label>To‘g‘ri javob</label><select id="e_correct"><option value="">— tanlanmagan —</option>'+['A','B','C','D'].map(function(L){return '<option '+(q.correct===L?'selected':'')+'>'+L+'</option>';}).join('')+'</select></div>'
+  +'<div><label>Qiyinlik darajasi</label><select id="e_level"><option value="">— belgilanmagan —</option>'+[['oson','Oson'],['orta','O‘rta'],['qiyin','Qiyin']].map(function(L){return '<option value="'+L[0]+'"'+(q.level===L[0]?' selected':'')+'>'+L[1]+'</option>';}).join('')+'</select></div></div>'
   +'<div style="margin-top:14px;display:flex;gap:10px"><button class="btn" onclick="saveQ()">'+IC.save+'Saqlash</button><button class="btn sec" onclick="document.getElementById(\'qedit\').innerHTML=\'\'">Bekor</button></div>'
   +'<div id="savemsg" class="ok" style="margin-top:8px"></div></div>';
  document.getElementById('qedit').innerHTML=h;document.getElementById('qedit').scrollIntoView({behavior:'smooth'});
@@ -794,7 +796,7 @@ function editQ(i){
 function saveQ(){
  var o={};['A','B','C','D'].forEach(function(L){var v=document.getElementById('e_'+L).value.trim();if(v)o[L]=v;});
  var patch={text:document.getElementById('e_text').value,fan:document.getElementById('e_fan').value,
-   options:o,correct:document.getElementById('e_correct').value||null,
+   options:o,correct:document.getElementById('e_correct').value||null,level:document.getElementById('e_level').value||'',
    needs_review:!document.getElementById('e_correct').value,edited:new Date().toISOString()};
  dbWrite('/overrides/'+curQ.id+'.json','PUT',JSON.stringify(patch))
   .then(function(){OVER[curQ.id]=patch;document.getElementById('savemsg').textContent='✅ Saqlandi (kioskda darrov ishlaydi)';showQList();})
@@ -969,7 +971,8 @@ function renderImp(){
  el.innerHTML='<div class="card"><h3>'+IC.ai+'Fayl yoki matndan savol qo‘shish (AI)</h3>'
   +'<div class="mut">Word (.docx) faylni tashlang — AI uni o‘qib, savollarni topib, javobini yechib, tanlangan yo‘nalish/fanga qo‘shadi. Yoki matnni qo‘lda joylang.</div>'
   +'<label>Yo‘nalish</label><select id="imp_yon" onchange="impFans()">'+opts+'</select>'
-  +'<label>Qaysi fanga qo‘shilsin</label><select id="imp_fan"></select>'
+  +'<div class="row"><div><label>Qaysi fanga qo‘shilsin</label><select id="imp_fan"></select></div>'
+  +'<div><label>Qiyinlik darajasi</label><select id="imp_level"><option value="">— belgilanmagan —</option><option value="oson">Oson</option><option value="orta">O‘rta</option><option value="qiyin">Qiyin</option></select></div></div>'
   +'<label style="margin-top:14px">📄 Word fayl (.docx)</label>'
   +'<div id="impdrop" class="impdrop"><input type="file" id="imp_file" accept=".docx" style="display:none" onchange="pickFile(this)">'
   +'<div id="impdroptxt">Faylni shu yerga tashlang yoki <b style="color:#8fcaf6">tanlash uchun bosing</b></div></div>'
@@ -1007,7 +1010,7 @@ function queueImport(){if(RO())return;
  var txt=document.getElementById('imp_text').value;
  if(!IMP_FILE&&!txt.trim()){alert('Word fayl tashlang yoki matn kiriting');return;}
  var rec={yon:document.getElementById('imp_yon').value,yon_name:(y?y.name:''),
-   fan:document.getElementById('imp_fan').value,status:'queued',created:new Date().toISOString()};
+   fan:document.getElementById('imp_fan').value,level:document.getElementById('imp_level').value||'',status:'queued',created:new Date().toISOString()};
  if(IMP_FILE){rec.file=IMP_FILE.b64;rec.filename=IMP_FILE.name;}
  if(txt.trim())rec.text=txt;
  var m=document.getElementById('impmsg');m.style.color='var(--mut)';m.textContent='Yuborilmoqda…';

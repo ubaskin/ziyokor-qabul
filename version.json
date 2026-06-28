@@ -1,5 +1,5 @@
 {
-  "version": 16,
+  "version": 17,
   "date": "2026-06-28",
-  "note": "YANGI: «Word→AI import» endi FAYL bilan ishlaydi — .docx tashlang, AI vision bilan o'qib savollarni topadi, javobini yechadi va tanlangan yo'nalish/FANga qo'shadi. Import navbati holati ko'rinadi. Qo'shilgan savollar bankка ish vaqtida birlashadi (kiosk+menejer), qayta deploy shart emas. Matn bilan ham ishlaydi."
+  "note": "YANGI: Savol QIYINLIK DARAJASI (Oson/O'rta/Qiyin). Abituriyent o'quvchi yo'nalishdan keyin daraja tanlaydi — test shu darajadagi savollardan tuziladi (Aralash = barchasi). Import va savol tahririda daraja belgilanadi; menejerda savol ro'yxati va natijada daraja ko'rinadi. Bazasi kuchli bola qiyin, oson bola oson imtihon topshiradi."
 }

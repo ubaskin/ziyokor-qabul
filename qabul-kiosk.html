@@ -353,7 +353,25 @@ function screenYon(){
 }
 window.pickYon=function(id){
  state.yon=DATA.yonalishlar.find(function(y){return y.id===id});
- state.qs=state.yon.questions.slice();state.idx=0;state.ans={};
+ state.idx=0;state.ans={};
+ screenLevel();
+};
+var LEVELS=[{k:'oson',lab:'Oson',ic:'🟢'},{k:'orta',lab:'O‘rta',ic:'🟡'},{k:'qiyin',lab:'Qiyin',ic:'🔴'}];
+function levelCount(lvl){var n=0;(state.yon.questions||[]).forEach(function(q){if((q.level||'')===lvl)n++;});return n;}
+function screenLevel(){
+ var h='<h1>Qiyinlik darajasini tanlang</h1><div class="sub">'+state.yon.name+'</div><div class="grid">';
+ LEVELS.forEach(function(L){var c=levelCount(L.k);
+   h+='<div class="yo" onclick="pickLevel(\''+L.k+'\')">'+L.ic+' '+L.lab+'<small>'+c+' savol</small></div>';
+ });
+ h+='<div class="yo" onclick="pickLevel(\'\')">🎲 Aralash (barchasi)<small>'+state.yon.questions.length+' savol</small></div>';
+ h+='</div>';app.innerHTML=h;
+}
+window.pickLevel=function(lvl){
+ var qs;
+ if(lvl){qs=state.yon.questions.filter(function(q){return (q.level||'')===lvl;});
+   if(!qs.length)qs=state.yon.questions.slice();}  // bu darajada savol yo'q bo'lsa — barchasi (test bo'sh qolmasin)
+ else qs=state.yon.questions.slice();
+ state.qs=qs.slice();state.level=lvl;state.idx=0;state.ans={};
  screenInfo();
 };
 function screenInfo(){
@@ -374,7 +392,7 @@ window.startTest=function(){
  if(!nm){alert('Ism familiyani kiriting');return;}
  state.info={name:nm,sinf:document.getElementById('i_sinf').value,tel:readTel(),
    viloyat:document.getElementById('i_viloyat').value,tuman:document.getElementById('i_tuman').value,source:document.getElementById('i_source').value,
-   yon:state.yon.id,yon_name:state.yon.name,branch:state.branch,started:new Date().toISOString()};
+   yon:state.yon.id,yon_name:state.yon.name,level:state.level||'',branch:state.branch,started:new Date().toISOString()};
  state.idx=0;startTimer();renderQ();
 };
 function renderQ(){
