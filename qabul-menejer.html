@@ -212,7 +212,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="emodal" class="tmodal hidden"><div class="card" style="max-width:460px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 style="margin:0;flex:1">O‘quvchi ma‘lumoti</h3><button class="aanal" onclick="closeEdit()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="emodal_b"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=13; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=14; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -413,7 +413,7 @@ function fanBreakdown(s){var byFan={};
 }
 function esc(x){return (x==null?'':String(x)).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 function phoneDigits(p){return (p||'').replace(/\D/g,'');}
-var FSTATUS='all',FSEARCH='';var FDATE={from:'',to:''};
+var FSTATUS='all',FSEARCH='',FYON='';var FDATE={from:'',to:''};
 var STATUSES=['yangi',"bog'lanildi",'yozildi','rad etdi'];
 function statusOf(s){return s.status||'yangi';}
 function allRows(){return Object.keys(SESS||{}).map(function(k){var v=SESS[k]||{};v._key=k;return v;}).filter(inBranch)
@@ -424,6 +424,9 @@ function renderRes(){
  var bugun=all.filter(function(s){return (s.finished||'').slice(0,10)===new Date().toISOString().slice(0,10);}).length;
  var bogl=all.filter(function(s){return statusOf(s)!=='yangi';}).length;
  var yoz=all.filter(function(s){return statusOf(s)==='yozildi';}).length;
+ // natijalarda uchragan yo'nalishlar (filtr uchun)
+ var yset={};all.forEach(function(s){var y=(s.info&&s.info.yon_name)||'';if(y)yset[y]=1;});var yonList=Object.keys(yset).sort();
+ if(FYON&&yonList.indexOf(FYON)<0)FYON='';
  var h='<div class="stats">'
    +'<div class="stat"><b>'+all.length+'</b>Topshirdi</div>'
    +'<div class="stat"><b>'+bugun+'</b>Bugun</div>'
@@ -433,6 +436,7 @@ function renderRes(){
  h+='<div class="card" style="padding:12px;margin:8px 0"><div class="row">'
    +'<div class="fsrch">'+IC.search+'<input id="fsearch" placeholder="Ism / telefon / yo‘nalish" value="'+FSEARCH.replace(/"/g,'&quot;')+'"></div>'
    +'<select id="fstatus" style="flex:0 0 auto;width:auto"><option value="all">Barcha holat</option>'+STATUSES.map(function(s){return '<option '+(FSTATUS===s?'selected':'')+'>'+s+'</option>';}).join('')+'</select>'
+   +'<select id="fyon" style="flex:0 0 auto;width:auto"><option value="">Barcha yo‘nalish</option>'+yonList.map(function(y){return '<option'+(FYON===y?' selected':'')+'>'+esc(y)+'</option>';}).join('')+'</select>'
    +'</div>'
    +'<div class="daterow"><span class="dlbl">📅 Sana oralig‘i'+dn+'</span>'
    +'<input type="date" id="f_from" title="dan" value="'+(FDATE.from||'')+'"><span class="dsep">—</span>'
@@ -443,6 +447,7 @@ function renderRes(){
  el.innerHTML=h;
  var fs=document.getElementById('fsearch');fs.oninput=function(){FSEARCH=this.value;renderCards();};
  document.getElementById('fstatus').onchange=function(){FSTATUS=this.value;renderCards();};
+ var fy=document.getElementById('fyon');if(fy)fy.onchange=function(){FYON=this.value;renderCards();};
  var ff=document.getElementById('f_from'),ft=document.getElementById('f_to');
  if(ff)ff.onchange=function(){FDATE.from=this.value;renderRes();};
  if(ft)ft.onchange=function(){FDATE.to=this.value;renderRes();};
@@ -453,6 +458,7 @@ function renderCards(){
  var wrap=document.getElementById('cardwrap');if(!wrap)return;
  var rows=allRows().filter(function(s){
    if(FSTATUS!=='all'&&statusOf(s)!==FSTATUS)return false;
+   if(FYON&&((s.info&&s.info.yon_name)||'')!==FYON)return false;
    if(!inDate(s))return false;
    if(FSEARCH){var inf=s.info||{};var blob=((inf.name||'')+' '+(inf.tel||'')+' '+(inf.yon_name||'')).toLowerCase();if(blob.indexOf(FSEARCH.toLowerCase())<0)return false;}
    return true;});

@@ -1,5 +1,5 @@
 {
-  "version": 13,
+  "version": 14,
   "date": "2026-06-28",
-  "note": "Tuzatishlar: profil menyusi endi tablar ostida qolmaydi (to'liq ko'rinadi). Sana oralig'i yaqqol — «dan → gacha» ko'rsatiladi, Tozalash tugmasi, Excelga yuklab olish ham shu oraliqni oladi. O'quvchi ma'lumotini tahrirlash (ism/sinf/telefon/viloyat/tuman/manba) — karta yonidagi qalam tugmasi. Fan kesimida ham savol tahrirlash ishlaydi."
+  "note": "Natijalarda «Barcha yo'nalish» filtri — holat yonida; tanlangan yo'nalish bo'yicha natijalarni ko'rsatadi. Excelga yuklab olish ham shu filtr (yo'nalish + holat + sana oralig'i)ni oladi."
 }
