@@ -1,5 +1,5 @@
 {
-  "version": 19,
+  "version": 20,
   "date": "2026-06-29",
-  "note": "Qabul testi: endi har savolga qiyinlik darajasi (Oson/O'rta/Qiyin) belgilandi — yo'nalish tanlangach 'Qiyinlik darajasini tanlang' ekrani to'liq ishlaydi (avval daraja bo'sh edi, hamma savol aralash chiqardi). 659 savol teglandi."
+  "note": "Qabul: asosiy 659 savol = OSON darajaga belgilandi (siz boshida bergan savollar). Qiyin daraja = kecha qo'shilgan savollar. Endi 'Oson' tanlansa asosiy bank, 'Qiyin' tanlansa kechagi savollar chiqadi."
 }
