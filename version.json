@@ -1,5 +1,5 @@
 {
-  "version": 17,
-  "date": "2026-06-28",
-  "note": "YANGI: Savol QIYINLIK DARAJASI (Oson/O'rta/Qiyin). Abituriyent o'quvchi yo'nalishdan keyin daraja tanlaydi — test shu darajadagi savollardan tuziladi (Aralash = barchasi). Import va savol tahririda daraja belgilanadi; menejerda savol ro'yxati va natijada daraja ko'rinadi. Bazasi kuchli bola qiyin, oson bola oson imtihon topshiradi."
+  "version": 18,
+  "date": "2026-06-29",
+  "note": "Tuzatish: natija/topshirish vaqti endi Toshkent vaqtida (UTC+5) ko'rsatiladi — avval 5 soat orqada (UTC) chiqardi. Sana filtri, Excel, 'Bugun' hisobi ham Toshkent vaqtida. Word import xatosi tuzatildi (LaTeX formulalar worker'da). Formulalar sifatli LaTeX bo'lib import qilinadi."
 }
