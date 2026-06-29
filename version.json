@@ -1,5 +1,5 @@
 {
-  "version": 18,
+  "version": 19,
   "date": "2026-06-29",
-  "note": "Tuzatish: natija/topshirish vaqti endi Toshkent vaqtida (UTC+5) ko'rsatiladi — avval 5 soat orqada (UTC) chiqardi. Sana filtri, Excel, 'Bugun' hisobi ham Toshkent vaqtida. Word import xatosi tuzatildi (LaTeX formulalar worker'da). Formulalar sifatli LaTeX bo'lib import qilinadi."
+  "note": "Qabul testi: endi har savolga qiyinlik darajasi (Oson/O'rta/Qiyin) belgilandi — yo'nalish tanlangach 'Qiyinlik darajasini tanlang' ekrani to'liq ishlaydi (avval daraja bo'sh edi, hamma savol aralash chiqardi). 659 savol teglandi."
 }
