@@ -225,7 +225,7 @@ body::before{animation:auroraFloat 24s ease-in-out infinite alternate}
 <div id="emodal" class="tmodal hidden"><div class="card" style="max-width:460px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 style="margin:0;flex:1">O‘quvchi ma‘lumoti</h3><button class="aanal" onclick="closeEdit()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="emodal_b"></div></div></div>
 <div id="qmodal" class="tmodal hidden"><div class="card" style="max-width:760px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><h3 style="margin:0;flex:1" id="qmodal_t">Savollar tahlili</h3><button class="aanal" onclick="closeReview()" style="flex:0 0 auto;padding:7px 13px;border:1px solid var(--line)!important;border-radius:9px;cursor:pointer">✕</button></div><div id="qmodal_b"></div></div></div>
 <script>
-var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=20; // version.json bilan sinxron
+var OTA_BASE='https://ubaskin.github.io/ziyokor-qabul';var APP_VER=21; // version.json bilan sinxron
 var DB="https://ziyokor2024-default-rtdb.firebaseio.com/qabul_test";       // asosiy baza
 var DB2="https://ziyokor-qabul-default-rtdb.firebaseio.com/qabul_test";    // zaxira (dual-write)
 var TDB="https://ziyokor2024-default-rtdb.firebaseio.com";                 // talim+ (filial: pm / abit)
@@ -651,15 +651,24 @@ function exportXls(){
 }
 function analyze(i){
  var s=window._rows[i],inf=s.info||{};
- var byFan={};
+ var byTop={};
  Object.keys(s.answers||{}).forEach(function(qid){var raw=findQ(qid);if(!raw)return;var q=applyOver(Object.assign({},raw));if(!q.correct)return;
-   var f=q.fan||'?';byFan[f]=byFan[f]||{c:0,t:0};byFan[f].t++;if(s.answers[qid]===q.correct)byFan[f].c++;});
- var h='<div class="card"><h3>AI tahlil — '+(inf.name||'')+'</h3>';
- var fans=Object.keys(byFan);
- if(!fans.length){h+='<div class="mut">Baholangan savollar yetarli emas (javoblar tasdiqlangach to‘liq tahlil bo‘ladi).</div>';}
- else{ fans.forEach(function(f){var d=byFan[f];var p=Math.round(d.c/d.t*100);
-   h+='<div style="margin:8px 0"><b>'+f+':</b> '+d.c+'/'+d.t+' ('+p+'%) — '+(p>=70?'<span class=ok>kuchli</span>':p>=40?'o‘rtacha':'<span style="color:#c0392b">zaif, takrorlash kerak</span>')+'</div>';});
-   h+='<div class="mut" style="margin-top:8px">Tavsiya: eng past foizli fan bo‘yicha qo‘shimcha tayyorgarlik.</div>';}
+   var m=q.mavzu||q.fan||'?';byTop[m]=byTop[m]||{c:0,t:0};byTop[m].t++;if(s.answers[qid]===q.correct)byTop[m].c++;});
+ var ai=(s.ai_analysis&&!s.ai_analysis.skipped)?s.ai_analysis:null;
+ var h='<div class="card"><h3>AI tahlil — '+esc(inf.name||'')+'</h3>';
+ var tops=Object.keys(byTop);
+ if(!tops.length){h+='<div class="mut">Baholangan savollar yetarli emas (javoblar tasdiqlangach tahlil bo‘ladi).</div>';}
+ else{
+   if(ai){
+     if(ai.summary)h+='<div style="margin:6px 0 10px;line-height:1.6">'+esc(ai.summary)+'</div>';
+     if(ai.level)h+='<div style="margin:4px 0"><b>Umumiy daraja:</b> '+esc(ai.level)+'/5</div>';
+   } else { h+='<div class="mut" style="margin-bottom:8px">Mavzu bo‘yicha hisob (to‘liq AI matni — API kalit ulangach avtomatik chiqadi):</div>'; }
+   tops.sort(function(a,b){return byTop[a].c/byTop[a].t-byTop[b].c/byTop[b].t;});
+   tops.forEach(function(m){var d=byTop[m];var p=Math.round(d.c/d.t*100);
+     h+='<div style="margin:5px 0"><b>'+esc(m)+':</b> '+d.c+'/'+d.t+' ('+p+'%) — '+(p>=70?'<span class=ok>kuchli</span>':p>=40?'o‘rtacha':'<span style="color:#c0392b">zaif</span>')+'</div>';});
+   var rec=(ai&&ai.recommendation)?ai.recommendation:'Eng past foizli mavzu(lar) bo‘yicha qo‘shimcha tayyorgarlik tavsiya etiladi.';
+   h+='<div class="mut" style="margin-top:10px"><b>Tavsiya:</b> '+esc(rec)+'</div>';
+ }
  h+='</div>';var an=document.getElementById('anal');an.innerHTML=h;an.scrollIntoView({behavior:'smooth'});
 }
 

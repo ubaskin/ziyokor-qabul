@@ -1,5 +1,5 @@
 {
-  "version": 20,
-  "date": "2026-06-29",
-  "note": "Qabul: asosiy 659 savol = OSON darajaga belgilandi (siz boshida bergan savollar). Qiyin daraja = kecha qo'shilgan savollar. Endi 'Oson' tanlansa asosiy bank, 'Qiyin' tanlansa kechagi savollar chiqadi."
+  "version": 21,
+  "date": "2026-06-30",
+  "note": "Qabul: har savolga MAVZU tegi qo'shildi (1454 savol). Natija tahlili endi fan emas, MAVZU darajasida (qaysi mavzu zaif/kuchli). Chuqur AI tahlil (Sonnet) tayyor — menejer/ota-ona xulosasida ko'rinadi."
 }

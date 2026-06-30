@@ -65,7 +65,7 @@ else Promise.all([
   if(!s){ document.getElementById('wrap').innerHTML='<div class="err">Natija topilmadi.</div>'; return; }
   // savol kartasi (id -> {fan,correct}), override qo'llab
   const qmap={};
-  function add(q){const o=OVER[q.id]||{};qmap[q.id]={fan:o.fan||q.fan,correct:('correct'in o)?o.correct:q.correct};}
+  function add(q){const o=OVER[q.id]||{};qmap[q.id]={fan:o.fan||q.fan,correct:('correct'in o)?o.correct:q.correct,mavzu:o.mavzu||q.mavzu};}
   if(DATA&&DATA.yonalishlar)DATA.yonalishlar.forEach(y=>(y.questions||[]).forEach(add));
   if(PREZ&&PREZ.questions)PREZ.questions.forEach(add);
   if(OLIMP&&OLIMP.sinflar)Object.keys(OLIMP.sinflar).forEach(k=>(OLIMP.sinflar[k].questions||[]).forEach(add));
@@ -75,6 +75,15 @@ else Promise.all([
   const graded=fans.reduce((a,f)=>a+byFan[f].t,0), correct=fans.reduce((a,f)=>a+byFan[f].c,0);
   const pct=graded?Math.round(correct/graded*100):0; const L=levelOf(pct,graded);
   const strong=fans.filter(f=>byFan[f].c/byFan[f].t>=0.7), weak=fans.filter(f=>byFan[f].c/byFan[f].t<0.5);
+  // mavzu (topic) bo'yicha — fan'dan chuqurroq
+  const byTop={};Object.keys(s.answers||{}).forEach(qid=>{const q=qmap[qid];if(!q||!q.correct)return;const m=q.mavzu||q.fan||'?';byTop[m]=byTop[m]||{c:0,t:0};byTop[m].t++;if(s.answers[qid]===q.correct)byTop[m].c++;});
+  const tops=Object.keys(byTop);
+  const topWeak=tops.filter(m=>byTop[m].c/byTop[m].t<0.5).sort((a,b)=>byTop[a].c/byTop[a].t-byTop[b].c/byTop[b].t);
+  const topStrong=tops.filter(m=>byTop[m].c/byTop[m].t>=0.7);
+  // AI tahlil (worker yozadi; bo'lmasa mavzu-hisobi ishlatiladi)
+  const ai=(s.ai_analysis&&!s.ai_analysis.skipped)?s.ai_analysis:null;
+  const wTopics=(ai&&ai.weak_topics&&ai.weak_topics.length)?ai.weak_topics:topWeak;
+  const sTopics=(ai&&ai.strong_topics&&ai.strong_topics.length)?ai.strong_topics:topStrong;
   const inf=s.info||{};
   document.getElementById('wrap').innerHTML=`
     <div class="hero"><div class="logo">🎓</div><h1>ZIYOKOR</h1><p>Qabul testi — natija xulosasi</p></div>
@@ -84,8 +93,10 @@ else Promise.all([
       <div class="ring" style="border-color:${LEVEL_COLOR[L]}"><div class="lvl" style="color:${LEVEL_COLOR[L]}">${graded?L:'—'}</div><div class="of">5 dan</div></div>
       <div class="lvl-label">${esc(LEVEL_LABEL[L]||'')}</div>
       <div class="pct">${graded?`To'g'ri javoblar: <b>${correct}/${graded}</b> (${pct}%)`:`Javob berildi: ${s.answered||0}/${s.total||0}`}</div>
-      ${strong.length?`<div class="section"><h3>💪 Kuchli tomonlar</h3>${strong.map(f=>`<span class="tag strong">${esc(f)} — ${Math.round(byFan[f].c/byFan[f].t*100)}%</span>`).join('')}</div>`:''}
-      ${weak.length?`<div class="section"><h3>📈 O'sish nuqtalari</h3><div style="color:var(--hint);font-size:13px;margin-bottom:8px">Shu fanlarga e'tibor bersak, natija tez ko'tariladi:</div>${weak.map(f=>`<span class="tag weak">${esc(f)} — ${Math.round(byFan[f].c/byFan[f].t*100)}%</span>`).join('')}</div>`:''}
+      ${ai&&ai.summary?`<div class="section"><h3>🧠 AI tahlil</h3><div class="plan">${esc(ai.summary)}</div></div>`:''}
+      ${sTopics.length?`<div class="section"><h3>💪 Kuchli mavzular</h3>${sTopics.map(m=>`<span class="tag strong">${esc(m)}${byTop[m]?` — ${Math.round(byTop[m].c/byTop[m].t*100)}%`:''}</span>`).join('')}</div>`:''}
+      ${wTopics.length?`<div class="section"><h3>📈 O'sish nuqtalari (zaif mavzular)</h3><div style="color:var(--hint);font-size:13px;margin-bottom:8px">Shu mavzularga e'tibor bersak, natija tez ko'tariladi:</div>${wTopics.map(m=>`<span class="tag weak">${esc(m)}${byTop[m]?` — ${Math.round(byTop[m].c/byTop[m].t*100)}%`:''}</span>`).join('')}</div>`:''}
+      ${ai&&ai.recommendation?`<div class="section"><h3>🎯 Tavsiya</h3><div class="plan">${esc(ai.recommendation)}</div></div>`:''}
       <div class="grp"><div class="gn">ZIYOKOR o'quv markazi</div><div class="gm">Menejer siz bilan jadval va mos guruhni hal qiladi</div></div>
       <div class="note">Bu xulosa ZIYOKOR menejeri bilan suhbat uchun.<br>Savollaringiz bo'lsa — menejerga murojaat qiling.</div>
     </div>`;
